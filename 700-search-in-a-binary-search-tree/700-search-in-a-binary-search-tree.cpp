@@ -18,17 +18,17 @@ public:
             return root;
         }
         
-        if(root->val==val)
+        if(val==root->val)
         {
             return root;
         }
-        else if(root->val<val)
+        else if(val<root->val)
         {
-            return searchBST(root->right,val);
+            return searchBST(root->left,val);
         }
         else
         {
-            return searchBST(root->left,val);
+            return searchBST(root->right,val);
         }
     }
 };
