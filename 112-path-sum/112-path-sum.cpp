@@ -11,8 +11,8 @@
  */
 class Solution {
 public:
-//     bool PathSum(TreeNode* root,int targetSum)
-//     {
+//     bool PathSum(TreeNode* root,int targetSum)  //made this to deal with  
+//     {                                           // root==NULL and targetSum==0 testcase
 //         int sum=0;
         
 //         if(root==NULL)
@@ -48,15 +48,15 @@ public:
             return false;
         }
         
-        if(root->left==NULL)
-        {
-            return hasPathSum(root->right,targetSum-root->val);
-        }
+//         if(root->left==NULL) //right skewed
+//         {
+//             return hasPathSum(root->right,targetSum-root->val);
+//         }
         
-        if(root->right==NULL)
-        {
-            return hasPathSum(root->left,targetSum-root->val);
-        }
+//         if(root->right==NULL) //left skewed
+//         {
+//             return hasPathSum(root->left,targetSum-root->val);
+//         }
         
         return hasPathSum(root->left,targetSum-root->val) || hasPathSum(root->right,targetSum-root->val);
     }
