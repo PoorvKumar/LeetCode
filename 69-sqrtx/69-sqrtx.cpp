@@ -5,7 +5,7 @@ public:
         unsigned long low=1;
         unsigned long high=x;
         unsigned long mid=(low+high)/2;
-        unsigned int M=1000000007;
+        // unsigned int M=1000000007;
         
         while(low<=high)
         {
