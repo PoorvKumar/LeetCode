@@ -7,8 +7,6 @@ public:
         
         int j=i+1;
         
-        int k=1;
-        
         while(j<nums.size())
         {
             if(nums[j]==val)
@@ -20,10 +18,9 @@ public:
                 nums[++i]=nums[j];
                 val=nums[j];
                 j++;
-                k++;
             }
         }
         
-        return k;
+        return i+1;
     }
 };
