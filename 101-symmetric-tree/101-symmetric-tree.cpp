@@ -33,9 +33,11 @@ public:
             return true;
         }
         
-        TreeNode* p=root->left;
-        TreeNode* q=root->right;
+//         TreeNode* p=root->left;
+//         TreeNode* q=root->right;
         
-        return isMirror(p,q);
+//         return isMirror(p,q);
+        
+        return isMirror(root->left,root->right);
     }
 };
