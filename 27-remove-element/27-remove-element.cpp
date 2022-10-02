@@ -29,7 +29,7 @@ public:
         
         for( ; i<j; i++)
         {
-            while(i<j && nums[j]==val)
+            while(i<j && nums[j]==val) //Two Pointer Approach
             {
                 j--;
             }
