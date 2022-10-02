@@ -17,11 +17,11 @@ public:
         {
             return true;
         }
-        if(p==NULL || q==NULL)
-        {
-            return false;
-        }
         
-        return p->val==q->val&&isSameTree(p->left,q->left)&&isSameTree(p->right,q->right);
+        if(p!=NULL && q!=NULL && p->val==q->val)
+        {
+            return isSameTree(p->left,q->left) && isSameTree(p->right,q->right);
+        }
+        return false;
     }
 };
