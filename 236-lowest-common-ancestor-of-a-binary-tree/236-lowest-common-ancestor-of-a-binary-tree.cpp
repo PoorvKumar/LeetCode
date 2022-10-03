@@ -9,7 +9,7 @@
  */
 class Solution {
 private:
-    bool search(TreeNode* root,int key) //would work for BST
+    bool search(TreeNode* root,int key) //modified search to work for Binary Tree
     {
         if(root==NULL)
         {
