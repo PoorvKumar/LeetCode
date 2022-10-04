@@ -18,14 +18,19 @@ public:
             return false;
         }
         
-        if(root->left==NULL && root->right==NULL)
+        if(root->val==targetSum && root->left==NULL && root->right==NULL)
         {
-            if(root->val==targetSum)
-            {
-                return true;
-            }
-            return false;
+            return true;
         }
+        
+        // if(root->left==NULL && root->right==NULL)
+        // {
+        //     if(root->val==targetSum)
+        //     {
+        //         return true;
+        //     }
+        //     return false;
+        // }
         
         return hasPathSum(root->left,targetSum-root->val) || hasPathSum(root->right,targetSum-root->val);
     }
