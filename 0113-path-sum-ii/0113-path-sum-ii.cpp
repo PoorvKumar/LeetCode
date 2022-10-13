@@ -46,7 +46,7 @@ private:
         pathSumUtil(root->left,targetSum-root->val,v);
         pathSumUtil(root->right,targetSum-root->val,v);
         
-        // v.clear(); //all the paths from root to node before leaf which might be possible answer but is not
+        v.clear(); //all the paths from root to node before leaf which might be possible answer but is not
         return v; //try commneting above to see what happens
     }
 public:
