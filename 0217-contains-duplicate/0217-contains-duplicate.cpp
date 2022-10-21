@@ -2,21 +2,20 @@ class Solution {
 public:    
     bool containsDuplicate(vector<int>& nums) 
     {
-        // selectionSort(nums);
-        sort(nums.begin(),nums.end());
+        sort(nums.begin(),nums.end()); //O(nlogn)
         
-//         for(int i=0; i<nums.size()-1; i++)
-//         {
-//             if(nums[i]==nums[i+1])
-//             {
-//                 return true;
-//             }
-//         }
+        for(int i=0; i<nums.size()-1; i++) ///O(n)
+        {
+            if(nums[i]==nums[i+1])
+            {
+                return true;
+            }
+        }
         
-//         return false;
+        return false;
         
-        set<int> set(nums.begin(),nums.end());
+//         set<int> set(nums.begin(),nums.end()); //More time complexity
         
-        return nums.size()!=set.size();
+//         return nums.size()!=set.size();
     }
 };
