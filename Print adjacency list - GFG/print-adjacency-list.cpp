@@ -14,11 +14,11 @@ public:
         for(int i=0; i<V; i++)
         {
             vec[i].push_back(i);
-            // for(int j=0; j<adj[i].size(); j++)
-            // {
-            //     vec[i].push_back(adj[i][j]);
-            // }
-            vec[i].insert(vec[i].end(),adj[i].begin(),adj[i].end()); 
+            for(int j=0; j<adj[i].size(); j++)
+            {
+                vec[i].push_back(adj[i][j]);
+            }
+            // vec[i].insert(vec[i].end(),adj[i].begin(),adj[i].end()); 
             //insert(position,interatorBegin,iteratorEnd)
         }
         
