@@ -5,7 +5,7 @@ public:
         unordered_set<char> set({'a','A','e','E','i','I','o','O','u','U'});
         int n=s.length();
         
-        string str;
+        // string str;
         int j=n-1;
         for(int i=0; i<j; i++)
         {
