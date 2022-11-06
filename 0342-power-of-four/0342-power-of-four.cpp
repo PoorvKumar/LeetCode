@@ -11,10 +11,11 @@ public:
             return true;
         }
         
-        if(n%4==0) //Recursive Step //Recursive
-        {
-            return isPowerOfFour(n/4); 
-        }
-        return false;
+        // if(n%4==0) //Recursive Step 
+        // {
+        //     return isPowerOfFour(n/4); 
+        // }
+        // return false;
+        return n%4==0?isPowerOfFour(n/4):false; //Recursive Step
     }
 };
