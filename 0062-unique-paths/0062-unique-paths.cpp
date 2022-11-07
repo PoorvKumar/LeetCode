@@ -5,22 +5,24 @@ private:
 public:
     int uniquePaths(int m, int n) 
     {        
-//         //top-down DP approach-> Recursion + Memomization
-//         if(m==1 || n==1)  
-//         {
-//             umap[m][n]=1;
-//             return umap[m][n];
-//         }
+        //top-down DP approach-> Recursion + Memomization
+        if(m==1 || n==1)  
+        {
+            umap[m][n]=1;
+            return umap[m][n];
+        }
         
-//         if(umap.count(m)==1 && umap[m].count(n)==1)
-//         {
-//             return umap[m][n];
-//         }
+        if(umap.count(m)==1 && umap[m].count(n)==1)
+        {
+            return umap[m][n];
+        }
         
-//         umap[m][n]=uniquePaths(m-1,n)+uniquePaths(m,n-1);
-//         return umap[m][n];
+        umap[m][n]=uniquePaths(m-1,n)+uniquePaths(m,n-1);
+        return umap[m][n];
         
-        // bottom-up DP approach-> Tabulation
+        //comment any before checking either
+        
+        // bottom-up DP approach-> Tabulation 
         if(m==1 || n==1)
         {
             return 1;
