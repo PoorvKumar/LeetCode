@@ -14,11 +14,13 @@ class Solution
 public:
     int countNodes(TreeNode* root) 
     {
-        if(root==NULL)
-        {
-            return 0;
-        }
+//         if(root==NULL)
+//         {
+//             return 0;
+//         }
         
-        return 1+countNodes(root->left)+countNodes(root->right);
+//         return 1+countNodes(root->left)+countNodes(root->right);
+        
+        return root==NULL?0:1+countNodes(root->left)+countNodes(root->right);
     }
 };
