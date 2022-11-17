@@ -27,7 +27,6 @@ public:
         
         if(bx1>=ax1 && bx1<=ax2 || ax1>=bx1 && ax1<=bx2)
         {
-
             if(bx2>=ax1 && bx2<=ax2 && bx1>=ax1 && bx1<=ax2)
             {
                 x=bx2-bx1;
