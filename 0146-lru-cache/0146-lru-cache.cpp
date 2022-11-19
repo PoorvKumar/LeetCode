@@ -12,6 +12,8 @@ private:
 public:
     LRUCache(int capacity) 
     {
+        ios::sync_with_stdio(false);
+        cin.tie(NULL);
         this->capacity=capacity;
         // age=0;
     }
