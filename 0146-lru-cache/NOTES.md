@@ -13,6 +13,7 @@
 unordered_map<int,pair<int,list<int>::iterator>> lru;
 ```
 ​
-//**this way we can use erase() and fin() functions in O(1) time complexity
+//**this way we can use erase() and find() functions in O(1) time complexity
 by passing an object of type class iterator**
+//but still getting TLE sometimes so optimizing a bit
 ​
