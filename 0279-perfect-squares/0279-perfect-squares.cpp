@@ -17,7 +17,7 @@ private:
         
         int res=INT_MAX;
         
-        for(int i=vec.size()-1; i>=0; i--)
+        for(int i=0; i<vec.size(); i++) //Top-Down DP approach -> Recursion + Memoization
         {
             int x=umap.count(n-vec[i])?umap[n-vec[i]]:numSquareUtil(vec,n-vec[i]);
             if(x!=INT_MAX && x+1<res)
@@ -46,9 +46,23 @@ public:
         //     cout<<x<<" ";
         // }
         
+        return numSquareUtil(vec,n); //Top-Down DP approach -> Recursion + Memoization
         
-        // return 1;
-        return numSquareUtil(vec,n);
+//         // Bottom-Up DP approach -> Tabulation
+//         vector<vector<int>> dp;
+//         vector<vector<int>> dp(n+1,vector<int>(vec.size()+1,INT_MAX));
+        
+//         dp[0].assign(vec.size()+1,0);
+        
+//         for(int i=1; i<=n; i++)
+//         {
+//             for(int j=0; j<vec.size(); j++)
+//             {
+//                 dp[i][j]=min(dp[i][j],dp[i][j-vec[i]])+1;
+//             }
+//         }
+        
+        
     }
 };
 
