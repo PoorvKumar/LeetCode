@@ -5,19 +5,22 @@ public:
     {
         unordered_set<char> uset({'a','A','i','I','e','E','o','O','u','U'});
         
-        int countL=0;
-        int countR=0;
+        // int countL=0;
+        // int countR=0;
+        int x=0;
         int j=s.length()/2;
         
         for(int i=0; i<s.length()/2; i++)
         {
             if(uset.count(s[i]))
             {
-                countL++;
+                x++;
+                // countL++;
             }
             if(uset.count(s[j]))
             {
-                countR++;
+                x--;
+                // countR++;
             }    
             j++;
         }
@@ -34,6 +37,7 @@ public:
         //     }
         // }
         
-        return countL==countR;
+        // return countL==countR;
+        return x==0;
     }
 };
