@@ -19,10 +19,10 @@ public:
         //     return NULL;
         // }
         
-        if(root==NULL || root->val<val)
+        if(!root || root->val<val)
         {
             TreeNode* p=new TreeNode(val);
-            p->val=val;
+            // p->val=val;
             p->left=root;
             p->right=NULL;
             return p;
