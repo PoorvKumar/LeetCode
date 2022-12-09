@@ -12,47 +12,35 @@
 class Solution 
 {
 private:
-    int maxVal(TreeNode* root,int maximVal)
+    void helper(TreeNode* root,int maxim,int minim,int &ans)
     {
         if(root==NULL)
         {
-            return maximVal;
+            return ;
         }
         
-        maximVal=max(maximVal,root->val);
-        maximVal=max(maximVal,maxVal(root->left,maximVal));
+        maxim=root->val>maxim?root->val:maxim;
+        minim=root->val<minim?root->val:minim;
         
-        return max(maximVal,maxVal(root->right,maximVal));
-    }
-    
-    int minVal(TreeNode* root,int minimVal)
-    {
-        if(root==NULL)
-        {
-            return minimVal;
-        }
+        ans=max(ans,abs(maxim-minim));
         
-        minimVal=min(minimVal,root->val);
-        minimVal=min(minimVal,minVal(root->left,minimVal));
-        
-        return min(minimVal,minVal(root->right,minimVal));
+        helper(root->left,maxim,minim,ans);
+        helper(root->right,maxim,minim,ans);
     }
 public:
-    int maxAncestorDiff(TreeNode* root,int maximDiff=0) 
+    int maxAncestorDiff(TreeNode* root) 
     {
-        if(root==NULL) //Base Case
+        if(!root)
         {
-            return maximDiff;
+            return 0;
         }
         
-        int minimVal=min(minVal(root->left,root->val),minVal(root->right,root->val));
-        int maximVal=max(maxVal(root->left,root->val),maxVal(root->right,root->val));
-        // cout<<minimVal<<endl;
-        // cout<<maximVal<<endl;
+        int ans=0;
+        int maxim=INT_MIN;
+        int minim=INT_MAX;
         
-        maximDiff=max(abs(root->val-minimVal),abs(root->val-maximVal));
-        maximDiff=max(maximDiff,maxAncestorDiff(root->left,maximDiff));
+        helper(root,maxim,minim,ans);
         
-        return max(maximDiff,maxAncestorDiff(root->right,maximDiff));
+        return ans;
     }
 };
