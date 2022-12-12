@@ -3,11 +3,6 @@ class Solution
 private:
     unordered_map<int,int> umap;
 public:
-    Solution()
-    {
-        umap.clear();
-    }
-    
 //     int climbStairs(int n) // Top-Down DP -> Recursion + Memoization
 //     {                      // could be done with better space complexity
 //         if(n<3)
