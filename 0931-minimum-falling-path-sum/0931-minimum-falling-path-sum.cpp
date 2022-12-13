@@ -5,6 +5,37 @@ public:
     {
         int n=matrix.size(); 
         
+        for(int i=n-2; i>=0; i--)
+        {
+            for(int j=0; j<n; j++)
+            {
+                if(j==0 || j==n-1)
+                {
+                    if(j==0)
+                    {
+                        matrix[i][j]=matrix[i][j]+min(matrix[i+1][j],matrix[i+1][j+1]);
+                    }
+                    else
+                    {
+                        matrix[i][j]=matrix[i][j]+min(matrix[i+1][j-1],matrix[i+1][j]);
+                    }
+                }
+                else
+                {
+                    int minim=min(matrix[i+1][j-1],matrix[i+1][j]);
+                    minim=min(minim,matrix[i+1][j+1]);
+                    matrix[i][j]+=minim;
+                }
+            }
+        }
+        
+        int res=matrix[0][0];
+        for(int i=0; i<n; i++)
+        {
+            res=min(res,matrix[0][i]);
+        }
+        
+        return res;
 //         dpTopDown.assign(n,vector<int>(n,-1));
         
 //         helper(matrix,n-1,0);
@@ -66,36 +97,5 @@ public:
         
 //         return res;
         
-        for(int i=n-2; i>=0; i--)
-        {
-            for(int j=0; j<n; j++)
-            {
-                if(j==0 || j==n-1)
-                {
-                    if(j==0)
-                    {
-                        matrix[i][j]=matrix[i][j]+min(matrix[i+1][j],matrix[i+1][j+1]);
-                    }
-                    else
-                    {
-                        matrix[i][j]=matrix[i][j]+min(matrix[i+1][j-1],matrix[i+1][j]);
-                    }
-                }
-                else
-                {
-                    int minim=min(matrix[i+1][j-1],matrix[i+1][j]);
-                    minim=min(minim,matrix[i+1][j+1]);
-                    matrix[i][j]+=minim;
-                }
-            }
-        }
-        
-        int res=matrix[0][0];
-        for(int i=0; i<n; i++)
-        {
-            res=min(res,matrix[0][i]);
-        }
-        
-        return res;
     }
 };
