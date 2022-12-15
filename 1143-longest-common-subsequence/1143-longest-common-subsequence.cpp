@@ -50,7 +50,7 @@ public:
         
         vector<vector<int>> dp(s1.length()+1,vector<int>(s2.length()+1,0));
         
-        for(int i=1; i<s1.length()+1; i++)
+        for(int i=1; i<s1.length()+1; i++) //Botttom-UP DP approach -> Tabulation
         {
             for(int j=1; j<s2.length()+1; j++)
             {
