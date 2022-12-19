@@ -28,6 +28,42 @@ private:
         return false;
     }
     
+    bool bfs(int source,int dest)
+    {
+        if(source==dest)
+        {
+            return true;
+        }
+        
+        queue<int> q;
+        q.push(source);
+        
+        while(!q.empty())
+        {
+            int x=q.front();
+            q.pop();
+            
+            visited[x]=true;
+            
+            if(x==dest)
+            {
+                return true;
+            }
+            
+            for(int i=0; i<adjList[x].size(); i++)
+            {
+                int y=adjList[x][i];
+                if(!visited[y])
+                {
+                    q.push(y);
+                    visited[y]=true;
+                }
+            }
+        }
+        
+        return false;
+    }
+    
 public:
     bool validPath(int N, vector<vector<int>>& edges, int source, int destination) 
     {
@@ -70,6 +106,7 @@ public:
         //     cout<<endl;
         // }
         
-        return dfs(source,destination);
+        // return dfs(source,destination);
+        return bfs(source,destination);
     }
 };
