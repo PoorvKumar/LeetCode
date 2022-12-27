@@ -50,8 +50,9 @@ private:
                 for(int j=0; j<vec.size(); j++)
                 {
                     vec[j].push_back(cand[i]);
-                    sort(vec[j].begin(),vec[j].end());
-                    bool flag=false;
+                    
+                    sort(vec[j].begin(),vec[j].end()); //logic to add only those which not present
+                    bool flag=false;  //sort() to compare objects of type class vector
                     for(auto &x:ans)
                     {
                         if(compare(vec[j],x))
@@ -59,7 +60,8 @@ private:
                             flag=true;
                         }
                     }
-                    if(!flag)
+                    
+                    if(!flag) 
                     {
                         ans.push_back(vec[j]);
                     }
