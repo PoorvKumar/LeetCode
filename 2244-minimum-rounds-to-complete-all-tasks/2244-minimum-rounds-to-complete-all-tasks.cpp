@@ -28,40 +28,25 @@ private:
         return umap[count];
     }
 public:
-    int minimumRounds(vector<int>& tasks) 
+    int minimumRounds(vector<int>& tasks)  
     {
+        unordered_map<int,int> umap1;
         int round=0;
         
-        sort(tasks.begin(),tasks.end()); //O(nlogn)
-        // for(auto x:tasks)
-        // {
-        //     cout<<x<<" ";
-        // }
-        
-        int i=0;
-        int diff=tasks[0];
-        int n=tasks.size();
-        
-        int count=0;
-        
-        while(i<n)
+        for(int i=0; i<tasks.size(); i++)//O(n)
         {
-            diff=tasks[i];
-            count=0;
-            
-            while(i<n && diff==tasks[i])
-            {
-                i++;
-                count++;
-            }
-            
-            int x=helper(count);
-            if(x==INT_MAX)
+            umap1[tasks[i]]++;
+        }      
+        
+        for(auto &x:umap1)
+        {
+            // cout<<x.first<<" "<<x.second<<endl;
+            if(x.second==1)
             {
                 return -1;
             }
             
-            round=round+x;
+            round=round+helper(x.second);
         }
         
         return round;
