@@ -1,7 +1,7 @@
 class Solution 
 {
 private:
-    unordered_map<int,int> umap;
+    // unordered_map<int,int> umap;
 public:
     int fib(int n) 
     {
