@@ -34,11 +34,27 @@ public:
     int maxIceCream(vector<int>& costs,int coins)
     {
         sort(costs.begin(),costs.end());
-        if(costs[0]>coins)
+        // if(costs[0]>coins)
+        // {
+        //     return 0;
+        // }
+        
+        // return maxIceCreamUtil(costs,coins,0);
+        
+        int count=0;
+        int i=0;
+        
+        while(i<costs.size() && coins>0)
         {
-            return 0;
+            if(costs[i]>coins)
+            {
+                return count;
+            }
+            coins=coins-costs[i];
+            i++;
+            count++;
         }
         
-        return maxIceCreamUtil(costs,coins,0);
+        return count;
     }
 };
