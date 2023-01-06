@@ -1,27 +1,26 @@
 class Solution 
 {
+private:
+    unordered_map<int,int> umap;
 public:
-    int fibonacci[31];
-    
-    Solution()
-    {
-        fill(fibonacci,fibonacci+31,-1);
-    }
-    
     int fib(int n) 
     {
-        if(n<=1)
+        if(n<2)
         {
             return n;
         }
         
-        if(fibonacci[n]!=-1)
+        // return fib(n-1)+fib(n-2);
+        
+        if(!umap.count(n-1))
         {
-            return fibonacci[n];
+            umap[n-1]=fib(n-1);
+        }
+        if(!umap.count(n-2))
+        {
+            umap[n-2]=fib(n-2);
         }
         
-        fibonacci[n]=fib(n-1)+fib(n-2);
-        
-        return fibonacci[n];
+        return umap[n]=umap[n-1]+umap[n-2];
     }
 };
