@@ -46,7 +46,7 @@ public:
         
         while(i<costs.size() && coins>0)
         {
-            if(costs[i]>coins)
+            if(costs[i]>coins) //very good approach
             {
                 return count;
             }
