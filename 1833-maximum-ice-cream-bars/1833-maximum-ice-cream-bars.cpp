@@ -42,18 +42,29 @@ public:
         // return maxIceCreamUtil(costs,coins,0);
         
         int count=0;
-        int i=0;
         
-        while(i<costs.size() && coins>0)
+        for(int i=0; i<costs.size(); i++)
         {
-            if(costs[i]>coins) //very good approach
+            if(costs[i]>coins)
             {
                 return count;
             }
+            
             coins=coins-costs[i];
-            i++;
             count++;
         }
+//         int i=0;
+        
+//         while(i<costs.size() && coins>0)
+//         {
+//             if(costs[i]>coins) //very good approach
+//             {
+//                 return count;
+//             }
+//             coins=coins-costs[i];
+//             i++;
+//             count++;
+//         }
         
         return count;
     }
