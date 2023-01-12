@@ -35,7 +35,7 @@ private:
 //         return countLabel;
 //     }
     
-    unordered_map<char,int> helper(int src,string& labels,vector<int>& ans)
+    unordered_map<char,int> helper(int src,string& labels,vector<int>& ans) //also works now as object labels of type class  string passed by reference
     {
         // if(adjList[src].size()==1) //-1 added at 0 so that adjacency list of 0 always have atleast 2 elements
         // {
@@ -60,8 +60,7 @@ private:
             }
         }
         
-        ans[src]=1+countHash[labels[src]];
-        countHash[labels[src]]=ans[src];
+        ans[src]=countHash[labels[src]];
         return countHash;
     }
     
@@ -120,9 +119,16 @@ public:
         //     cout<<endl;
         // }
         
-        vector<int> countHash(26,0);
-        subTreeUtil(0,labels,ans,countHash);
-        // countHelper(0,labels,ans);
+//         vector<int> countHash(26,0);
+//         subTreeUtil(0,labels,ans,countHash);
+//         // countHelper(0,labels,ans);
+        
+//         return ans;
+        unordered_map<char,int> umap=helper(0,labels,ans);
+        // for(auto x:umap)
+        // {
+        //     cout<<x.first<<" "<<x.second<<endl;
+        // }
         
         return ans;
         
