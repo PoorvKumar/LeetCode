@@ -1,2 +1,2 @@
 # LeetCode
-LeetCode Problem's Solutions
+My approach while solving LeetCode and DSA problems
