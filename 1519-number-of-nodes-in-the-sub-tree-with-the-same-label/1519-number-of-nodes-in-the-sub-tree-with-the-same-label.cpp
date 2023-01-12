@@ -59,9 +59,9 @@ public:
         //     cout<<endl;
         // }
         
-        vector<int> countHash(26,0);
-        subTreeUtil(0,labels,ans,countHash);
-        // countHelper(0,labels,ans);
+        // vector<int> countHash(26,0);
+        // subTreeUtil(0,labels,ans,countHash);
+        countHelper(0,labels,ans);
         
         return ans;
         
