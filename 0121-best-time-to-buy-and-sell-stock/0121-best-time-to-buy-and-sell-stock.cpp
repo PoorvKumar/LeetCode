@@ -3,23 +3,26 @@ class Solution
 public:
     int maxProfit(vector<int>& prices) 
     {
-        int minim=prices[0];
-        int maxim=prices[0];
+        int start=prices[0];
+        int end=prices[0];
         
-        int profit=0;
+        int maxProfit=0;
         
-        for(int i=1; i<prices.size(); i++)
+        for(int i=0; i<prices.size(); i++)
         {
-            if(prices[i-1]<minim)
+            if(prices[i]>end)
             {
-                minim=prices[i-1];
-                maxim=prices[i-1];
+                end=prices[i];
+            }
+            if(prices[i]<start)
+            {
+                start=prices[i];
+                end=prices[i];
             }
             
-            maxim=prices[i]>maxim?prices[i]:maxim;
-            profit=max(profit,maxim-minim);
+            maxProfit=max(maxProfit,end-start);
         }
         
-        return profit;
+        return maxProfit;
     }
 };
