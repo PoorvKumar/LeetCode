@@ -1,42 +1,60 @@
 class Solution 
 {
 private:
-    int maxSubArraySum(vector<int>& nums,int j) //Kadane's Algorithm
-    {
-        int n=nums.size();
+//     int maxSubArraySum(vector<int>& nums,int j) //Kadane's Algorithm
+//     {
+//         int n=nums.size();
        
-        int fsum=0;
-        // int bsum=0;
-        int fmaxim=nums[j];
-        // int bmaxim=nums[j];
+//         int fsum=0;
+//         // int bsum=0;
+//         int fmaxim=nums[j];
+//         // int bmaxim=nums[j];
 
-        int f=j;
-        // int b=j;
+//         int f=j;
+//         // int b=j;
 
-        do
-        {
-            //forward
-            fsum=fsum+nums[f];
-            fmaxim=max(fmaxim,fsum);
-            if(fsum<0)
-            {
-                fsum=0;
-            }
-            f=(f+1)%n;
+//         do
+//         {
+//             //forward
+//             fsum=fsum+nums[f];
+//             fmaxim=max(fmaxim,fsum);
+//             if(fsum<0)
+//             {
+//                 fsum=0;
+//             }
+//             f=(f+1)%n;
 
-            // //backward
-            // bsum=bsum+nums[b];
-            // bmaxim=max(bmaxim,bsum);
-            // if(bsum<0)
-            // {
-            //     bsum=0;
-            // }
-            // b=(b-1+n)%n;
-        }
-        while(f!=j);
+//             // //backward
+//             // bsum=bsum+nums[b];
+//             // bmaxim=max(bmaxim,bsum);
+//             // if(bsum<0)
+//             // {
+//             //     bsum=0;
+//             // }
+//             // b=(b-1+n)%n;
+//         }
+//         while(f!=j);
     
-        // return max(fmaxim,bmaxim);
-        return fmaxim;
+//         // return max(fmaxim,bmaxim);
+//         return fmaxim;
+//     }
+    
+    int maxSubArraySum(vector<int>& nums)
+    {
+        int sum=0;
+        int maxim=nums[0];
+        
+        for(int i=0; i<nums.size(); i++)
+        {
+            sum=sum+nums[i];
+            maxim=max(maxim,sum);
+            if(sum<0)
+            {
+                sum=0;
+            }
+        }
+        
+        return maxim;
     }
 public:
     int maxSubarraySumCircular(vector<int>& nums)
@@ -44,20 +62,14 @@ public:
         int n=nums.size();
         
         int maxim=nums[0];
-        
         // for(int i=0; i<n; i++) //getting TLE //99 out of 111 testcases passed
         // {
         //     maxim=max(maxim,maxSubArraySum(nums,i));
         // }
         
-        maxim=max(maxim,maxSubArraySum(nums,0)); 
-        
-//         for(int i=n/4; i<n; i++)
-//         {
-//             maxim=max(maxim,maxSubArraySum(nums,i));
-//         }
-        
 //         return maxim;
+        
+        maxim=max(maxim,maxSubArraySum(nums));
         
         int sum=accumulate(nums.begin(),nums.end(),0);
         int minim=nums[0];
@@ -67,7 +79,8 @@ public:
             x=x*-1;
         }
         
-        minim=min(minim,maxSubArraySum(nums,0)*-1);
+        // minim=min(minim,maxSubArraySum(nums,0)*-1);
+        minim=maxSubArraySum(nums)*-1;
         
         if(sum-minim!=0)
         {
