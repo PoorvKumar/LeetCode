@@ -19,7 +19,7 @@ public:
 //         return umap[i][j];
 //     }
     
-    int minimumTotal(vector<vector<int>> &triangle)
+    int minimumTotal(vector<vector<int>> &triangle) //Bottom-UP DP approach -> Tabulation
     {
         vector<vector<int>> dp(triangle.size(),vector<int>(triangle.size()));
         
