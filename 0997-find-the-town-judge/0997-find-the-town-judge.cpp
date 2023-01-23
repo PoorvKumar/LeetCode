@@ -4,6 +4,26 @@ public:
     int findJudge(int n, vector<vector<int>>& trust)
     {
         // unordered_map<int,unordered_set<int>> adjList;
+        
+//         for(auto x:trust)
+//         {
+//             adjList[x[0]].insert(x[1]);
+//         }
+        
+//         for(int i=1;; i<=n; i++)
+//         {
+//             if(adjList.count(i)==0)
+//             {
+//                 for(auto x:adjList)
+//                 {
+//                     if(x.second.count(i)==0)
+//                     {
+//                         return -1;
+//                     }
+//                 }
+//                 return i;
+//             }
+//         }
         vector<vector<int>> adjList(n+1,vector<int>());
         
         for(int i=0; i<trust.size(); i++)
@@ -34,13 +54,15 @@ public:
                     {
                         if(find(adjList[j].begin(),adjList[j].end(),i)==adjList[j].end())
                         {
-                            flag=false;
-                            break;
+                            return-1;
+                            // flag=false;
+                            // break;
                         }
                     }
                 }
                 
-                return flag?i:-1;
+                return i;
+                // return flag?i:-1;
             }
         }
         
