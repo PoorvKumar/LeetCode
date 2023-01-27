@@ -41,25 +41,25 @@ public:
     int deleteAndEarn(vector<int>& nums)
     {
         // unordered_map<int,int> umap;
-        for(int i=0; i<nums.size(); i++)
-        {
-            umap[nums[i]]++;
-        }
+//         for(int i=0; i<nums.size(); i++)
+//         {
+//             umap[nums[i]]++;
+//         }
         
-        if(umap.size()==1)
-        {
-            return nums[0]*umap[nums[0]];
-        }
+//         if(umap.size()==1)
+//         {
+//             return nums[0]*umap[nums[0]];
+//         }
         
-        int n=umap.size();
+//         int n=umap.size();
         
-        vector<int> vec;
-        for(auto x:umap)
-        {
-            vec.push_back(x.first);
-        }
+//         vector<int> vec;
+//         for(auto x:umap)
+//         {
+//             vec.push_back(x.first);
+//         }
         
-        sort(vec.begin(),vec.end());
+//         sort(vec.begin(),vec.end());
         // int maxim=0;
         
         // vector<int> dp(n,0);
@@ -108,7 +108,8 @@ public:
         
 // //         return deleteAndEarnUtil(vec,0,0,uset);
         
-        int maxim=vec[vec.size()-1]; //largest element
+        int maxim=*max_element(nums.begin(),nums.end());
+        // int maxim=vec[vec.size()-1]; //largest element
         vector<int> dp(maxim+1,0);
         
         for(auto x:nums)
