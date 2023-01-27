@@ -40,16 +40,16 @@ private:
 public:
     int deleteAndEarn(vector<int>& nums)
     {
-        // unordered_map<int,int> umap;
-//         for(int i=0; i<nums.size(); i++)
-//         {
-//             umap[nums[i]]++;
-//         }
+        unordered_map<int,int> umap;
+        for(int i=0; i<nums.size(); i++)
+        {
+            umap[nums[i]]++;
+        }
         
-//         if(umap.size()==1)
-//         {
-//             return nums[0]*umap[nums[0]];
-//         }
+        if(umap.size()==1)
+        {
+            return nums[0]*umap[nums[0]];
+        }
         
 //         int n=umap.size();
         
@@ -61,9 +61,27 @@ public:
         
 //         sort(vec.begin(),vec.end());
         // int maxim=0;
+        int nsize=*max_element(nums.begin(),nums.end());
         
-        // vector<int> dp(n,0);
-        // dp[0]=vec[0]*umap[vec[0]];
+        vector<int> dp(nsize+1,0);
+        // dp[0]=vec[0]*umap[vec[0]];\
+        
+//         for(auto x:nums)
+//         {
+//             dp[x]=dp[x]+x;
+//         }
+        
+        for(auto x:umap)
+        {
+            dp[x.first]=x.first*x.second;
+        }
+        
+        for(int i=2; i<=nsize; i++)
+        {
+            dp[i]=max(dp[i-1],dp[i-2]+dp[i]);
+        }
+        
+        return dp[nsize];
         
 //         int i=1;
 
@@ -110,20 +128,20 @@ public:
         
         int maxim=*max_element(nums.begin(),nums.end());
         // int maxim=vec[vec.size()-1]; //largest element
-        vector<int> dp(maxim+1,0);
+//         vector<int> dp(maxim+1,0);
         
-        for(auto x:nums)
-        {
-            dp[x]=dp[x]+x;
-        }
+//         for(auto x:nums)
+//         {
+//             dp[x]=dp[x]+x;
+//         }
         
-        for(int i=2; i<=maxim; i++)
-        {
-            // int x=vec[i]*umap[vec[i]];
-            dp[i]=max(dp[i-1],dp[i-2]+dp[i]);
-        }
+//         for(int i=2; i<=maxim; i++)
+//         {
+//             // int x=vec[i]*umap[vec[i]];
+//             dp[i]=max(dp[i-1],dp[i-2]+dp[i]);
+//         }
         
-        // return max(dp[n-1],dp[n-2]);
-        return dp[maxim];
+//         // return max(dp[n-1],dp[n-2]);
+//         return dp[maxim];
     }
 };
