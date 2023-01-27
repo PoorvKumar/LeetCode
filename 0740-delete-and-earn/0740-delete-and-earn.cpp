@@ -60,46 +60,21 @@ public:
         }
         
         sort(vec.begin(),vec.end());
-        int maxim=0;
+        // int maxim=0;
         
-        vector<int> dp(n,0);
-        dp[0]=vec[0]*umap[vec[0]];
+        // vector<int> dp(n,0);
+        // dp[0]=vec[0]*umap[vec[0]];
         
-        for(int i=1; i<n; i++)
-        {
-            int x=vec[i]*umap[vec[i]];
-            if(vec[i]!=vec[i-1]+1)
-            {
-                // dp[i]=dp[i-1]+x; //max at dp[i-1]
-                int maxLast=0;
-                for(int j=0; j<i; j++)
-                {
-                    maxLast=max(maxLast,dp[j]);
-                }
-                dp[i]=maxLast+x;
-            }
-            else
-            {
-                int maxLast=0;
-                for(int j=0; j<i-1; j++)
-                {
-                    maxLast=max(maxLast,dp[j]);
-                }
-                dp[i]=maxLast+x;
-            }
-        }
-        
-        return max(dp[n-1],dp[n-2]);
 //         int i=1;
-        
+
 //         if(vec[1]==vec[0]+1)
 //         {
 //             dp[1]=vec[1]*umap[vec[1]];
 //             i++;
 //         }
-        
+
 //         maxim=max(dp[0],dp[1]);
-        
+
 //         for( ; i<n; i++) //Time Complexity: O(n^2)
 //         {
 //             int x=vec[i]*umap[vec[i]];
@@ -125,12 +100,29 @@ public:
 //             }
 //             maxim=max(maxim,dp[i]);
 //         }
-        
+
 //         return maxim;
+//         // return max(dp[n-1],dp[n-2]);
+        
+// //         unordered_set<int> uset;
+        
+// //         return deleteAndEarnUtil(vec,0,0,uset);
+        
+        int maxim=vec[vec.size()-1]; //largest element
+        vector<int> dp(maxim+1,0);
+        
+        for(auto x:nums)
+        {
+            dp[x]=dp[x]+x;
+        }
+        
+        for(int i=2; i<=maxim; i++)
+        {
+            // int x=vec[i]*umap[vec[i]];
+            dp[i]=max(dp[i-1],dp[i-2]+dp[i]);
+        }
+        
         // return max(dp[n-1],dp[n-2]);
-        
-//         unordered_set<int> uset;
-        
-//         return deleteAndEarnUtil(vec,0,0,uset);
+        return dp[maxim];
     }
 };
