@@ -39,7 +39,7 @@ public:
             
             for(auto p:umap)
             {
-                ans=max(ans,p.second+1); 
+                ans=max(ans,p.second+1); //points on line = number of edges between points + 1
                 // cout<<p.first<<" "<<p.second<<endl;
             }
         }
