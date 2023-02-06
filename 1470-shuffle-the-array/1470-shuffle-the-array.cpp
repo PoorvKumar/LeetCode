@@ -6,14 +6,15 @@ public:
         vector<int> ans;
         
         int i=0; 
-        int j=n;
+        // int j=n;
         
-        while(j<2*n)
+        while(i<n)
         {
             ans.push_back(nums[i]);
-            ans.push_back(nums[j]);
+            ans.push_back(nums[i+n]);
+            // ans.push_back(nums[j]);
             i++;
-            j++;
+            // j++;
         }
         
         return ans;
