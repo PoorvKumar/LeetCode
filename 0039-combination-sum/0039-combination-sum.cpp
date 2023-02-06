@@ -1,17 +1,18 @@
 class Solution 
 {
-private:    
-    bool compare(vector<int> & v1,vector<int>& v2)
+private:
+    bool compareVec(vector<int>& v1,vector<int>& v2)
     {
         if(v1.size()!=v2.size())
         {
             return false;
         }
         
-        int n=v1.size();
-        while(n--)
+        // sort(v2.begin(),v2.end());
+        
+        for(int i=0; i<v1.size(); i++)
         {
-            if(v1[n]!=v2[n])
+            if(v1[i]!=v2[i])
             {
                 return false;
             }
@@ -20,53 +21,28 @@ private:
         return true;
     }
     
-    void combinationSumHelper(vector<int>& cand,int target,vector<vector<int>>& ans)
+    void combinationSumUtil(vector<int>& c,vector<vector<int>>& res,vector<int>& vec,int target)
     {
-        if(target<1)
+        if(target<0)
         {
             return ;
         }
         
-        for(int i=0; i<cand.size(); i++)
+        if(target==0)
         {
-            if(target<cand[i])
+            res.push_back(vec);
+            return;
+        }
+        
+        for(auto x:c)
+        {
+            if(target>=x)
             {
-                return; 
-            }
-            
-            if(target==cand[i]) 
-            { 
-                ans.push_back({target});
-                return; //sorted other elements in candidates greater which need not be traversed
-            }
-            
-            int x=target-cand[i];
-            
-            vector<vector<int>> vec;
-            combinationSumHelper(cand,x,vec); 
-            
-            if(!vec.empty())
-            {
-                for(int j=0; j<vec.size(); j++)
-                {
-                    vec[j].push_back(cand[i]);
-                    
-                    sort(vec[j].begin(),vec[j].end()); //logic to add only those which not present
-                    bool flag=false;  //sort() to compare objects of type class vector
-                    for(auto &x:ans)
-                    {
-                        if(compare(vec[j],x))
-                        {
-                            flag=true;
-                        }
-                    }
-                    
-                    if(!flag) 
-                    {
-                        ans.push_back(vec[j]);
-                    }
-                }
-            }
+                vec.push_back(x);
+                // cout<<x<<" "<<target<<endl;
+                combinationSumUtil(c,res,vec,target-x);
+                vec.pop_back();
+            }            
         }
         
         return ;
@@ -76,39 +52,44 @@ public:
     {
         sort(candidates.begin(),candidates.end());
         
+        vector<vector<int>> res;
+        vector<int> vec;
+        
+        combinationSumUtil(candidates,res,vec,target);
+        
+        if(res.empty())
+        {
+            return res;
+        }
+        
+        for(auto &x:res)
+        {
+            sort(x.begin(),x.end());
+        }
+        
+        sort(res.begin(),res.end());
+        
         vector<vector<int>> ans;
-        combinationSumHelper(candidates,target,ans);
+        // ans.push_back(res[0]);
         
+        for(auto x:res)
+        {
+            bool flag=true;
+            for(auto y:ans)
+            {
+                if(compareVec(x,y))
+                {
+                    flag=false;
+                    break;
+                }
+            }
+            if(flag)
+            {
+                ans.push_back(x);
+            }
+        }
+         
+        // return res;
         return ans;
-        
-//         for(int i=0; i<ans.size(); i++)
-//         {
-//             sort(ans[i].begin(),ans[i].end());
-//         }
-        
-//         int j=0;
-//         for(int i=1; i<ans.size(); i++)
-//         {
-//             while(compare(ans[j],ans[i]))
-//             {
-//                 i++;
-//             }
-//             if(i<ans.size())
-//             {
-//                 ans[++j]=ans[i];
-//             }
-//         }
-        
-//         int n=ans.size();
-        
-//         for(int i=j+1; i<n; i++)
-//         {
-//             ans.erase(ans.begin()+i);
-//         }
-        
-        // answer.assign(ans.begin(),ans.begin()+j); //[beginAddress,endAddress) 
-        // ans.erase(ans.begin()+j,ans.end()); //above doesn't work as contiguous memory allocation and object of type class vector<vector<int>> so not just +1
-        
-        // return ans;
     }
 };
