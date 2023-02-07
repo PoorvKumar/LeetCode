@@ -1,7 +1,7 @@
 class Solution 
 {
 public:
-    int totalFruit(vector<int>& fruits) 
+    int totalFruit(vector<int>& fruits)
     {
         int maxim=0;
         
