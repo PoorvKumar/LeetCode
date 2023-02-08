@@ -1,42 +1,42 @@
 class Solution 
 {
-private:
-    unordered_map<int,int> umap;
+// private:
+//     unordered_map<int,int> umap;
     
-    int jumpHelper(vector<int>& nums,int index) //Top-Down DP approach -> Recursion + Memoization
-    {
-        if(index>=nums.size()-1) //base case
-        {
-            return 0;
-        }
+//     int jumpHelper(vector<int>& nums,int index) //Top-Down DP approach -> Recursion + Memoization
+//     {
+//         if(index>=nums.size()-1) //base case
+//         {
+//             return 0;
+//         }
         
-        if(umap.count(index))
-        {
-            return umap[index];
-        }
+//         if(umap.count(index))
+//         {
+//             return umap[index];
+//         }
         
-        int minim=INT_MAX;
+//         int minim=INT_MAX;
         
-        for(int i=1; i<=nums[index]; i++) //Recursive Solution
-        {
-            int x;
-            if(!umap.count(index+i))
-            {
-                x=jumpHelper(nums,index+i);
-            }
-            else
-            {
-                x=umap[index+i];
-            }
-            if(x<INT_MAX)
-            {
-                x++;
-            }
-            minim=min(minim,x);
-        }
+//         for(int i=1; i<=nums[index]; i++) //Recursive Solution
+//         {
+//             int x;
+//             if(!umap.count(index+i))
+//             {
+//                 x=jumpHelper(nums,index+i);
+//             }
+//             else
+//             {
+//                 x=umap[index+i];
+//             }
+//             if(x<INT_MAX)
+//             {
+//                 x++;
+//             }
+//             minim=min(minim,x);
+//         }
         
-        return umap[index]=minim;
-    }
+//         return umap[index]=minim;
+//     }
 public:
     int jump(vector<int>& nums) 
     {
@@ -48,7 +48,7 @@ public:
         vector<int> dp(n,INT_MAX);
         dp[n-1]=0;
         
-        for(int i=n-2; i>=0; i--)
+        for(int i=n-2; i>=0; i--) //Bottom-Up DP approach -> Tabulation
         {
             for(int j=1; j<=nums[i]; j++)
             {
