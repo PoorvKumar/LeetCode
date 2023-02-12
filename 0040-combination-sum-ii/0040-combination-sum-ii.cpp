@@ -23,7 +23,7 @@ private:
         
         //exclude
         int i=index;
-        while(i<c.size() && c[i]==x)
+        while(i<c.size() && c[i]==x) //if not included once not later also, go to index of next unique element 
         {
             i++;
         }
