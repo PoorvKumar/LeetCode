@@ -31,7 +31,7 @@ public:
                     if(j-i+1>str.length())
                     {
                         str=s.substr(i,j-i+1); //s.substr(start_index,numbe_of_characters);
-                        // break;
+                        break;
                     }
                 }
             }
