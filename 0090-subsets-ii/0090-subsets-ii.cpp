@@ -30,7 +30,7 @@ private:
 public:
     vector<vector<int>> subsetsWithDup(vector<int>& nums) 
     {
-        sort(nums.begin(),nums.end());
+        sort(nums.begin(),nums.end()); //Combination Sum II 
         
         vector<vector<int>> res;
         vector<int> vec;
