@@ -36,11 +36,12 @@ public:
         //when not including start index start form index 1
         //when including start index nums.pop_back(); to remove last index element as cannot be  included
         
-        ans=robUtil(nums,1);
+        ans=robUtil(nums,1); //when not including 1st index stat from 0
         
-        nums.pop_back();
+        nums.pop_back(); //when including 1st index but cannot include last index 
         
-        umap.clear();
+        umap.clear(); //umap.clear(); //for object umap of type class unordered_map<int,int> 
+        //to be empty for robUtil() function call
         ans=max(ans,robUtil(nums,0));
         
         return ans;
