@@ -1,28 +1,28 @@
 class Solution 
 {
-// private:
-//     unordered_map<int,int> umap;
+private:
+    unordered_map<int,int> umap;
     
-//     int robUtil(vector<int>& nums,int index)
-//     {
-//         if(index>=nums.size())
-//         {
-//             return 0;
-//         }
+    int robUtil(vector<int>& nums,int index)
+    {
+        if(index>=nums.size())
+        {
+            return 0;
+        }
         
-//         // return max(robUtil(nums,index+1),nums[index]+robUtil(nums,index+2)); //Recursive Solution
+        // return max(robUtil(nums,index+1),nums[index]+robUtil(nums,index+2)); //Recursive Solution
         
-//         if(umap.count(index))
-//         {
-//             return umap[index];
-//         }
+        if(umap.count(index))
+        {
+            return umap[index];
+        }
         
-//         umap[index+1]=robUtil(nums,index+1);//Top-Down DP approach -> Recursion + Memoizaion
-//         umap[index+2]=robUtil(nums,index+2);
+        umap[index+1]=robUtil(nums,index+1);//Top-Down DP approach -> Recursion + Memoizaion
+        umap[index+2]=robUtil(nums,index+2);
         
-//         umap[index]=max(umap[index+1],nums[index]+umap[index+2]);
-//         return umap[index];
-//     }
+        umap[index]=max(umap[index+1],nums[index]+umap[index+2]);
+        return umap[index];
+    }
 public:
     int rob(vector<int>& nums)
     {
