@@ -3,10 +3,10 @@ class Solution
 public:
     int searchInsert(vector<int>& nums, int target) 
     {
-        if(nums[nums.size()-1]<target)
-        {
-            return nums.size();
-        }
+        // if(nums[nums.size()-1]<target)
+        // {
+        //     return nums.size();
+        // }
         
         // if(nums[0]>target)
         // {
@@ -36,6 +36,8 @@ public:
             }
         }
         
-        return mid=(low+high)/2;
+        mid=(low+high)/2;
+        
+        return nums[mid]<target?mid+1:mid;
     }
 };
