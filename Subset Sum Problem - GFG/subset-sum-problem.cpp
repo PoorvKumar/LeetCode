@@ -38,41 +38,73 @@ public:
         
         // // return exclude || include; //Recursive Solution TC:O(2^n) SC:O(n)
         // return umap[index][target]=exclude || include; //Top-Down DP approach -> Recursion + Memoization 
-        // //TC:O(n*sum) SC:O(n*sum)
+        // //TC:O(n*sum) SC:O(n*sum) + O(n) auxiliary space
         // //still TLE
         
         int n=arr.size();
         
-        vector<vector<bool>> dp(n,vector<bool>(target+1,false)); 
-        //dp[index][target+1]
-        //as two parameters changing index , target
+        // vector<vector<bool>> dp(n,vector<bool>(target+1,false)); 
+        // //dp[index][target+1]
+        // //as two parameters changing index , target
         
-        for(int i=0; i<n; i++)
-        {
-            dp[i][0]=true; //base case
-        }
+        // for(int i=0; i<n; i++)
+        // {
+        //     dp[i][0]=true; //base case
+        // }
+        
+        // if(arr[n-1]<=target)
+        // {
+        //     dp[n-1][arr[n-1]]=true; //base case
+        // }
+        
+        // for(int i=n-2; i>=0; i--) //Bottom-Up DP approach -> Tabulation
+        // {
+        //     for(int j=1; j<=target; j++)
+        //     {
+        //         bool exclude=dp[i+1][j];
+        //         bool include=false;
+        //         if(j>=arr[i])
+        //         {
+        //             include=dp[i+1][j-arr[i]];
+        //         }
+                
+        //         dp[i][j]=exclude || include;
+        //     }
+        // }
+        
+        // return dp[index][target]; //TC: O(n*target) SC:O(n*target)
+        
+        vector<bool> curr(target+1,false);
+        vector<bool> prev(target+1,false);
+        
+        curr[0]=true;
+        prev[0]=true;
         
         if(arr[n-1]<=target)
         {
-            dp[n-1][arr[n-1]]=true; //base case
+            prev[arr[n-1]]=true;
         }
         
-        for(int i=n-2; i>=0; i--) //Bottom-Up DP approach -> Tabulation
+        for(int i=n-2; i>=0; i--)
         {
+            curr.assign(target+1,false);
+            
             for(int j=1; j<=target; j++)
             {
-                bool exclude=dp[i+1][j];
+                bool exclude=prev[j];
                 bool include=false;
                 if(j>=arr[i])
                 {
-                    include=dp[i+1][j-arr[i]];
+                    include=prev[j-arr[i]];
                 }
                 
-                dp[i][j]=exclude || include;
+                curr[j]=exclude || include;
             }
+            
+            prev=curr;
         }
         
-        return dp[index][target];
+        return curr[target];
     }
 };
 
