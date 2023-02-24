@@ -85,7 +85,7 @@ public:
             prev[arr[n-1]]=true;
         }
         
-        for(int i=n-2; i>=0; i--)
+        for(int i=n-2; i>=0; i--) //Space Optimisation
         {
             curr.assign(target+1,false);
             
@@ -104,7 +104,7 @@ public:
             prev=curr;
         }
         
-        return curr[target];
+        return curr[target]; //TC: O(n*target) SC: O(target)
     }
 };
 
