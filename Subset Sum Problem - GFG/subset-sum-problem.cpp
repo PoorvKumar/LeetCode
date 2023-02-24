@@ -43,7 +43,9 @@ public:
         
         int n=arr.size();
         
-        vector<vector<bool>> dp(n,vector<bool>(target+1,false));
+        vector<vector<bool>> dp(n,vector<bool>(target+1,false)); 
+        //dp[index][target+1]
+        //as two parameters changing index , target
         
         for(int i=0; i<n; i++)
         {
@@ -52,10 +54,10 @@ public:
         
         if(arr[n-1]<=target)
         {
-            dp[n-1][arr[n-1]]=true;
+            dp[n-1][arr[n-1]]=true; //base case
         }
         
-        for(int i=n-2; i>=0; i--)
+        for(int i=n-2; i>=0; i--) //Bottom-Up DP approach -> Tabulation
         {
             for(int j=1; j<=target; j++)
             {
