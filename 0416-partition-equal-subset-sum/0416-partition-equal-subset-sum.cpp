@@ -58,6 +58,8 @@ public:
             {
                 dp[n-1][i]=true; //val==sum //base case sum-nums[index]==val+nums[index] //bae case
             }
+            //base case val==sum
+            //sum%2==0 && i==sum/2 
         }
         
         for(int i=n-2; i>=0; i--)
