@@ -1,13 +1,13 @@
 class Solution 
 {
 private:
-    // vector<vector<string>> res;
-    // int n;
+    vector<vector<string>> res;
+    vector<string> vec;
     
-    bool isPalindrome(string& s)
+    bool isPalindrome(string& s,int index,int n)
     {
-        int i=0;
-        int j=s.length()-1;
+        int i=index;
+        int j=index+n-1;
         
         while(i<j)
         {
@@ -15,7 +15,6 @@ private:
             {
                 return false;
             }
-            
             i++;
             j--;
         }
@@ -23,82 +22,36 @@ private:
         return true;
     }
     
-    vector<vector<string>> partitionHelper(string s)
+    void partitionUtil(string& s,int index,int n)
     {
-        vector<vector<string>> vec;
-        if(s.size()==1)
+        if(index+n==s.length())
         {
-            // if(s.length()==n)
-            // {
-            //     return vec;
-            // }
-            vec.push_back({s});
-            return vec;
-        }
-        
-        for(int i=0; i<s.length(); i++)
-        {
-            string str=s.substr(0,i+1);
-            if(isPalindrome(str))
+            if(isPalindrome(s,index,n))
             {
-                vector<vector<string>> ans=partitionHelper(s.substr(i+1,s.length()-i-1));
-                for(auto x:ans)
-                {
-                    vec.push_back({str});
-                    for(auto y:x)
-                    {
-                        vec[vec.size()-1].push_back(y);
-                    }
-                }
+                vec.push_back(s.substr(index,n));
+                res.push_back(vec);
+                vec.pop_back();
             }
+            
+            return ;
         }
         
-        if(!s.empty() && isPalindrome(s))
+        if(isPalindrome(s,index,n))
         {
-            vec.push_back({s});
+            vec.push_back(s.substr(index,n));
+            partitionUtil(s,index+n,1);
+            vec.pop_back();
         }
         
-        return vec;
+        partitionUtil(s,index,n+1);
+        
+        return ;
     }
 public:
-    vector<vector<string>> partition(string s) 
+    vector<vector<string>> partition(string s)
     {
-        vector<vector<string>> vec;
-        if(s.size()==1)
-        {
-            vec.push_back({s});
-            return vec;
-        }
+        partitionUtil(s,0,1);
         
-        // n=s.length();
-        
-        vec=partitionHelper(s);
-        
-        // if(isPalindrome(s))
-        // {
-        //     vec.push_back({s});
-        // }
-        
-        return vec;
-
-//         for(int i=0; i<s.length(); i++)
-//         {
-//             string str=s.substr(0,i+1);
-//             if(isPalindrome(str))
-//             {
-//                 vector<vector<string>> ans=partitionHelper(s.substr(i+1,s.length()-i-1));
-//                 // vector<vector<string>> ans=partition(s.substr(i+1,s.length()-i-1));
-//                 for(auto x:ans)
-//                 {
-//                     vec.push_back({str});
-//                     for(auto y:x)
-//                     {
-//                         vec[vec.size()-1].push_back(y);
-//                     }
-//                 }
-//             }
-//         }
-
-//         return vec;
+        return res;
     }
 };
