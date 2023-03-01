@@ -33,9 +33,12 @@ private:
 public:
     vector<int> sortArray(vector<int>& nums)
     {
-        sort(nums.begin(),nums.end());
+        // sort(nums.begin(),nums.end());
         
         // quickSort(nums,0,nums.size()-1);
+        
+        multiset<int> st(nums.begin(),nums.end());
+        nums.assign(st.begin(),st.end());
         
         return nums;
     }
