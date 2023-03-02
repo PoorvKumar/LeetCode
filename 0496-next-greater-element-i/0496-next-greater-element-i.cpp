@@ -1,35 +1,62 @@
 class Solution 
 {
-private:
-    int helper(vector<int>& nums,int val)
-    {
-        int i=0;
-        
-        while(i<nums.size())
-        {
-            if(nums[i]==val)
-            {
-                break;
-            }
-            i++;
-        }
-        
-        for( ; i<nums.size(); i++)
-        {
-            if(nums[i]>val)
-            {
-                return nums[i];
-            }
-        }
-        
-        return -1;
-    }
 public:
     vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) 
     {
-        for(auto &x:nums1) //Brute Force Solution withoutt using Monotonic Stack
+        stack<int> stk; //monotonic increasing stack
+        unordered_map<int,int> umap;
+        
+        for(int i=0; i<nums2.size(); i++)
         {
-            x=helper(nums2,x); //TC: O(n*m) //SC:O(n*m)
+            if(stk.empty())
+            {
+                stk.push(nums2[i]);
+                continue;
+            }
+            
+            if(stk.top()<nums2[i])
+            {
+                if(!umap.count(stk.top()))
+                {
+                    umap[stk.top()]=nums2[i]; //
+                }
+                stk.push(nums2[i]);
+            }
+            else
+            {
+                if(!umap.count(stk.top())) //finding NGE for element on top of stack
+                {
+                    int j=i+1;
+                    while(j<nums2.size())
+                    {
+                        if(stk.top()<nums2[j])
+                        {
+                            umap[stk.top()]=nums2[j];
+                            break;
+                        }
+                        j++;
+                    }
+                }
+                
+                while(!stk.empty() && stk.top()>nums2[i]) 
+                {
+                    stk.pop(); //popping elements form stack to make it monotonic increasing
+                }
+                
+                stk.push(nums2[i]);
+            }
+        }
+        
+        for(auto &x:nums1)
+        {
+            if(umap.count(x))
+            {
+                x=umap[x];
+            }
+            else
+            {
+                x=-1;
+            }
         }
         
         return nums1;
