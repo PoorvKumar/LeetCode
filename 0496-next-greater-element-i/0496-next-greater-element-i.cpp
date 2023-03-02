@@ -6,7 +6,7 @@ public:
         stack<int> stk; //monotonic increasing stack
         unordered_map<int,int> umap;
         
-        for(int i=0; i<nums2.size(); i++)
+        for(int i=0; i<nums2.size(); i++) //TC:O(n+m) //SC:O(m)
         {
             if(stk.empty())
             {
@@ -59,6 +59,6 @@ public:
             }
         }
         
-        return nums1;
+        return nums1; //TC: O(n+m) SC: O(m)
     }
 };
