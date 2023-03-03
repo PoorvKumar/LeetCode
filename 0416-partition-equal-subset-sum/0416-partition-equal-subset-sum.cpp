@@ -1,85 +1,87 @@
 class Solution 
 {
 private:
-    unordered_map<int,unordered_map<int,int>> umap; //umap[index][sum]
+    unordered_map<int,unordered_map<int,bool>> umap;
     
-    bool canPartitionUtil(vector<int>& nums,int index,int val,int sum)
+    bool canPartitionUtil(vector<int>& nums,int index,int target)
     {
-        if(val==sum)
+        if(target==0)
         {
             return true;
         }
         
         if(index==nums.size()-1)
         {
-            return sum-nums[index]==val+nums[index];
+            return nums[index]==target;
         }
         
-        if(umap.count(index) && umap[index].count(sum))
+        if(umap.count(index) && umap[index].count(target))
         {
-            return umap[index][sum];
+            return umap[index][target];
         }
         
-        //exclude
-        bool exclude=canPartitionUtil(nums,index+1,val,sum); 
-        //include
+        bool exclude=canPartitionUtil(nums,index+1,target);
         bool include=false;
-        if(sum>=nums[index])
+        
+        if(nums[index]<=target)
         {
-            include=canPartitionUtil(nums,index+1,val+nums[index],sum-nums[index]);
+            include=canPartitionUtil(nums,index+1,target-nums[index]);
         }
         
         // return exclude || include; //Recursive Solution 
-        //TC: O(2^n) as two calls include exclude at every index
-        //SC: O(n) + O(n) auxiliary space
+        // //TC: O(2^n) as 2 calls for each index (include,exclude)
+        // //SC: O(n) auxiliary space
         
-        return umap[index][sum]=exclude || include; //Top-Down DP approach -> Recursion + Memoization
-        //TC: O(n*sum) as function call at each index (n) && for all possible sum values from sum to 0 (sum)
-        //SC: O(n*sum) for every index && every possible value of sum for that index answer memoized
+        umap[index][target]=exclude || include;
+        return umap[index][target]; //Top-Down DP approach -> Recursion + Memoization
+        //TC: O(n*target) as for every index all possible values of target recursion calls memoized(result stored)
+        //sc: O(n*sum) + O(n)auxiliary space
     }
 public:
     bool canPartition(vector<int>& nums)
     {
-        int val=0;
         int sum=accumulate(nums.begin(),nums.end(),0);
         
-        // cout<<sum<<endl;
+        if(sum%2!=0)
+        {
+            return false;
+        }
         
-        // return canPartitionUtil(nums,0,val,sum);
+        int target=sum/2;
+        // return canPartitionUtil(nums,0,target);
         
         int n=nums.size();
         
-        vector<vector<bool>> dp(n,vector<bool>(sum+1,false));
-        //dp[index][sum]
+        vector<vector<bool>> dp(nums.size(),vector<bool>(target+1,false));
+        //dp[index][target]
         
-        for(int i=1; i<=sum; i++)
+        for(int i=0; i<n; i++)
         {
-            if((sum%2==0 && i==sum/2) || i-nums[n-1]==sum-i+nums[n-1]) //sum'+val==sum 
+            dp[i][0]=true;
+        }
+        
+        for(int i=0; i<=target; i++)
+        {
+            if(nums[n-1]==i)
             {
-                dp[n-1][i]=true; //val==sum //base case sum-nums[index]==val+nums[index] //bae case
+                dp[n-1][i]=true;
             }
-            //base case val==sum
-            //sum%2==0 && i==sum/2 
         }
         
         for(int i=n-2; i>=0; i--)
         {
-            for(int j=0; j<=sum; j++)
+            for(int j=1; j<=target; j++)
             {
-                //exclude
                 bool exclude=dp[i+1][j];
-                
-                //include
                 bool include=false;
-                if(j>=nums[i]) //as cannot take sum 0
+                if(j>=nums[i])
                 {
                     include=dp[i+1][j-nums[i]];
                 }
-                
                 dp[i][j]=exclude || include;
             }
         }
         
-        return dp[0][sum];
+        return dp[0][target];
     }
 };
