@@ -1,1 +1,1 @@
-//sum%2==0 was very very important detail which could not be missed as i==sum/2 always true
+​
