@@ -52,36 +52,74 @@ public:
         
         int n=nums.size();
         
-        vector<vector<bool>> dp(nums.size(),vector<bool>(target+1,false));
-        //dp[index][target]
+//         vector<vector<bool>> dp(nums.size(),vector<bool>(target+1,false));
+//         //dp[index][target]
         
-        for(int i=0; i<n; i++)
-        {
-            dp[i][0]=true;
-        }
+//         for(int i=0; i<n; i++)
+//         {
+//             dp[i][0]=true;
+//         }
         
-        for(int i=0; i<=target; i++)
+//         for(int i=0; i<=target; i++)
+//         {
+//             if(nums[n-1]==i)
+//             {
+//                 dp[n-1][i]=true;
+//             }
+//         }
+        
+//         for(int i=n-2; i>=0; i--)
+//         {
+//             for(int j=1; j<=target; j++)
+//             {
+//                 bool exclude=dp[i+1][j];
+//                 bool include=false;
+//                 if(j>=nums[i])
+//                 {
+//                     include=dp[i+1][j-nums[i]];
+//                 }
+//                 dp[i][j]=exclude || include;
+//             }
+//         }
+        
+//         return dp[0][target]; //Bottom-Up DP approach -> Tabulation
+//         //TC: O(n*sum)
+//         //SC: O(n*sum)
+        
+        vector<bool> curr(target+1,false);
+        vector<bool> prev(target+1,false);
+        
+        curr[0]=true;
+        prev[0]=true;
+        
+        for(int i=1; i<=target; i++)
         {
             if(nums[n-1]==i)
             {
-                dp[n-1][i]=true;
+                prev[i]=true;
             }
         }
         
         for(int i=n-2; i>=0; i--)
         {
+            curr.assign(target+1,false);
+            
             for(int j=1; j<=target; j++)
             {
-                bool exclude=dp[i+1][j];
+                bool exclude=prev[j];
                 bool include=false;
                 if(j>=nums[i])
                 {
-                    include=dp[i+1][j-nums[i]];
+                    include=prev[j-nums[i]];
                 }
-                dp[i][j]=exclude || include;
+                
+                curr[j]=exclude || include;
             }
+            prev=curr;
         }
         
-        return dp[0][target];
+        return curr[target]; //Space Optimisation
+        //TC: O(n*sum)
+        //SC: O(sum)
     }
 };
