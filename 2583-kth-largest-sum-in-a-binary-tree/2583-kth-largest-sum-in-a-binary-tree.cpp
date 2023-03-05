@@ -9,61 +9,46 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-class Solution
+class Solution 
 {
 private:
-    vector<long long> levelSum;
+    unordered_map<int,long long> umap;
     
-    int findDepth(TreeNode* root,int depth,int& ans)
-    {
-        if(root==NULL)
-        {
-            return max(depth,ans);
-        }
-        
-        ans=max(ans,findDepth(root->left,depth+1,ans));
-        ans=max(ans,findDepth(root->right,depth+1,ans));
-        
-        return ans;
-    }
-    
-    void kthLargestSumUtil(TreeNode* root,int depth)
+    void kthLargestLevelSumUtil(TreeNode* root,int depth)
     {
         if(root==NULL)
         {
             return ;
         }
         
-        levelSum[depth]=levelSum[depth]+root->val;
+        umap[depth]=umap[depth]+root->val;
         
-        kthLargestSumUtil(root->left,depth+1);
-        kthLargestSumUtil(root->right,depth+1);
+        kthLargestLevelSumUtil(root->left,depth+1);
+        kthLargestLevelSumUtil(root->right,depth+1);
+        
+        return;
     }
 public:
     long long kthLargestLevelSum(TreeNode* root, int k)
     {
-        int maxDepth=0;
-        findDepth(root,0,maxDepth);
+        vector<long long> vec;
         
-        // cout<<maxDepth<<endl;
+        kthLargestLevelSumUtil(root,0);
+        // cout<<umap.size()<<endl;
         
-        if(k>maxDepth)
+        if(k>umap.size())
         {
             return -1;
         }
         
-        levelSum.assign(maxDepth,0);
+        for(auto x:umap)
+        {
+            // cout<<x.first<<" -> "<<x.second<<endl;
+            vec.push_back(x.second);
+        }
         
-        kthLargestSumUtil(root,0);
+        sort(vec.begin(),vec.end(),greater<long long>());
         
-        sort(levelSum.begin(),levelSum.end(),greater<long long>());
-        
-        // for(auto x:levelSum)
-        // {
-        //     cout<<x<<" ";
-        // }
-        // cout<<endl;
-        
-        return levelSum[k-1];
+        return vec[k-1];
     }
 };
