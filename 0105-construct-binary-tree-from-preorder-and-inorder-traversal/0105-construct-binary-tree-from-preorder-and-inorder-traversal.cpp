@@ -12,6 +12,8 @@
 class Solution 
 {
 private:
+    unordered_map<int,int> umap; //umap[node]=index;
+    
     TreeNode* buildTreeUtil(vector<int>& preorder,vector<int>& inorder,int index,int low,int high)
     {
         if(low>high)
@@ -26,23 +28,33 @@ private:
         
         TreeNode* root=new TreeNode();
         
-        for(int i=low; i<=high; i++)
-        {
-            if(inorder[i]==preorder[index])
-            {
-                root->val=preorder[index];
-                root->left=buildTreeUtil(preorder,inorder,index+1,low,i-1);
-                root->right=buildTreeUtil(preorder,inorder,index+1+i-low,i+1,high);
+//         for(int i=low; i<=high; i++)
+//         {
+//             if(inorder[i]==preorder[index])
+//             {
+//                 root->val=preorder[index];
+//                 root->left=buildTreeUtil(preorder,inorder,index+1,low,i-1);
+//                 root->right=buildTreeUtil(preorder,inorder,index+1+i-low,i+1,high);
                 
-                return root;
-            }
-        }
+//                 return root;
+//             }
+//         }
         
-        return NULL;
+        int i=umap[preorder[index]];
+        root->val=preorder[index];
+        root->left=buildTreeUtil(preorder,inorder,index+1,low,i-1);
+        root->right=buildTreeUtil(preorder,inorder,index+1+i-low,i+1,high);
+        
+        return root;
     }
 public:
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) 
     {
+        for(int i=0; i<inorder.size(); i++)
+        {
+            umap[inorder[i]]=i;
+        }
+        
         return buildTreeUtil(preorder,inorder,0,0,inorder.size()-1);
     }
 };
