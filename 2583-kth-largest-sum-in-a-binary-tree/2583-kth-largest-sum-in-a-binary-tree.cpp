@@ -31,10 +31,9 @@ private:
 public:
     long long kthLargestLevelSum(TreeNode* root, int k)
     {
-        vector<long long> vec;
+        priority_queue<long long> pq; //max heap
         
         kthLargestLevelSumUtil(root,0);
-        // cout<<umap.size()<<endl;
         
         if(k>umap.size())
         {
@@ -43,12 +42,16 @@ public:
         
         for(auto x:umap)
         {
-            // cout<<x.first<<" -> "<<x.second<<endl;
-            vec.push_back(x.second);
+            pq.push(x.second);
         }
         
-        sort(vec.begin(),vec.end(),greater<long long>());
+        k--;
         
-        return vec[k-1];
+        while(k--)
+        {
+            pq.pop();
+        }
+        
+        return pq.top();
     }
 };
