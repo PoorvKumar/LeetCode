@@ -12,46 +12,58 @@
 class Solution 
 {
 private:
-    unordered_map<int,long long> umap;
+    vector<long long> levelSum;
     
-    void kthLargestLevelSumUtil(TreeNode* root,int depth)
+    int findDepth(TreeNode* root,int depth,int& ans)
+    {
+        if(root==NULL)
+        {
+            return max(depth,ans);
+        }
+        
+        ans=max(ans,findDepth(root->left,depth+1,ans));
+        ans=max(ans,findDepth(root->right,depth+1,ans));
+        
+        return ans;
+    }
+    
+    void kthLargestSumUtil(TreeNode* root,int depth)
     {
         if(root==NULL)
         {
             return ;
         }
         
-        umap[depth]=umap[depth]+root->val;
+        levelSum[depth]=levelSum[depth]+root->val;
         
-        kthLargestLevelSumUtil(root->left,depth+1);
-        kthLargestLevelSumUtil(root->right,depth+1);
-        
-        return;
+        kthLargestSumUtil(root->left,depth+1);
+        kthLargestSumUtil(root->right,depth+1);
     }
 public:
     long long kthLargestLevelSum(TreeNode* root, int k)
     {
-        priority_queue<long long> pq; //max heap
+        int maxDepth=0;
+        findDepth(root,0,maxDepth);
         
-        kthLargestLevelSumUtil(root,0);
+        // cout<<maxDepth<<endl;
         
-        if(k>umap.size())
+        if(k>maxDepth)
         {
             return -1;
         }
         
-        for(auto x:umap)
-        {
-            pq.push(x.second);
-        }
+        levelSum.assign(maxDepth,0);
         
-        k--;
+        kthLargestSumUtil(root,0);
         
-        while(k--)
-        {
-            pq.pop();
-        }
+        sort(levelSum.begin(),levelSum.end(),greater<long long>());
         
-        return pq.top();
+        // for(auto x:levelSum)
+        // {
+        //     cout<<x<<" ";
+        // }
+        // cout<<endl;
+        
+        return levelSum[k-1];
     }
 };
