@@ -15,8 +15,13 @@ public:
         
         unordered_set<ListNode*> uset;
         
-        while(!uset.count(p) && p!=NULL)
+        while(p!=NULL)
         {
+            if(uset.count(p))
+            {
+                return p;
+            }
+            
             uset.insert(p);
             p=p->next;
         }
