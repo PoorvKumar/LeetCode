@@ -2,53 +2,38 @@ class Solution
 {
 private:
     unordered_map<int,unordered_map<int,int>> umap;
-public:
-    int uniquePaths(int m, int n) 
-    {        
-//         //top-down DP approach-> Recursion + Memomization
-//         if(m==1 || n==1)  
-//         {
-//             umap[m][n]=1;
-//             return umap[m][n];
-//         }
-        
-//         if(umap.count(m)==1 && umap[m].count(n)==1)
-//         {
-//             return umap[m][n];
-//         }
-        
-//         umap[m][n]=uniquePaths(m-1,n)+uniquePaths(m,n-1);
-//         return umap[m][n];
-        
-        //comment any before checking either
-        
-        // bottom-up DP approach-> Tabulation 
-        if(m==1 || n==1)
+    
+    int uniquePathsUtil(int i,int j,int m,int n)
+    {
+        if(i==m-1 || j==n-1)
         {
             return 1;
         }
         
-        vector<vector<int>> tab(m+1,vector<int>(n+1));
-        
-        for(int i=1; i<m; i++)
+        if(umap.count(i) && umap[i].count(j))
         {
-            for(int j=1; j<n; j++)
-            {
-                if(i==1 || j==1)
-                {
-                    tab[i][j]=1;
-                }
-            }
+            return umap[i][j];
         }
         
-        for(int i=2; i<=m; i++)
-        {
-            for(int j=2; j<=n; j++)
-            {
-                tab[i][j]=tab[i-1][j]+tab[i][j-1];
-            }
-        }
+        // int down=uniquePathsUtil(i+1,j,m,n);
+        // int right=uniquePathsUtil(i,j+1,m,n);
         
-        return tab[m][n]+2;
+        //down
+        umap[i+1][j]=uniquePathsUtil(i+1,j,m,n);
+        //right
+        umap[i][j+1]=uniquePathsUtil(i,j+1,m,n);
+        
+        // return down+right; //Recursive Solution
+        //TC: O(2^(m*n)) //as 2 calls at every cell && m*n cells
+        //SC: O(m*n)
+        
+        return umap[i][j]=umap[i+1][j] + umap[i][j+1]; //Top-Down DP approach -> Recursion + Memoization
+        //TC: O(m*n) //as recursive calls for all cells but memoized the solution for all cells so call once for each cell
+        //SC: O(m*n)
+    }
+public:
+    int uniquePaths(int m, int n) 
+    {
+        return uniquePathsUtil(0,0,m,n);
     }
 };
