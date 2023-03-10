@@ -32,32 +32,56 @@ private:
         //SC: O(m*n)
     }
 public:
-    int uniquePaths(int m, int n) 
+    int uniquePaths(int m, int n)
     {
         // return uniquePathsUtil(0,0,m,n);
         
-        vector<vector<int>> dp(m,vector<int>(n,0));
+//         vector<vector<int>> dp(m,vector<int>(n,0));
         
-        for(int i=0; i<n; i++) //base case
-        {
-            dp[m-1][i]=1;
-        }
+//         for(int i=0; i<n; i++) //base case
+//         {
+//             dp[m-1][i]=1;
+//         }
         
-        for(int i=0; i<m; i++) //base case
-        {
-            dp[i][n-1]=1;
-        }
+//         for(int i=0; i<m; i++) //base case
+//         {
+//             dp[i][n-1]=1;
+//         }
+        
+//         for(int i=m-2; i>=0; i--)
+//         {
+//             for(int j=n-2; j>=0; j--)
+//             {
+//                 dp[i][j]=dp[i+1][j] + dp[i][j+1]; //dp[i][j]=down + right;
+//             }
+//         }
+        
+//         return dp[0][0]; //Bottom-UP DP approach -> Tabulation
+//         //TC: O(m*n) 
+//         //SC: O(m*n) + O(m*n)auxiliary space
+        
+        vector<int> curr(n,0);
+        vector<int> prev(n,1);
+        
+        vector<int> vec(n,0);
+        vec[n-1]=1;
+        
+        curr[n-1]=1;
         
         for(int i=m-2; i>=0; i--)
         {
+            // curr.assign(n,0);
+            // curr[n-1]=1;
+            // curr=vec;
             for(int j=n-2; j>=0; j--)
             {
-                dp[i][j]=dp[i+1][j] + dp[i][j+1]; //dp[i][j]=down + right;
+                curr[j]=prev[j]+curr[j+1];
             }
+            prev=curr;
         }
         
-        return dp[0][0]; //Bottom-UP DP approach -> Tabulation
-        //TC: O(m*n) 
-        //SC: O(m*n) + O(m*n)auxiliary space
+        return prev[0]; //Space Optimization
+        //TC: O(m*n)
+        //SC: O(n)
     }
 };
