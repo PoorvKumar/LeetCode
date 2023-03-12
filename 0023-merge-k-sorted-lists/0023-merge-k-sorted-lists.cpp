@@ -43,7 +43,7 @@ private:
         return head->next;
     }
 public:
-    ListNode* mergeKLists(vector<ListNode*>& lists) 
+    ListNode* mergeKLists(vector<ListNode*>& lists)
     {
         if(lists.size()==0)
         {
