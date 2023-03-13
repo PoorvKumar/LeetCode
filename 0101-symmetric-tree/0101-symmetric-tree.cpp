@@ -12,19 +12,19 @@
 class Solution 
 {
 private:
-    bool isMirror(TreeNode* p,TreeNode* q)
+    bool isMirror(TreeNode* root1,TreeNode* root2)
     {
-        if(p==NULL && q==NULL)
+        if(root1==NULL && root2==NULL)
         {
             return true;
         }
         
-        if(p==NULL || q==NULL)
+        if(root1==NULL || root2==NULL)
         {
             return false;
         }
         
-        return p->val==q->val && isMirror(p->left,q->right) && isMirror(p->right,q->left);
+        return root1->val==root2->val && isMirror(root1->left,root2->right) && isMirror(root1->right,root2->left);
     }
 public:
     bool isSymmetric(TreeNode* root) 
