@@ -4,11 +4,41 @@ private:
     vector<vector<int>> res;
     vector<int> vec;
     
-    void combinationSum3Util(int n,int val)
+//     void combinationSum3Util(int n,int val)
+//     {
+//         if(n==0)
+//         {
+//             res.push_back(vec);
+//             return ;
+//         }
+        
+//         if(val>9)
+//         {
+//             return ;
+//         }
+        
+//         if(n>=val)
+//         {
+//             //exclude
+//             combinationSum3Util(n,val+1);
+            
+//             //include
+//             vec.push_back(val);
+//             combinationSum3Util(n-val,val+1);
+//             vec.pop_back();
+//         }
+        
+//         return ;
+//     }
+    
+    void combinationSum3Util(int n,int val,int k)
     {
         if(n==0)
         {
-            res.push_back(vec);
+            if(k==0)
+            {
+                res.push_back(vec);
+            }
             return ;
         }
         
@@ -17,34 +47,24 @@ private:
             return ;
         }
         
-        if(n>=val)
+        if(n>=val) //as val always increasing
         {
             //exclude
-            combinationSum3Util(n,val+1);
+            combinationSum3Util(n,val+1,k);
             
             //include
             vec.push_back(val);
-            combinationSum3Util(n-val,val+1);
+            combinationSum3Util(n-val,val+1,k-1);
             vec.pop_back();
         }
         
         return ;
     }
 public:
-    vector<vector<int>> combinationSum3(int k, int n) 
+    vector<vector<int>> combinationSum3(int k, int n)
     {
-        combinationSum3Util(n,1);
+        combinationSum3Util(n,1,k);
         
-        vector<vector<int>> ans;
-        
-        for(auto &x:res)
-        {
-            if(x.size()==k)
-            {
-                ans.push_back(x);
-            }
-        }
-        
-        return ans;
+        return res;
     }
 };
