@@ -55,41 +55,73 @@ public:
         
         // return knapSackUtil(wt,val,0,W);
         
-        vector<vector<int>> dp(n,vector<int>(W+1,0)); //dp[index][W]
+        // vector<vector<int>> dp(n,vector<int>(W+1,0)); //dp[index][W]
         
-        for(int i=0; i<n; i++) //base case
-        {
-            dp[i][0]=0;
-        }
+        // for(int i=0; i<n; i++) //base case
+        // {
+        //     dp[i][0]=0;
+        // }
         
-        for(int i=0; i<=W; i++) //base case
+        // for(int i=0; i<=W; i++) //base case
+        // {
+        //     if(i>=wt[n-1])
+        //     {
+        //         dp[n-1][i]=val[n-1];
+        //     }
+        //     else
+        //     {
+        //         dp[n-1][i]=0;
+        //     }
+        // }
+        
+        // for(int i=n-2; i>=0; i--)
+        // {
+        //     for(int j=0; j<=W; j++)
+        //     {
+        //         int exclude=dp[i+1][j];
+        //         int include=0;
+        //         if(j>=wt[i])
+        //         {
+        //             include=val[i]+dp[i+1][j-wt[i]];
+        //         }
+                
+        //         dp[i][j]=max(exclude,include);
+        //     }
+        // }
+        
+        // return dp[0][W]; //dp[index][W]; //Bottom-Up DP approach -> Tabulation
+        // //TC: O(n*W)
+        // //SC: O(n*W) + O(n)auxiliary space
+        
+        vector<int> curr(W+1,0);
+        vector<int> prev(W+1,0);
+        
+        for(int i=0; i<=W; i++)
         {
             if(i>=wt[n-1])
             {
-                dp[n-1][i]=val[n-1];
-            }
-            else
-            {
-                dp[n-1][i]=0;
+                prev[i]=val[n-1];
             }
         }
         
         for(int i=n-2; i>=0; i--)
         {
+            // curr.assign(W+1,0);
             for(int j=0; j<=W; j++)
             {
-                int exclude=dp[i+1][j];
+                int exclude=prev[j];
                 int include=0;
                 if(j>=wt[i])
                 {
-                    include=val[i]+dp[i+1][j-wt[i]];
+                    include=val[i]+prev[j-wt[i]];
                 }
                 
-                dp[i][j]=max(exclude,include);
+                curr[j]=max(exclude,include);
             }
+            prev=curr;
         }
         
-        return dp[0][W]; //dp[index][W];
+        return prev[W];
     }
 };
 
