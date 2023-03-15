@@ -36,6 +36,8 @@ private:
 public:
     bool isCompleteTree(TreeNode* root) 
     {
+        return bfs(root);
+        
         if(!levelOrder(root,0)) 
         {
             return false; //some level not left filled
@@ -46,7 +48,7 @@ public:
         int n=mp.size();
         mp.erase(n-1);
         n--;
-        cout<<n<<endl;
+        // cout<<n<<endl;
         
         // for(auto x:mp)
         // {
@@ -71,6 +73,40 @@ public:
                     }
                 }
             }
+        }
+        
+        return true;
+    }
+    
+private:
+    bool bfs(TreeNode* root)
+    {
+        queue<TreeNode*> q;
+        q.push(root);
+        
+        while(!q.empty())
+        {
+            TreeNode* p=q.front();
+            q.pop();
+            
+            if(p==NULL)
+            {
+                while(!q.empty())
+                {
+                    p=q.front();
+                    q.pop();
+                    
+                    if(p!=NULL)
+                    {
+                        return false;
+                    }
+                }
+                
+                return true;
+            }
+            
+            q.push(p->left);
+            q.push(p->right);
         }
         
         return true;
