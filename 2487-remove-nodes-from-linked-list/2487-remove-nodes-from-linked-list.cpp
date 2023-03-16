@@ -13,55 +13,38 @@ class Solution
 public:
     ListNode* removeNodes(ListNode* head) 
     {
-        stack<int> stk; //monotonic decreasing stack
+        deque<int> dq; //monotonic decreasing doubly-ended queue
         
         ListNode* p=head;
         
         while(p!=NULL)
         {
-            if(stk.empty())
+            if(dq.empty())
             {
-                stk.push(p->val);
+                dq.push_back(p->val);
                 p=p->next;
                 continue;
             }
             
-            while(!stk.empty() && stk.top()<p->val)
+            while(!dq.empty() && dq.back()<p->val)
             {
-                // cout<<stk.top()<<" "<<p->val<<endl;
-                stk.pop();
+                dq.pop_back();
             }
             
-            stk.push(p->val);
+            dq.push_back(p->val);
             p=p->next;
         }
-        
-        // cout<<stk.size()<<endl;
-        
-        vector<int> vec;
-        while(!stk.empty())
-        {
-            vec.push_back(stk.top());
-            stk.pop();
-        }
-        
-        reverse(vec.begin(),vec.end());
-        
-        // for(auto x:vec)
-        // {
-        //     cout<<x<<" ";
-        // }
         
         ListNode* ans=new ListNode();
-        // ListNode* p=ans;
         p=ans;
         
-        for(auto x:vec)
+        while(!dq.empty())
         {
-            p->next=new ListNode(x);
+            p->next=new ListNode(dq.front());
+            dq.pop_front();
             p=p->next;
         }
         
-        return ans->next; //TC: O(n) SC: O(n) //but can be optimised by using an object of type classs deque<int>
+        return ans->next;
     }
 };
