@@ -62,6 +62,6 @@ public:
             p=p->next;
         }
         
-        return ans->next;
+        return ans->next; //TC: O(n) SC: O(n) //but can be optimised by using an object of type classs deque<int>
     }
 };
