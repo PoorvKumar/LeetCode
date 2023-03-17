@@ -2,7 +2,7 @@ class Solution
 {
 private:
     int sum=0;
-    unordered_map<int,unordered_map<int,int>> umap;
+    unordered_map<int,unordered_map<int,int>> umap; //umap[index][plus]
     
     int targetSumUtil(vector<int>& nums,int index,int plus,int target)
     {
@@ -33,5 +33,34 @@ public:
         sum=accumulate(nums.begin(),nums.end(),0);
         
         return targetSumUtil(nums,0,0,target);
+        
+        int n=nums.size();
+        
+        vector<vector<int>> dp(n+1,vector<int>(sum+1,0));
+        
+        for(int i=0; i<=sum; i++) //base case
+        {
+            if(2*i-sum==target)
+            {
+                dp[n][i]=1;
+            }
+            else
+            {
+                dp[n][i]=0;
+            }
+        }
+        
+        for(int i=n-1; i>=0; i--)
+        {
+            for(int j=0; j<=sum; j++)
+            {
+                int exclude=dp[i+1][j];
+                int include=dp[i+1][j+nums[i]];
+                
+                dp[i][j]=exclude+include;
+            }
+        }
+        
+        return dp[0][0]; //dp[index][plus]
     }
 };
