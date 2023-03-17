@@ -23,7 +23,9 @@ private:
         //TC: O(2^n) //as 2 (include,exclude) calls at each index
         //SC: O(n) + O(n)auxiliary space
         
-        return umap[index][plus]=exclude+include;
+        return umap[index][plus]=exclude+include; //Top-Down DP approach -> Recursion + Memoization
+        //TC: O(n*sum) //as for every index for every subset sum plus Recursion calls result Memoized
+        //SC: O(n*sum)
     }
 public:
     int findTargetSumWays(vector<int>& nums, int target) 
