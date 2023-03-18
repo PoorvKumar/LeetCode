@@ -36,31 +36,55 @@ public:
         
         int n=nums.size();
         
-        vector<vector<int>> dp(n+1,vector<int>(sum+1,0));
+//         vector<vector<int>> dp(n+1,vector<int>(sum+1,0));
         
-        for(int i=0; i<=sum; i++) //base case
+//         for(int i=0; i<=sum; i++) //base case
+//         {
+//             // if(2*i-sum==target)
+//             // {
+//             //     dp[n][i]=1;
+//             // }
+//             // else
+//             // {
+//             //     dp[n][i]=0;
+//             // }
+//             dp[n][i]=2*i-sum==target;
+//         }
+        
+//         for(int i=n-1; i>=0; i--)
+//         {
+//             for(int j=0; j<=sum; j++)
+//             {
+//                 int exclude=dp[i+1][j];
+//                 int include=dp[i+1][j+nums[i]];
+                
+//                 dp[i][j]=exclude+include;
+//             }
+//         }
+        
+//         return dp[0][0]; //dp[index][plus] //Bottom-Up DP approach -> Tabulation
+//         //TC: O(n*sum)
+//         //SC: O(n*sum)
+        
+        vector<int> curr(sum+1,0);
+        vector<int> prev(sum+1,0);
+        
+        for(int i=0; i<=sum; i++)
         {
-            if(2*i-sum==target)
-            {
-                dp[n][i]=1;
-            }
-            else
-            {
-                dp[n][i]=0;
-            }
+            prev[i]=2*i-sum==target;
         }
         
         for(int i=n-1; i>=0; i--)
         {
             for(int j=0; j<=sum; j++)
             {
-                int exclude=dp[i+1][j];
-                int include=dp[i+1][j+nums[i]];
+                int exclude=prev[j];
+                int include=prev[j+nums[i]];
                 
-                dp[i][j]=exclude+include;
+                curr[j]=exclude+include;
             }
         }
         
-        return dp[0][0]; //dp[index][plus]
+        return prev[0];
     }
 };
