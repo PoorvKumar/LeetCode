@@ -80,7 +80,7 @@ public:
         
         for(int i=n-1; i>=0; i--)
         {
-            for(int j=0; j<=sum; j++)
+            for(int j=sum; j>=0; j--)
             {
                 int exclude=prev[j];
                 int include=0;
@@ -107,10 +107,14 @@ public:
         
 //         for(int i=n-1; i>=0; i--)
 //         {
-//             for(int j=0; j<=sum; j++)
+//             for(int j=sum; j>=0; j--)
 //             {
 //                 int exclude=dp[j];
-//                 int include=dp[j+nums[i]];
+//                 int include=0;
+//                 if(j+nums[i]<=sum)
+//                 {
+//                     include=dp[j+nums[i]];
+//                 }
                 
 //                 dp[j]=exclude+include;
 //             }
