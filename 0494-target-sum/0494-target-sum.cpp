@@ -36,62 +36,67 @@ public:
         
         int n=nums.size();
         
-        vector<vector<int>> dp(n+1,vector<int>(sum+1,0));
+//         vector<vector<int>> dp(n+1,vector<int>(sum+1,0));
         
-        for(int i=0; i<=sum; i++) //base case
-        {
-            // if(2*i-sum==target)
-            // {
-            //     dp[n][i]=1;
-            // }
-            // else
-            // {
-            //     dp[n][i]=0;
-            // }
-            dp[n][i]=2*i-sum==target;
-        }
-        
-        for(int i=n-1; i>=0; i--) //index
-        {
-            for(int j=sum; j>=0; j--) //plus
-            {
-                int exclude=dp[i+1][j];
-                int include=0;
-                if(j+nums[i]<=sum)
-                {
-                    include=dp[i+1][j+nums[i]]; //differnet from subset sum as target not reducing plus increasing
-                }
-                
-                dp[i][j]=exclude+include;
-            }
-        }
-        
-        return dp[0][0]; //dp[index][plus] //Bottom-Up DP approach -> Tabulation
-        //TC: O(n*sum)
-        //SC: O(n*sum)
-        
-//         vector<int> curr(sum+1,0);
-//         vector<int> prev(sum+1,0);
-        
-//         for(int i=0; i<=sum; i++)
+//         for(int i=0; i<=sum; i++) //base case
 //         {
-//             prev[i]=2*i-sum==target;
+//             // if(2*i-sum==target)
+//             // {
+//             //     dp[n][i]=1;
+//             // }
+//             // else
+//             // {
+//             //     dp[n][i]=0;
+//             // }
+//             dp[n][i]=2*i-sum==target;
 //         }
         
-//         for(int i=n-1; i>=0; i--)
+//         for(int i=n-1; i>=0; i--) //index
 //         {
-//             for(int j=0; j<=sum; j++)
+//             for(int j=sum; j>=0; j--) //plus
 //             {
-//                 int exclude=prev[j];
-//                 int include=prev[j+nums[i]];
+//                 int exclude=dp[i+1][j];
+//                 int include=0;
+//                 if(j+nums[i]<=sum)
+//                 {
+//                     include=dp[i+1][j+nums[i]]; //differnet from subset sum as target not reducing plus increasing
+//                 }
                 
-//                 curr[j]=exclude+include;
+//                 dp[i][j]=exclude+include;
 //             }
 //         }
         
-//         return prev[0]; //Space Optimisation
+//         return dp[0][0]; //dp[index][plus] //Bottom-Up DP approach -> Tabulation
 //         //TC: O(n*sum)
-//         //SC: O(sum)
+//         //SC: O(n*sum)
+        
+        vector<int> curr(sum+1,0);
+        vector<int> prev(sum+1,0);
+        
+        for(int i=0; i<=sum; i++)
+        {
+            prev[i]=2*i-sum==target;
+        }
+        
+        for(int i=n-1; i>=0; i--)
+        {
+            for(int j=0; j<=sum; j++)
+            {
+                int exclude=prev[j];
+                int include=0;
+                if(j+nums[i]<=sum)
+                {
+                    include=prev[j+nums[i]];
+                }
+                
+                curr[j]=exclude+include;
+            }
+            prev=curr;
+        }
+        
+        return prev[0]; //Space Optimisation
+        //TC: O(n*sum)
+        //SC: O(sum)
         
 //         vector<int> dp(sum+1,0);
         
