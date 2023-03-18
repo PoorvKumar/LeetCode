@@ -66,25 +66,47 @@ public:
 //         //TC: O(n*sum)
 //         //SC: O(n*sum)
         
-        vector<int> curr(sum+1,0);
-        vector<int> prev(sum+1,0);
+//         vector<int> curr(sum+1,0);
+//         vector<int> prev(sum+1,0);
+        
+//         for(int i=0; i<=sum; i++)
+//         {
+//             prev[i]=2*i-sum==target;
+//         }
+        
+//         for(int i=n-1; i>=0; i--)
+//         {
+//             for(int j=0; j<=sum; j++)
+//             {
+//                 int exclude=prev[j];
+//                 int include=prev[j+nums[i]];
+                
+//                 curr[j]=exclude+include;
+//             }
+//         }
+        
+//         return prev[0]; //Space Optimisation
+//         //TC: O(n*sum)
+//         //SC: O(sum)
+        
+        vector<int> dp(sum+1,0);
         
         for(int i=0; i<=sum; i++)
         {
-            prev[i]=2*i-sum==target;
+            dp[i]=2*i-sum==target;
         }
         
         for(int i=n-1; i>=0; i--)
         {
             for(int j=0; j<=sum; j++)
             {
-                int exclude=prev[j];
-                int include=prev[j+nums[i]];
+                int exclude=dp[j];
+                int include=dp[j+nums[i]];
                 
-                curr[j]=exclude+include;
+                dp[j]=exclude+include;
             }
         }
         
-        return prev[0];
+        return dp[0];
     }
 };
