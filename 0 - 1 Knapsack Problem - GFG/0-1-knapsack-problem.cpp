@@ -93,7 +93,38 @@ public:
         // //TC: O(n*W)
         // //SC: O(n*W) + O(n)auxiliary space
         
-        vector<int> curr(W+1,0);
+        // vector<int> curr(W+1,0);
+        // vector<int> prev(W+1,0);
+        
+        // for(int i=0; i<=W; i++)
+        // {
+        //     if(i>=wt[n-1])
+        //     {
+        //         prev[i]=val[n-1];
+        //     }
+        // }
+        
+        // for(int i=n-2; i>=0; i--)
+        // {
+        //     // curr.assign(W+1,0);
+        //     for(int j=0; j<=W; j++)
+        //     {
+        //         int exclude=prev[j];
+        //         int include=0;
+        //         if(j>=wt[i])
+        //         {
+        //             include=val[i]+prev[j-wt[i]];
+        //         }
+                
+        //         curr[j]=max(exclude,include);
+        //     }
+        //     prev=curr;
+        // }
+        
+        // return prev[W]; //Space Optimisation
+        // //TC: O(n*W)
+        // //SC: O(W)
+        
         vector<int> prev(W+1,0);
         
         for(int i=0; i<=W; i++)
@@ -107,7 +138,7 @@ public:
         for(int i=n-2; i>=0; i--)
         {
             // curr.assign(W+1,0);
-            for(int j=0; j<=W; j++)
+            for(int j=W; j>=0; j--)
             {
                 int exclude=prev[j];
                 int include=0;
@@ -116,12 +147,15 @@ public:
                     include=val[i]+prev[j-wt[i]];
                 }
                 
-                curr[j]=max(exclude,include);
+                // curr[j]=max(exclude,include);
+                prev[j]=max(exclude,include);
             }
-            prev=curr;
+            // prev=curr;
         }
         
-        return prev[W];
+        return prev[W]; //1D Array Space Optimisation
+        //TC: O(n*W)
+        //SC: O(W)
     }
 };
 
