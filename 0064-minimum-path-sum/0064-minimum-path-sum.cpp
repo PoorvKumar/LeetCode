@@ -1,20 +1,19 @@
 class Solution 
 {
 private:
-    unordered_map<int,unordered_map<int,int>> umap;
     int m;
     int n;
+    unordered_map<int,unordered_map<int,int>> umap;
     
-    int minPathSumUtil(vector<vector<int>> &grid,int i,int j)
+    int minPathSumUtil(vector<vector<int>>& grid,int i,int j)
     {
-        if(umap.count(i)==1 && umap[i].count(j)==1)
+        if(i==m-1 && j==n-1) //base case
         {
-            return umap[i][j];
+            return grid[i][j];
         }
         
-        if(i==m-1 && j==n-1)
+        if(umap.count(i) && umap[i].count(j))
         {
-            umap[i][j]=grid[i][j];
             return umap[i][j];
         }
         
@@ -22,18 +21,21 @@ private:
         {
             if(i==m-1)
             {
-                umap[i][j]=grid[i][j]+minPathSumUtil(grid,i,j+1);
-                return umap[i][j];
+                return grid[i][j]+minPathSumUtil(grid,i,j+1);
             }
-            umap[i][j]=grid[i][j]+minPathSumUtil(grid,i+1,j);
-            return umap[i][j];
+            return grid[i][j]+minPathSumUtil(grid,i+1,j);
         }
         
-        int x=grid[i][j]+minPathSumUtil(grid,i+1,j);
-        int y=grid[i][j]+minPathSumUtil(grid,i,j+1);
+        int down=grid[i][j]+minPathSumUtil(grid,i+1,j);
+        int right=grid[i][j]+minPathSumUtil(grid,i,j+1);
         
-        umap[i][j]=min(x,y);
-        return umap[i][j];
+        // return min(down,right); //Recursive Solution
+        //TC: O(2^n) //as 2 (down,right) calls for every cell
+        //SC: O(m*n) + O(m*n)auxiliary space
+        
+        return umap[i][j]=min(down,right); //Top-Down DP approach -> Recursion + Memoization
+        //TC: O(m*n) //as for every cell Recursion calls Memoized
+        //SC: O(m*n) + O(m*n)auxiliary stack space
     }
     
 public:
