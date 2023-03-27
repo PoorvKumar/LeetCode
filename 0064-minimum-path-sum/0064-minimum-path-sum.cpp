@@ -70,8 +70,35 @@ public:
             }
         }
         
-        return dp[0][0]; //Bottom-Up DP approach -> Tabulation
+        // return dp[0][0]; //Bottom-Up DP approach -> Tabulation
         //TC: O(m*n)
         //SC: O(m*n)
+        
+        vector<int> prev(n,0);
+        vector<int> curr(n,0);
+        
+        prev[n-1]=grid[m-1][n-1]; //base case
+        
+        for(int i=n-2; i>=0; i--) //base case
+        {
+            prev[i]=grid[m-1][i]+prev[i+1];
+        }
+        
+        for(int i=m-2; i>=0; i--)
+        {
+            curr[n-1]=grid[i][n-1]+prev[n-1];
+            for(int j=n-2; j>=0; j--)
+            {
+                int down=grid[i][j]+prev[j];
+                int right=grid[i][j]+curr[j+1];
+                
+                curr[j]=min(down,right);
+            }
+            prev=curr;
+        }
+        
+        return prev[0]; //Space Optimisation
+        //TC: O(m*n)
+        //SC: O(n)
     }
 };
