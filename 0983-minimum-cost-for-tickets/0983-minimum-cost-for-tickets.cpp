@@ -47,6 +47,44 @@ private:
 public:
     int mincostTickets(vector<int>& days, vector<int>& costs) 
     {
-        return mincostTicketsUtil(days,costs,0);
+        // return mincostTicketsUtil(days,costs,0);
+        
+        int n=days.size();
+        vector<int> dp(n+1,0);
+        
+        // dp[n-1]=*min_element(costs.begin(),costs.end());
+        dp[n]=0; //base case
+        
+        for(int i=n-1; i>=0; i--)
+        {
+            int one=costs[0]+dp[i+1];
+            
+            int k=i;
+            while(k<n && days[k]<days[i]+7)
+            {
+                k++;
+            }
+            
+            // k=k==n?k-1:k;
+            int seven=costs[1]+dp[k];
+            
+            k=i;
+            while(k<n && days[k]<days[i]+30)
+            {
+                k++;
+            }
+            
+            // k=k==n?k-1:k;
+            int thirty=costs[2]+dp[k];
+            
+            int ans=min(one,seven);
+            ans=min(ans,thirty);
+            
+            dp[i]=ans;
+        }
+        
+        return dp[0]; //Bottom-Up DP approach -> Tabulation
+        //TC: O(n)
+        //SC: O(n)
     }
 };
