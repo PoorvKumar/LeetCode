@@ -38,15 +38,42 @@ public:
         // return maxSatisfactionUtil(satisfaction,0,1);
         
         int n=satisfaction.size();
-        vector<vector<int>> dp(n,vector<int>(n+1,0));
-        //dp[index][time]
+//         vector<vector<int>> dp(n,vector<int>(n+1,0));
+//         //dp[index][time]
+        
+//         for(int i=1; i<=n; i++) //base case
+//         {
+//             int val=i*satisfaction[n-1];
+//             if(val>0)
+//             {
+//                 dp[n-1][i]=val;
+//             }
+//         }
+        
+//         for(int i=n-2; i>=0; i--)
+//         {
+//             for(int j=1; j<n; j++)
+//             {
+//                 int exclude=0+dp[i+1][j];
+//                 int include=j*satisfaction[i]+dp[i+1][j+1];
+                
+//                 dp[i][j]=max(exclude,include);
+//             }
+//         }
+        
+//         return dp[0][1]; //Bottom-Up DP approach -> Tabulation
+//         //TC: O(n*n)
+//         //SC: O(n*n)
+        
+        vector<int> prev(n+1,0);
+        vector<int> curr(n+1,0);
         
         for(int i=1; i<=n; i++) //base case
         {
             int val=i*satisfaction[n-1];
             if(val>0)
             {
-                dp[n-1][i]=val;
+                prev[i]=val;
             }
         }
         
@@ -54,13 +81,14 @@ public:
         {
             for(int j=1; j<n; j++)
             {
-                int exclude=0+dp[i+1][j];
-                int include=j*satisfaction[i]+dp[i+1][j+1];
+                int exclude=0+prev[j];
+                int include=j*satisfaction[i]+prev[j+1];
                 
-                dp[i][j]=max(exclude,include);
+                curr[j]=max(exclude,include);
             }
+            prev=curr;
         }
         
-        return dp[0][1];
+        return prev[1];
     }
 };
