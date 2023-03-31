@@ -3,38 +3,39 @@ class Solution
 public:
     int lengthOfLongestSubstring(string s) 
     {
+        int ans=0;
+        int low=0;
         unordered_map<char,int> umap;
-        int maxim=0;
-        string substr="";
-        int j=0;
+        
+        if(s.length()==1)
+        {
+            return 1;
+        }
         
         for(int i=0; i<s.length(); i++)
         {
-            if(umap.count(s[i])==0)
+            if(umap.count(s[i]) && umap[s[i]]!=-1)
             {
-                substr=substr+s[i];
-                umap[s[i]]=j++;
+                ans=max(ans,i-low);
+                low=umap[s[i]]+1; //previous+1
+                umap[s[i]]=i; //current
+                for(auto &x:umap)
+                {
+                    if(x.second<low)
+                    {
+                        x.second=-1;
+                    }
+                }
             }
             else
             {
-                int x=substr.length();
-                maxim=max(maxim,x);
-                
-                // substr.erase(substr.begin(),substr.begin()+umap[s[i]]+1);
-                for(int j=0; j<umap[s[i]]+1; j++)
-                {
-                    umap.erase(substr[0]);
-                    substr.erase(substr.begin());
-                }
-                substr=substr+s[i];
-                j=substr.length();
-                umap[s[i]]=j++;
+                umap[s[i]]=i;
             }
         }
         
-        // cout<<substr<<endl;
-        int x=substr.length();
-        maxim=max(maxim,x);
-        return maxim;
+        int n=s.length(); //does not work when s.length() instead of n 
+        ans=max(ans,n-low); //incase of no repeating characters
+        
+        return ans;
     }
 };
