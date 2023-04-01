@@ -3,75 +3,28 @@ class Solution
 public:
     int lengthOfLongestSubstring(string s) 
     {
+        unordered_map<char,int> umap;
         int ans=0;
-        int left=0;
-        int right=0;
-        unordered_set<char> uset;
+        int low=0;
         
-        while(right<s.length())
+        for(int i=0; i<s.length(); i++)
         {
-            if(uset.count(s[right]))
+            if(umap.count(s[i]) && umap[s[i]]>=low) //char present in substring after low
             {
-                while(left<right)
-                {
-                    uset.erase(s[left]);
-                    if(s[left]==s[right])
-                    {
-                        left++;
-                        break;
-                    }
-                    left++;
-                }
+                ans=max(ans,i-low);
+                low=umap[s[i]]+1;
+                // umap[s[i]]=i;
             }
-            uset.insert(s[right]);
-            ans=max(ans,right-left+1);
-            right++;
+            // else
+            // {
+            //     umap[s[i]]=i;
+            // }
+            umap[s[i]]=i;
         }
         
-        return ans; //Two Pointers Approach
-        //TC: O(2*n) //as O(n) for left O(n) for right
-        //SC: O(n)
+        int n=s.length();
+        ans=max(ans,n-low); //when i becomes equal to n
+        
+        return ans;
     }
 };
-
-// class Solution 
-// {
-// public:
-//     int lengthOfLongestSubstring(string s)
-//     {
-//         int ans=0;
-//         int low=0;
-//         unordered_map<char,int> umap;
-        
-//         if(s.length()==1)
-//         {
-//             return 1;
-//         }
-        
-//         for(int i=0; i<s.length(); i++)
-//         {
-//             if(umap.count(s[i]) && umap[s[i]]!=-1)
-//             {
-//                 ans=max(ans,i-low);
-//                 low=umap[s[i]]+1; //previous+1
-//                 umap[s[i]]=i; //current
-//                 for(auto &x:umap)
-//                 {
-//                     if(x.second<low)
-//                     {
-//                         x.second=-1;
-//                     }
-//                 }
-//             }
-//             else
-//             {
-//                 umap[s[i]]=i;
-//             }
-//         }
-        
-//         int n=s.length(); //does not work when s.length() instead of n 
-//         ans=max(ans,n-low); //incase of no repeating characters
-        
-//         return ans; //TC: O(n^2) optmising Brute Force
-//     }
-// };
