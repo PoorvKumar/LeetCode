@@ -49,5 +49,38 @@ public:
     int numTrees(int n) 
     {
         return numTreesUtil(n);
+        
+        if(n<3) //base case
+        {
+            return n;
+        }
+        
+        vector<int> dp(n+1,0);
+        dp[0]=0; //base case
+        dp[1]=1; //base case
+        dp[2]=3; //base case
+        
+        for(int i=1; i<=n; i++)
+        {
+            int LST=dp[i-1];
+            int RST=dp[n-i];
+            
+            if(LST==0 || RST==0)
+            {
+                if(LST==0)
+                {
+                    dp[i]=dp[i]+RST;
+                }
+                else
+                {
+                    dp[i]=dp[i]+LST;
+                }
+                continue;
+            }
+            
+            dp[i]=dp[i]+LST*RST;
+        }
+        
+        return dp[n];
     }
 };
