@@ -12,27 +12,24 @@
 class Solution 
 {
 private:
-    int goodNodesUtil(TreeNode* root,int MAX)
+    int goodNodesUtil(TreeNode* root,int maximNode)
     {
         if(root==NULL)
         {
             return 0;
         }
         
-        MAX=max(MAX,root->val);
-        
-        if(root->val<MAX)
+        if(root->val>=maximNode)
         {
-            return goodNodesUtil(root->left,MAX)+goodNodesUtil(root->right,MAX);
+            maximNode=max(maximNode,root->val);
+            return 1+goodNodesUtil(root->left,maximNode)+goodNodesUtil(root->right,maximNode);
         }
         
-        return 1+goodNodesUtil(root->left,MAX)+goodNodesUtil(root->right,MAX);
+        return 0+goodNodesUtil(root->left,maximNode)+goodNodesUtil(root->right,maximNode);
     }
 public:
-    int goodNodes(TreeNode* root)
+    int goodNodes(TreeNode* root) 
     {
-        int MAX=root->val;
-        
-        return goodNodesUtil(root,MAX);
+        return goodNodesUtil(root,root->val);
     }
 };
