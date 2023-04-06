@@ -1,66 +1,55 @@
 class Solution 
 {
 private:
-    unordered_map<int,int> umap;
+    unordered_map<int,unordered_map<int,int>> umap; ///umap[index][amount]
     
-    int coinChangeUtil(vector<int>& coins,int amount)
+    int coinChangeUtil(vector<int>& coins,int index,int amount)
     {
-        if(amount<0)
-        {
-            return INT_MAX;
-        }
-        
         if(amount==0)
         {
-            // umap[amount]=0;
             return 0;
         }
         
-        int res=INT_MAX;
-        int x;
-        
-        for(int i=0; i<coins.size(); i++)
+        if(index==coins.size()-1)
         {
-            if(umap.count(amount-coins[i])==1)
+            if(amount%coins[index]==0)
             {
-                x=umap[amount-coins[i]];
+                return amount/coins[index];
             }
-            else
+            
+            return INT_MAX;
+        }
+        
+        if(umap.count(index) && umap[index].count(amount))
+        {
+            return umap[index][amount];
+        }
+        
+        int exclude=0+coinChangeUtil(coins,index+1,amount);
+        int include=INT_MAX;
+        if(amount>=coins[index])
+        {
+            include=coinChangeUtil(coins,index,amount-coins[index]);
+            if(include<INT_MAX)
             {
-                x=coinChangeUtil(coins,amount-coins[i]);
-            }
-            // x=coinChangeUtil(coins,amount-coins[i]);
-            // res=min(res,x);
-            if(x<res)
-            {
-                res=1+x;
+                include=include+1;
             }
         }
         
-        umap[amount]=res;
-        return res;
+        // return min(exclude,include); //Recursive Solution
+        //TC: O(2^n) //as 2 (exclude,include) calls for every index
+        //SC: O(n)+O(n)auxiliary stack space
+        
+        return umap[index][amount]=min(exclude,include); //Top-Down DP approach -> recursion + Memoization
+        //TC: O(n*amount) //as for every index for every amount Recursion calls Memoized
+        //SC: O(n* amount)
     }
 public:
     int coinChange(vector<int>& coins, int amount) 
     {
-        // int res=coinChangeUtil(coins,amount); //Top-Down DP approach -> Recursion + Memoization
-        // return res!=INT_MAX?res:-1;
+        sort(coins.begin(),coins.end());
         
-        //Bottom-Up DP approach-> Tabulation
-        vector<int> dp(amount+1,INT_MAX);
-        dp[0]=0;
-        
-        for(int i=1; i<=amount; i++)
-        {
-            for(int j=0; j<coins.size(); j++)
-            {
-                if(i-coins[j]>=0 && dp[i-coins[j]]<dp[i])
-                {
-                    dp[i]=1+dp[i-coins[j]];
-                }
-            }
-        }
-        
-        return dp[amount]!=INT_MAX?dp[amount]:-1;
+        int ans=coinChangeUtil(coins,0,amount);
+        return ans<INT_MAX?ans:-1;
     }
 };
