@@ -49,7 +49,47 @@ public:
     {
         sort(coins.begin(),coins.end());
         
-        int ans=coinChangeUtil(coins,0,amount);
-        return ans<INT_MAX?ans:-1;
+        // int ans=coinChangeUtil(coins,0,amount);
+        // return ans<INT_MAX?ans:-1;
+        
+        int n=coins.size();
+        vector<vector<int>> dp(n,vector<int>(amount+1,INT_MAX)); //dp[index][amount]
+        
+        for(int i=0; i<n; i++) //base case
+        {
+            dp[i][0]=0;
+        }
+        
+        for(int i=0; i<=amount; i++) //base case
+        {
+            if(i%coins[n-1]==0)
+            {
+                dp[n-1][i]=i/coins[n-1];
+            }
+        }
+        
+        for(int i=n-2; i>=0; i--)
+        {
+            for(int j=1; j<=amount; j++)
+            {
+                int exclude=0+dp[i+1][j];
+                int include=INT_MAX;
+                if(j>=coins[i])
+                {
+                    include=dp[i][j-coins[i]];
+                    if(include<INT_MAX)
+                    {
+                        include=include+1;
+                    }
+                }
+                
+                dp[i][j]=min(exclude,include);
+            }
+        }
+        
+        int ans=dp[0][amount];
+        return ans<INT_MAX?ans:-1; //Bottom-UP DP approach -> Tabulation
+        //TC: O(n*amount)
+        //SC: O(n*amount)
     }
 };
