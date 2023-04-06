@@ -40,7 +40,7 @@ private:
         //TC: O(2^n) //as 2 (exclude,include) calls for every index
         //SC: O(n)+O(n)auxiliary stack space
         
-        return umap[index][amount]=min(exclude,include); //Top-Down DP approach -> recursion + Memoization
+        return umap[index][amount]=min(exclude,include); //Top-Down DP approach -> Recursion + Memoization
         //TC: O(n*amount) //as for every index for every amount Recursion calls Memoized
         //SC: O(n* amount)
     }
