@@ -5,14 +5,14 @@ private:
     
     int changeUtil(vector<int>& coins,int index,int amount)
     {
-        if(amount==0)
+        if(amount==0) //base case
         {
             return 1;
         }
         
-        if(index>=coins.size())
+        if(index==coins.size()-1) //base case
         {
-            return 0;
+            return amount%coins[index]==0;
         }
         
         if(umap.count(index) && umap[index].count(amount))
@@ -27,17 +27,21 @@ private:
             include=changeUtil(coins,index,amount-coins[index]);
         }
         
-        // return exclude+include; //Recursive Solution
-        //TC: O(2^n) //as 2 (include,exclude) calls for every index
-        //SC: O(n) + O(n)auxiliary space
+        int ans=exclude+include;
+        // return ans; //Recursive Solution
+        //TC: O(2^n) //as 2 (exclude,include) calls for evry index
+        //SC: O(n)+O(n)auxiliary stack space
         
-        return umap[index][amount]=exclude+include; //Top-Down DP approach -> Recursion + Memoization
-        //TC: O(n*amount) //as for every index for every amount Recursion calls Result Memoized
-        //SC: O(n*amount) + O(n)auxiliary space
+        // umap[index][amount]=ans;
+        return umap[index][amount]=ans; //Top-Down DP approach -> Recursion + Memoization
+        //TC: O(n*amount) //as for every index for every amount Recursion calls Memoized
+        //SC: O(n*amount)+O(n)auxiliary stack space
     }
 public:
     int change(int amount, vector<int>& coins) 
     {
+        sort(coins.begin(),coins.end());
+        
         return changeUtil(coins,0,amount);
     }
 };
