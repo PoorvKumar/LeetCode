@@ -45,33 +45,66 @@ public:
         // return changeUtil(coins,0,amount);
         
         int n=coins.size();
-        vector<vector<int>> dp(n,vector<int>(amount+1,0)); //dp[index][amount]
+//         vector<vector<int>> dp(n,vector<int>(amount+1,0)); //dp[index][amount]
         
-        for(int i=0; i<n; i++) //base case
-        {
-            dp[i][0]=1;
-        }
+//         for(int i=0; i<n; i++) //base case
+//         {
+//             dp[i][0]=1;
+//         }
+        
+//         for(int i=1; i<=amount; i++) //base case
+//         {
+//             dp[n-1][i]=i%coins[n-1]==0;
+//         }
+        
+//         for(int i=n-2; i>=0; i--)
+//         {
+//             for(int j=0; j<=amount; j++)
+//             {
+//                 int exclude=dp[i+1][j];
+//                 int include=0;
+//                 if(j>=coins[i])
+//                 {
+//                     include=dp[i][j-coins[i]];
+//                 }
+                
+//                 dp[i][j]=exclude+include;
+//             }
+//         }
+        
+//         return dp[0][amount]; //Bottom-Up DP approach -> Tabulation
+//         //TC: O(n*amount)
+//         //SC: O(n*amount)
+        
+        vector<int> prev(amount+1,0);
+        vector<int> curr(amount+1,0);
+        
+        prev[0]=1; //base case
+        curr[0]=1; //base case
         
         for(int i=1; i<=amount; i++) //base case
         {
-            dp[n-1][i]=i%coins[n-1]==0;
+            prev[i]=i%coins[n-1]==0;
         }
         
         for(int i=n-2; i>=0; i--)
         {
-            for(int j=0; j<=amount; j++)
+            for(int j=1; j<=amount; j++)
             {
-                int exclude=dp[i+1][j];
+                int exclude=prev[j];
                 int include=0;
                 if(j>=coins[i])
                 {
-                    include=dp[i][j-coins[i]];
+                    include=curr[j-coins[i]];
                 }
                 
-                dp[i][j]=exclude+include;
+                curr[j]=exclude+include;
             }
+            prev=curr;
         }
         
-        return dp[0][amount];
+        return prev[amount]; //Space Optimisation
+        //TC: O(n*amount)
+        //SC: O(n)
     }
 };
