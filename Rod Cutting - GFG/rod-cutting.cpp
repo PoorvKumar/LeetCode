@@ -54,33 +54,61 @@ public:
     {
         // return cutRodUtil(n,price,0,n);
         
-        vector<vector<int>> dp(n,vector<int>(n+1,INT_MIN)); //dp[index][target]
+        // vector<vector<int>> dp(n,vector<int>(n+1,INT_MIN)); //dp[index][target]
         
-        for(int i=0; i<n; i++) //base case
-        {
-            dp[i][0]=0;
-        }
+        // for(int i=0; i<n; i++) //base case
+        // {
+        //     dp[i][0]=0;
+        // }
         
-        dp[n-1][n]=price[n-1]; //base case
+        // dp[n-1][n]=price[n-1]; //base case
+        
+        // for(int i=n-2; i>=0; i--)
+        // {
+        //     for(int j=1; j<=n; j++)
+        //     {
+        //         int notcut=0+dp[i+1][j];
+        //         int cut=INT_MIN;
+        //         if(j>=i+1)
+        //         {
+        //             cut=price[i]+dp[i][j-(i+1)];
+        //         }
+                
+        //         dp[i][j]=max(notcut,cut);
+        //     }
+        // }
+        
+        // return dp[0][n]; //Bottom-Up DP approach -> Tabulation
+        // //TC: O(n*n)
+        // //SC: O(n*n)
+        
+        vector<int> prev(n+1,INT_MIN);
+        vector<int> curr(n+1,INT_MIN);
+        
+        prev[0]=0; //base case
+        curr[0]=0; //base case
+        
+        prev[n]=price[n-1]; //base case
         
         for(int i=n-2; i>=0; i--)
         {
             for(int j=1; j<=n; j++)
             {
-                int notcut=0+dp[i+1][j];
+                int notcut=0+prev[j];
                 int cut=INT_MIN;
                 if(j>=i+1)
                 {
-                    cut=price[i]+dp[i][j-(i+1)];
+                    cut=price[i]+curr[j-(i+1)];
                 }
                 
-                dp[i][j]=max(notcut,cut);
+                curr[j]=max(notcut,cut);
             }
+            prev=curr;
         }
         
-        return dp[0][n]; //Bottom-Up DP approach -> Tabulation
+        return prev[n]; //Space Optimisation
         //TC: O(n*n)
-        //SC: O(n*n)
+        //SC: O(n)
     }
 };
 
