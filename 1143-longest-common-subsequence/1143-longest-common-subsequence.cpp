@@ -3,68 +3,62 @@ class Solution
 private:
     unordered_map<int,unordered_map<int,int>> umap;
     
-    int topDownDP(string s1,string s2,int i,int j)
+    int longestCommonUtil(string& text1,string& text2,int x,int y)
     {
-        if(i<0 || j<0)
+        // if(x==text1.length()-1 && y==text2.length()-1)
+        // {
+        //     return text1[x]==text2[y];
+        // }
+        
+        if(x==text1.length()-1 || y==text2.length()-1) //base case
         {
+            if(x==text1.length()-1)
+            {
+                while(y<text2.length())
+                {
+                    if(text1[x]==text2[y])
+                    {
+                        return 1;
+                    }
+                    y++;
+                }
+                return 0;
+            }
+            
+            while(x<text1.length())
+            {
+                if(text1[x]==text2[y])
+                {
+                    return 1;
+                }
+                x++;
+            }
+            
             return 0;
         }
         
-        if(umap.count(i) && umap[i].count(j))
+        if(umap.count(x) && umap[x].count(y))
         {
-            return umap[i][j];
+            return umap[x][y];
         }
         
-        if(s1[i]==s2[j]) 
+        if(text1[x]==text2[y])
         {
-            umap[i][j]=1+topDownDP(s1,s2,i-1,j-1); //Top-Down DP -> Recursion + Memoization
-            return umap[i][j];
-            
-            // return 1+topDownDP(s1,s2,i-1,j-1); //Recursive Solution Time Complexity: Exponential
+            return umap[x][y]= 1+longestCommonUtil(text1,text2,x+1,y+1);
         }
-        else
-        {
-            umap[i][j]=max(topDownDP(s1,s2,i-1,j),topDownDP(s1,s2,i,j-1));
-            return umap[i][j];
-            
-            // return max(topDownDP(s1,s2,i-1,j),topDownDP(s1,s2,i,j-1));
-        }
+        
+        int t1=longestCommonUtil(text1,text2,x+1,y);
+        int t2=longestCommonUtil(text1,text2,x,y+1);
+        
+        // return max(t1,t2); //Recursive Solution
+        
+        return umap[x][y]=max(t1,t2); //Top-Down DP approach -> Recursion + Memoization
+        //TC: O(x*y) //as for every index in text1 for every indedx in text2 Recursion calls Memoized
+        //SC: O(x*y)
     }
 public:
     int longestCommonSubsequence(string text1, string text2) 
     {
-        string s1;
-        string s2;
-        if(text1.length()<text2.length())
-        {
-            s1=text2;
-            s2=text1;
-        }
-        else
-        {
-            s1=text1;
-            s2=text2;
-        }
-        
-        // return topDownDP(s1,s2,s1.length()-1,s2.length()-1);
-        
-        vector<vector<int>> dp(s1.length()+1,vector<int>(s2.length()+1,0));
-        
-        for(int i=1; i<s1.length()+1; i++) //Botttom-UP DP approach -> Tabulation
-        {
-            for(int j=1; j<s2.length()+1; j++)
-            {
-                if(s1[i-1]==s2[j-1])
-                {
-                    dp[i][j]=1+dp[i-1][j-1];
-                }
-                else
-                {
-                    dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
-                }
-            }
-        }
-        
-        return dp[s1.length()][s2.length()];
+        return longestCommonUtil(text1,text2,0,0);
     }
 };
