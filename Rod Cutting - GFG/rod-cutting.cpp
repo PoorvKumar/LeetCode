@@ -52,7 +52,35 @@ private:
 public:
     int cutRod(int price[], int n) 
     {
-        return cutRodUtil(n,price,0,n);
+        // return cutRodUtil(n,price,0,n);
+        
+        vector<vector<int>> dp(n,vector<int>(n+1,INT_MIN)); //dp[index][target]
+        
+        for(int i=0; i<n; i++) //base case
+        {
+            dp[i][0]=0;
+        }
+        
+        dp[n-1][n]=price[n-1]; //base case
+        
+        for(int i=n-2; i>=0; i--)
+        {
+            for(int j=1; j<=n; j++)
+            {
+                int notcut=0+dp[i+1][j];
+                int cut=INT_MIN;
+                if(j>=i+1)
+                {
+                    cut=price[i]+dp[i][j-(i+1)];
+                }
+                
+                dp[i][j]=max(notcut,cut);
+            }
+        }
+        
+        return dp[0][n]; //Bottom-Up DP approach -> Tabulation
+        //TC: O(n*n)
+        //SC: O(n*n)
     }
 };
 
