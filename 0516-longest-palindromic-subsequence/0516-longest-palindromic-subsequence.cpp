@@ -38,7 +38,7 @@ public:
         reverse(s.begin(),s.end());
         string s2=s;
         
-        return longestCommonUtil(s1,s2,0,0);
+        // return longestCommonUtil(s1,s2,0,0);
         
         int n=s.length();
         
