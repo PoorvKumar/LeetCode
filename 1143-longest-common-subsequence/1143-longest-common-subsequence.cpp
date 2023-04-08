@@ -28,8 +28,8 @@ private:
         //SC: O(n1+n2)+O(n1+n2)auxiliary stack space
         
         return umap[index1][index2]=max(t1,t2); //Top-Down DP approach -> Recursion + Memoization
-        //TC: O(n1*n2) //as for evry index in text1 for every index in textt2 Recursion calls Memoized
-        //SC: O(n1*n2)+O(n1+n2)auxiliar stack space
+        //TC: O(n1*n2) //as for evry index in text1 for every index in text2 Recursion calls Memoized
+        //SC: O(n1*n2)+O(n1+n2)auxiliary stack space
     }
 public:
     int longestCommonSubsequence(string text1, string text2) 
@@ -39,8 +39,28 @@ public:
         int n1=text1.length();
         int n2=text2.length();
         
-        vector<vector<int>> dp(n1+1,vector<int>(n2+1,0));
-        //dp[index1][index2]
+//         vector<vector<int>> dp(n1+1,vector<int>(n2+1,0));
+//         //dp[index1][index2]
+        
+//         for(int i=n1-1; i>=0; i--)
+//         {
+//             for(int j=n2-1; j>=0; j--)
+//             {
+//                 if(text1[i]==text2[j])
+//                 {
+//                     dp[i][j]=1+dp[i+1][j+1];
+//                     continue;
+//                 }
+//                 dp[i][j]=max(dp[i+1][j],dp[i][j+1]);
+//             }
+//         }
+        
+//         return dp[0][0]; //Bottom-Up DP approach -> Tabulation
+//         //TC: O(n1*n2)
+//         //SC: O(n1*n2)
+        
+        vector<int> prev(n2+1,0);
+        vector<int> curr(n2+1,0);
         
         for(int i=n1-1; i>=0; i--)
         {
@@ -48,13 +68,16 @@ public:
             {
                 if(text1[i]==text2[j])
                 {
-                    dp[i][j]=1+dp[i+1][j+1];
+                    curr[j]=1+prev[j+1];
                     continue;
                 }
-                dp[i][j]=max(dp[i+1][j],dp[i][j+1]);
+                curr[j]=max(prev[j],curr[j+1]);
             }
+            prev=curr;
         }
         
-        return dp[0][0];
+        return prev[0]; //Space Optimisation
+        //TC: O(n1*n2)
+        //SC: O(n2)
     }
 };
