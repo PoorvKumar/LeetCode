@@ -28,7 +28,9 @@ private:
             //TC: O(2^n) //as 2 (notBuy|Buy || notSell|Sell) calls for evry index
             //SC: O(n)+O(n)auxiliary stack
             
-            return umap[index][buy]=max(notBuy,Buy);
+            return umap[index][buy]=max(notBuy,Buy); //Top-Down DP apporach -> Recursion + Memoization
+            //TC: O(n*2) // as for evry index for every buy Recursion calls Memoized
+            //SC: O(n*2)+O(n)auxiliary stack space
         }
         
         int notSell=0+maxProfitUtil(prices,index+1,buy);
@@ -38,7 +40,9 @@ private:
         //TC: O(2^n) // as 2 (notBuy|Buy || notSell|Sell) calls for every index
         //SC: O(n)+O(n)auxiliary stack space
         
-        return umap[index][buy]=max(notSell,Sell);
+        return umap[index][buy]=max(notSell,Sell); //Top-Down DP approach -> Recursion + Memoization
+        //TC: O(n*2) //as for every index for every buy Recursion calls Memoized
+        //SC: O(n*2)+O(n)auxiliary stack space
     }
 public:
     int maxProfit(vector<int>& prices)
