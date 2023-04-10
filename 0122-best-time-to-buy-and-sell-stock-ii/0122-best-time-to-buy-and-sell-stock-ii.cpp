@@ -79,31 +79,43 @@ public:
 //         //TC: O(n*2)
 //         //SC: O(n*2)
         
-        vector<int> prev(2,0);
-        vector<int> curr(2,0);
+//         vector<int> prev(2,0);
+//         vector<int> curr(2,0);
         
-        prev[0]=prices[n-1]; //base case
+//         prev[0]=prices[n-1]; //base case
         
-        for(int i=n-2; i>=0; i--)
-        {
-            for(int j=1; j>=0; j--)
-            {
-                if(j)
-                {
-                    int notBuy=prev[j];
-                    int Buy=-prices[i]+prev[j-1];
+//         for(int i=n-2; i>=0; i--)
+//         {
+//             for(int j=1; j>=0; j--)
+//             {
+//                 if(j)
+//                 {
+//                     int notBuy=prev[j];
+//                     int Buy=-prices[i]+prev[j-1];
                     
-                    curr[j]=max(notBuy,Buy);
-                    continue;
-                }
-                int notSell=prev[j];
-                int Sell=prices[i]+prev[j+1];
+//                     curr[j]=max(notBuy,Buy);
+//                     continue;
+//                 }
+//                 int notSell=prev[j];
+//                 int Sell=prices[i]+prev[j+1];
                 
-                curr[j]=max(notSell,Sell);
+//                 curr[j]=max(notSell,Sell);
+//             }
+//             prev=curr;
+//         }
+        
+//         return prev[1];
+        
+        int maxProfit=0;
+        for(int i=1; i<n; i++)
+        {
+            int val=prices[i]-prices[i-1];
+            if(val>0)
+            {
+                maxProfit=maxProfit+val;
             }
-            prev=curr;
         }
         
-        return prev[1];
+        return maxProfit;
     }
 };
