@@ -51,10 +51,38 @@ public:
         
         int n=prices.size();
         
-        vector<vector<int>> dp(n,vector<int>(2,0));
-        //dp[index][buy]
+//         vector<vector<int>> dp(n,vector<int>(2,0));
+//         //dp[index][buy]
         
-        dp[n-1][0]=prices[n-1]; //base case
+//         dp[n-1][0]=prices[n-1]; //base case
+        
+//         for(int i=n-2; i>=0; i--)
+//         {
+//             for(int j=1; j>=0; j--)
+//             {
+//                 if(j)
+//                 {
+//                     int notBuy=dp[i+1][j];
+//                     int Buy=-prices[i]+dp[i+1][j-1];
+                    
+//                     dp[i][j]=max(notBuy,Buy);
+//                     continue;
+//                 }
+//                 int notSell=dp[i+1][j];
+//                 int Sell=prices[i]+dp[i+1][j+1];
+                
+//                 dp[i][j]=max(notSell,Sell);
+//             }
+//         }
+        
+//         return dp[0][1]; //Bottom-Up DP approach -> Tabulation
+//         //TC: O(n*2)
+//         //SC: O(n*2)
+        
+        vector<int> prev(2,0);
+        vector<int> curr(2,0);
+        
+        prev[0]=prices[n-1]; //base case
         
         for(int i=n-2; i>=0; i--)
         {
@@ -62,21 +90,20 @@ public:
             {
                 if(j)
                 {
-                    int notBuy=dp[i+1][j];
-                    int Buy=-prices[i]+dp[i+1][j-1];
+                    int notBuy=prev[j];
+                    int Buy=-prices[i]+prev[j-1];
                     
-                    dp[i][j]=max(notBuy,Buy);
+                    curr[j]=max(notBuy,Buy);
                     continue;
                 }
-                int notSell=dp[i+1][j];
-                int Sell=prices[i]+dp[i+1][j+1];
+                int notSell=prev[j];
+                int Sell=prices[i]+prev[j+1];
                 
-                dp[i][j]=max(notSell,Sell);
+                curr[j]=max(notSell,Sell);
             }
+            prev=curr;
         }
         
-        return dp[0][1]; //Bottom-Up DP approach -> Tabulation
-        //TC: O(n*2)
-        //SC: O(n*2)
+        return prev[1];
     }
 };
