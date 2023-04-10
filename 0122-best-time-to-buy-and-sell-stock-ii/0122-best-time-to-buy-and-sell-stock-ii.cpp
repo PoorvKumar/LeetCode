@@ -47,6 +47,36 @@ private:
 public:
     int maxProfit(vector<int>& prices)
     {
-        return maxProfitUtil(prices,0,true);
+        // return maxProfitUtil(prices,0,true);
+        
+        int n=prices.size();
+        
+        vector<vector<int>> dp(n,vector<int>(2,0));
+        //dp[index][buy]
+        
+        dp[n-1][0]=prices[n-1]; //base case
+        
+        for(int i=n-2; i>=0; i--)
+        {
+            for(int j=1; j>=0; j--)
+            {
+                if(j)
+                {
+                    int notBuy=dp[i+1][j];
+                    int Buy=-prices[i]+dp[i+1][j-1];
+                    
+                    dp[i][j]=max(notBuy,Buy);
+                    continue;
+                }
+                int notSell=dp[i+1][j];
+                int Sell=prices[i]+dp[i+1][j+1];
+                
+                dp[i][j]=max(notSell,Sell);
+            }
+        }
+        
+        return dp[0][1]; //Bottom-Up DP approach -> Tabulation
+        //TC: O(n*2)
+        //SC: O(n*2)
     }
 };
