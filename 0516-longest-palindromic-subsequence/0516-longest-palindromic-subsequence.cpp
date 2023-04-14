@@ -32,7 +32,7 @@ private:
         //SC: O(n1*n2)+O(n1+n2)auxiliary stack space
     }
 public:
-    int longestPalindromeSubseq(string s) 
+    int longestPalindromeSubseq(string s)
     {
         string s1=s;
         reverse(s.begin(),s.end());
