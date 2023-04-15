@@ -3,48 +3,17 @@ class Solution
 public:
     vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) 
     {
-        stack<int> stk; //monotonic increasing stack
+        stack<int> stk;
         unordered_map<int,int> umap;
         
-        for(int i=0; i<nums2.size(); i++) //TC:O(n+m) //SC:O(m)
+        for(int i=0; i<nums2.size(); i++)
         {
-            if(stk.empty())
+            while(!stk.empty() && stk.top()<nums2[i])
             {
-                stk.push(nums2[i]);
-                continue;
+                umap[stk.top()]=nums2[i];
+                stk.pop();
             }
-            
-            if(stk.top()<nums2[i])
-            {
-                if(!umap.count(stk.top()))
-                {
-                    umap[stk.top()]=nums2[i]; //
-                }
-                stk.push(nums2[i]);
-            }
-            else
-            {
-                if(!umap.count(stk.top())) //finding NGE for element on top of stack
-                {
-                    int j=i+1;
-                    while(j<nums2.size())
-                    {
-                        if(stk.top()<nums2[j])
-                        {
-                            umap[stk.top()]=nums2[j];
-                            break;
-                        }
-                        j++;
-                    }
-                }
-                
-                while(!stk.empty() && stk.top()>nums2[i]) 
-                {
-                    stk.pop(); //popping elements form stack to make it monotonic increasing
-                }
-                
-                stk.push(nums2[i]);
-            }
+            stk.push(nums2[i]);
         }
         
         for(auto &x:nums1)
@@ -52,13 +21,13 @@ public:
             if(umap.count(x))
             {
                 x=umap[x];
+                continue;
             }
-            else
-            {
-                x=-1;
-            }
+            x=-1;
         }
         
-        return nums1; //TC: O(n+m) SC: O(m)
+        return nums1; //monotonic decreasing stack
+        //TC: O(m+n)
+        //SC: O(n)
     }
 };
