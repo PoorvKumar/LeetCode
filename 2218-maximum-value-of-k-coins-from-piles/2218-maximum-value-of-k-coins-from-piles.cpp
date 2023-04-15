@@ -37,7 +37,7 @@ private:
         //SC: O(n*k)+O(n*k)auxiliary stack space
         
         return umap[index][k]=max(exclude,include); //Top-Down DP approach -> Recursion + Memoization
-        //TC: O(n*k) //as for every indeeex for eveery k Recursion calls Memoized
+        //TC: O(n*k*k) //as for every index for every k Recursion calls Memoized
         //SC: O(n*k)+O(n*k)auxiliary stack space
     }
 public:
@@ -58,33 +58,67 @@ public:
         
         int n=piles.size();
         
-        vector<vector<int>> dp(n+1,vector<int>(k+1,0));
-        //dp[index][k]
+//         vector<vector<int>> dp(n+1,vector<int>(k+1,0));
+//         //dp[index][k]
+        
+//         for(int i=1; i<=k; i++) //base case
+//         {
+//             dp[n][i]=INT_MIN;
+//         }
+        
+//         for(int i=n-1; i>=0; i--)
+//         {
+//             for(int j=0; j<=k; j++)
+//             {
+//                 int exclude=dp[i+1][j];
+//                 int include=0;
+                
+//                 int s=piles[i].size();
+                
+//                 for(int p=1; p<=min(j,s); p++)
+//                 {
+//                     int val=piles[i][p-1]+dp[i+1][j-p];
+//                     include=max(include,val);
+//                 }
+                
+//                 dp[i][j]=max(exclude,include);
+//             }
+//         }
+        
+//         return dp[0][k]; //Bottom-Up DP approach -> Tabulation
+//         //TC: O(n*k*k)
+//         //SC: O(n*k)
+        
+        vector<int> prev(k+1,0);
+        vector<int> curr(k+1,0);
         
         for(int i=1; i<=k; i++) //base case
         {
-            dp[n][i]=INT_MIN;
+            prev[i]=INT_MIN;
         }
         
         for(int i=n-1; i>=0; i--)
         {
             for(int j=0; j<=k; j++)
             {
-                int exclude=dp[i+1][j];
+                int exclude=prev[j];
                 int include=0;
                 
                 int s=piles[i].size();
                 
                 for(int p=1; p<=min(j,s); p++)
                 {
-                    int val=piles[i][p-1]+dp[i+1][j-p];
+                    int val=piles[i][p-1]+prev[j-p];
                     include=max(include,val);
                 }
                 
-                dp[i][j]=max(exclude,include);
+                curr[j]=max(exclude,include);
             }
+            prev=curr;
         }
         
-        return dp[0][k];
+        return prev[k]; //Space Optimisation
+        //TC: O(n*k*k)
+        //SC: O(k)
     }
 };
