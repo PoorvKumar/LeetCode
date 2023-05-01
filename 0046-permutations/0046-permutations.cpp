@@ -3,12 +3,22 @@ class Solution
 private:
     int factorial(int n)
     {
-        if(n<=1)
+//         if(n<=1)
+//         {
+//             return 1;
+//         }
+        
+//         return n*factorial(n-1);
+        int prev=1;
+        int curr=1;
+        
+        for(int i=2; i<=n; i++)
         {
-            return 1;
+            curr=i*prev;
+            prev=curr;
         }
         
-        return n*factorial(n-1);
+        return prev;
     }
 public:
     vector<vector<int>> permute(vector<int>& nums) 
