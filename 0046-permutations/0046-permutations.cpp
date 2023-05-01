@@ -1,38 +1,55 @@
-class Solution 
+class Solution
 {
 private:
-    int factorial(int n)
+    vector<vector<int>> res;
+    
+    void permuteUtil(unordered_set<int>& uset,vector<int>& vec)
     {
-//         if(n<=1)
-//         {
-//             return 1;
-//         }
-        
-//         return n*factorial(n-1);
-        int prev=1;
-        int curr=1;
-        
-        for(int i=2; i<=n; i++)
+        if(uset.empty())
         {
-            curr=i*prev;
-            prev=curr;
+            res.push_back(vec);
+            return ;
         }
         
-        return prev;
+        unordered_set<int> uset1=uset;
+        
+        for(auto x:uset1)
+        {
+            vec.push_back(x);
+            uset.erase(x);
+            permuteUtil(uset,vec);
+            uset.insert(x);
+            vec.pop_back();
+        }
+        
+        return ;
     }
+    
 public:
     vector<vector<int>> permute(vector<int>& nums) 
     {
-        int fact=factorial(nums.size());
+        unordered_set<int> uset;
+        vector<int> vec;
         
-        vector<vector<int>> res;
-        
-        while(fact--)
+        for(auto x:nums)
         {
-            res.push_back(nums);
-            next_permutation(nums.begin(),nums.end());
+            uset.insert(x);
         }
         
+        permuteUtil(uset,vec);
+        
         return res;
+        
+//         int fact=factorial(nums.size());
+        
+//         vector<vector<int>> res;
+        
+//         while(fact--)
+//         {
+//             res.push_back(nums);
+//             next_permutation(nums.begin(),nums.end());
+//         }
+        
+//         return res;
     }
 };
