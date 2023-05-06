@@ -67,14 +67,20 @@ public:
         int i=0;
         int j=nums.size()-1;
         
+        vector<int> power(nums.size()+1,1);
+        for(int i=1; i<=nums.size(); i++)
+        {
+            // power[i]=(int)pow(2,i)%M; //does not work as oustside range i=0
+            power[i]=2*power[i-1]%M;
+        }
+        
         while(i<=j)
         {
             if(nums[i]+nums[j]<=target)
             {
-                // ans=(ans+j-i+1)%M;
-                // int val=pow(2,j-i)%M;
-                umap.clear();
-                int val=power(2,j-i)%M;
+                // umap.clear();
+                // int val=power(2,j-i)%M;
+                int val=power[j-i]%M;
                 ans=(ans+val)%M;
                 i++;
             }
