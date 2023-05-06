@@ -33,7 +33,7 @@ private:
         return (exclude+include)%M;
     }
     
-    unordered_map<int,int> umap;
+    unordered_map<int,int> umap; //umap[p]
     
     int power(int n,int p)
     {
