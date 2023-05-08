@@ -38,7 +38,7 @@ private:
         //SC: O(n*n)+O(n)auxiliary stack space
     }
 public:
-    int lengthOfLIS(vector<int>& nums) 
+    int lengthOfLIS(vector<int>& nums)
     {
         // return lengthOfLISUtil(nums,0,0); //getting TLE
         
@@ -49,7 +49,7 @@ public:
         
 //         for(int i=n-1; i>=0; i--) //index
 //         {
-//             for(int j=n; j>=0; j--) //prev -> will be always less than or equal to i+1
+//             for(int j=i-1; j>=0; j--) //prev -> will be always less than or equal to i+1
 //             {
 //                 int exclude=dp[i+1][j];
 //                 int include=0;
@@ -78,7 +78,7 @@ public:
         
         for(int i=n-1; i>=0; i--) //index
         {
-            for(int j=i+1; j>=0; j--) //prev
+            for(int j=i; j>=0; j--) //prev
             {
                 int exclude=prev[j];
                 int include=0;
