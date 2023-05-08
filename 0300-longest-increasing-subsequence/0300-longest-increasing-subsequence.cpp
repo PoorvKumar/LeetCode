@@ -26,7 +26,7 @@ private:
             //     i++;
             // }
             
-            include=1+lengthOfLISUtil(nums,i,index+1);
+            include=1+lengthOfLISUtil(nums,index+1,index+1);
         }
         
         // return max(exclude,include); //Recursive Solution
@@ -56,19 +56,21 @@ public:
                 
                 if(j==0 || nums[i]>nums[j-1])
                 {
-                    int k=i+1;
+                    // int k=i+1;
                     // while(k<nums.size() && nums[i]>=nums[k])
                     // {
                     //     k++;
                     // }
                     
-                    include=1+dp[k][i+1];
+                    include=1+dp[i+1][i+1];
                 }
                 
                 dp[i][j]=max(exclude,include);
             }
         }
         
-        return dp[0][0];
+        return dp[0][0]; //Bottom-Up DP approach -> Tabulation
+        //TC: O(n*n)
+        //SC: O(n*n)
     }
 };
