@@ -33,6 +33,28 @@ private:
 public:
     long long mostPoints(vector<vector<int>>& questions) 
     {
-        return mostPointsUtil(questions,0);
+        // return mostPointsUtil(questions,0);
+        
+        int n=questions.size();
+        vector<long long> dp(n+1,0);
+        //dp[index]
+        
+        for(int i=n-1; i>=0; i--)
+        {
+            long long skip=dp[i+1];
+            
+            int points=questions[i][0];
+            int brainpower=questions[i][1];
+            
+            long long solve=points;
+            if(i+brainpower+1<=n)
+            {
+                solve=solve+dp[i+brainpower+1];
+            }
+            
+            dp[i]=max(skip,solve);
+        }
+        
+        return dp[0];
     }
 };
