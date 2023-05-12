@@ -43,13 +43,13 @@ public:
         {
             long long skip=dp[i+1];
             
-            int points=questions[i][0];
-            int brainpower=questions[i][1];
+            // int points=questions[i][0];
+            // int brainpower=questions[i][1];
             
-            long long solve=points;
-            if(i+brainpower+1<=n)
+            long long solve=questions[i][0];
+            if(i+questions[i][1]+1<=n)
             {
-                solve=solve+dp[i+brainpower+1];
+                solve=solve+dp[i+questions[i][1]+1];
             }
             
             dp[i]=max(skip,solve);
