@@ -43,18 +43,22 @@ public:
         {
             long long skip=dp[i+1];
             
-            // int points=questions[i][0];
-            // int brainpower=questions[i][1];
+            int points=questions[i][0];
+            int brainpower=questions[i][1];
             
-            long long solve=questions[i][0];
-            if(i+questions[i][1]+1<=n)
-            {
-                solve=solve+dp[i+questions[i][1]+1];
-            }
+            long long solve=points+(i+brainpower+1<=n?dp[i+brainpower+1]:0);
+            
+            // long long solve=questions[i][0];
+            // if(i+questions[i][1]+1<=n)
+            // {
+            //     solve=solve+dp[i+questions[i][1]+1];
+            // }
             
             dp[i]=max(skip,solve);
         }
         
-        return dp[0];
+        return dp[0]; //Bottom-Up DP approach -> Tabulation
+        //TC: O(n)
+        //SC: O(n)
     }
 };
