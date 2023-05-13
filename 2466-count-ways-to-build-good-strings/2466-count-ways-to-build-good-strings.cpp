@@ -3,7 +3,7 @@ class Solution
 private:
     long long M=1e9+7;
     
-    unordered_map<int,int> umap;
+    unordered_map<int,int> umap; //umap[size]
     
     int countGoodStringsUtil(int low,int high,int z,int o,int size)
     {
@@ -35,6 +35,30 @@ private:
 public:
     int countGoodStrings(int low, int high, int zero, int one) 
     {
-        return countGoodStringsUtil(low,high,zero,one,0);
+        // return countGoodStringsUtil(low,high,zero,one,0);
+        
+        vector<int> dp(high+1,0);
+        //dp[size]
+        
+        for(int i=high; i>=0; i--)
+        {
+            int ans=i>=low && i<=high?1:0;
+            
+            int zeroAppend=0;
+            if(i+zero<=high)
+            {
+                zeroAppend=dp[i+zero];
+            }
+            
+            int oneAppend=0;
+            if(i+one<=high)
+            {
+                oneAppend=dp[i+one];
+            }
+            
+            dp[i]=ans+(zeroAppend+oneAppend)%M;
+        }
+        
+        return dp[0];
     }
 };
