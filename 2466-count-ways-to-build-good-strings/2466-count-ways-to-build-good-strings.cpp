@@ -59,6 +59,8 @@ public:
             dp[i]=ans+(zeroAppend+oneAppend)%M;
         }
         
-        return dp[0];
+        return dp[0]; //Bottom-Up DP approach -> Tabulation
+        //TC: O(high)
+        //SC: O(high)
     }
 };
