@@ -18,16 +18,27 @@ public:
             return head;
         }
         
+        ListNode* dummy=new ListNode();
+        dummy->next=head;
+        
+        ListNode* prev=dummy;
         ListNode* p=head;
         ListNode* q=p->next;
         
-        p->next=q->next;
-        q->next=p;
+        while(p!=NULL && p->next!=NULL)
+        {
+            p->next=q->next;
+            q->next=p;
+            prev->next=q;
+            
+            prev=p;
+            if(p!=NULL && p->next!=NULL)
+            {
+                p=p->next;
+                q=p->next;
+            }
+        }
         
-        head=q;
-        
-        p->next=swapPairs(p->next);
-        
-        return head;
+        return dummy->next;
     }
 };
