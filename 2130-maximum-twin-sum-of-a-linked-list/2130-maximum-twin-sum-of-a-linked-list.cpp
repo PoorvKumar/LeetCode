@@ -28,7 +28,6 @@ public:
         // cout<<n<<endl;
         
         ListNode* p=head;
-        ListNode* q;
         
         int i=0;
         while(i<n/2)
@@ -36,8 +35,6 @@ public:
             p=p->next;
             i++;
         }
-        
-        q=p;
         
         ListNode* r=new ListNode();
         
