@@ -36,28 +36,21 @@ public:
             i++;
         }
         
-        ListNode* r=new ListNode();
+        vector<int> vec;
         
         while(p!=NULL)
         {
-            r->val=p->val;
+            vec.push_back(p->val);
             p=p->next;
-            
-            ListNode* node=new ListNode();
-            node->next=r;
-            r=node;
         }
-        r=r->next;
         
         int maxim=0;
         p=head;
         
-        while(r!=NULL)
+        for(vector<int>::reverse_iterator rit=vec.rbegin(); rit!=vec.rend(); rit++)
         {
-            // cout<<r->val<<" ";
-            maxim=max(maxim,p->val+r->val);
+            maxim=max(maxim,p->val+*rit);
             p=p->next;
-            r=r->next;
         }
         
         return maxim;
