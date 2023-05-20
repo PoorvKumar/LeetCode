@@ -29,6 +29,19 @@ private:
 public:
     int rob(vector<int>& nums) 
     {
-        return robUtil(nums,0);
+        // return robUtil(nums,0);
+        
+        int n=nums.size();
+        vector<int> dp(n+2,0);
+        
+        for(int i=n-1; i>=0; i--)
+        {
+            int notRob=dp[i+1];
+            int rob=nums[i]+dp[i+2];
+            
+            dp[i]=max(notRob,rob);
+        }
+        
+        return dp[0];
     }
 };
