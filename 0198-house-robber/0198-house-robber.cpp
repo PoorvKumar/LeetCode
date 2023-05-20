@@ -1,50 +1,34 @@
 class Solution 
 {
 private:
-    unordered_map<int,int> umap;
-public:
-//     int robTopDown(vector<int>& nums,int i=0) 
-//     {
-//         if(i>=nums.size())  
-//         {
-//             return 0;
-//         }
-        
-//         if(umap.count(i))  //Top-Down DP approach -> Recursion + Memoization
-//         {
-//             return umap[i];
-//         }
-        
-//         umap[i+2]=rob(nums,i+2);
-//         umap[i+1]=rob(nums,i+1);
-        
-//         umap[i]=max(nums[i]+umap[i+2],umap[i+1]);
-        
-//         return umap[i];
-        
-//         // return max(nums[i]+rob(nums,i+2),0+rob(nums,i+1));
-        
-//         //Recursive Solution //Time Complexity -> O(2^n) where n is size of array
-//     }
+    unordered_map<int,int> umap; //umap[index]
     
-    
-    int rob(vector<int>& nums)
+    int robUtil(vector<int>& nums,int index)
     {
-        if(nums.size()==1)
+        if(index>=nums.size())
         {
-            return nums[0];
+            return 0;
         }
         
-        int n=nums.size();
-        
-        nums[n-2]=max(nums[n-2],nums[n- 1]);
-        
-        for(int i=n-3; i>=0; i--)
+        if(umap.count(index))
         {
-            nums[i]=max(nums[i]+nums[i+2],nums[i+1]);
+            return umap[index];
         }
         
-        return nums[0];
+        int notRob=robUtil(nums,index+1);
+        int rob=nums[index]+robUtil(nums,index+2);
+        
+        // return max(notRob,rob); //Recursive Solution
+        //TC: O(2^n) //as 2(notRob,rob) calls for every index
+        //SC: O(n)+O(n)auxiliary stack space
+        
+        return umap[index]=max(notRob,rob); //Top-Down DP approach -> Recursion + Memoization
+        //TC: O(n) //as for every index Recursion calls Memoized
+        //SC: O(n)+O(n)auxiliary stack space
     }
-    
+public:
+    int rob(vector<int>& nums) 
+    {
+        return robUtil(nums,0);
+    }
 };
