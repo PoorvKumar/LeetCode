@@ -45,7 +45,7 @@ public:
             dp[i]=i<=n;
         }
         
-        vector<double> vec(maxPts+n+1,0);
+        vector<double> vec(maxPts+n+1,0); //sliding window
         vec[maxPts+n]=dp[maxPts+n];
         
         for(int i=maxPts+n-1; i>=k; i--)
