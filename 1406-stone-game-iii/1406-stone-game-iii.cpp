@@ -89,6 +89,8 @@ public:
             return "Bob";
         }
         
-        return "Tie";
+        return "Tie"; //Bottom-Up DP approach -> Tabulation
+        //TC: O(n*2)
+        //SC: O(n*2)
     }
 };
