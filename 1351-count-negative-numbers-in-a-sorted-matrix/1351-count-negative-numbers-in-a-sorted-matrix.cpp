@@ -19,6 +19,8 @@ public:
             ans=ans+m-j;
         }
         
-        return ans;
+        return ans; 
+        //TC: O(n+m)
+        //SC: O(m*n)
     }
 };
