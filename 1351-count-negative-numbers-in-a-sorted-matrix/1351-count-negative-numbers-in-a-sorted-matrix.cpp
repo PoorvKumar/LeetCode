@@ -3,24 +3,22 @@ class Solution
 public:
     int countNegatives(vector<vector<int>>& grid) 
     {
-        int ans=0;
-        
         int m=grid.size();
         int n=grid[0].size();
         
-        for(int i=0; i<m; i++)
+        int ans=0;
+        int j=0;
+        
+        for(int i=n-1; i>=0; i--)
         {
-            for(int j=0; j<n; j++)
+            while(j<m && grid[j][i]>=0)
             {
-                if(grid[i][j]<0)
-                {
-                    ans++;
-                }
+                j++;
             }
+            
+            ans=ans+m-j;
         }
         
-        return ans; 
-        //TC: O(m*n)
-        //SC: O(m*n)
+        return ans;
     }
 };
