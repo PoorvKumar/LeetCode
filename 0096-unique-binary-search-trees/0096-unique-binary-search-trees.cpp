@@ -7,7 +7,11 @@ private:
     {
         if(n==0 || n==1 || n==2)
         {
-            return n;
+            if(n==2)
+            {
+                return 2;
+            }
+            return 1;
         }
         
         if(umap.count(n))
@@ -16,33 +20,21 @@ private:
         }
         
         int ans=0;
+        
         for(int i=1; i<=n; i++)
         {
             int LST=numTreesUtil(i-1);
             int RST=numTreesUtil(n-i);
             
-            if(LST==0 || RST==0)
-            {
-                if(LST==0)
-                {
-                    ans=ans+RST;
-                }
-                else
-                {
-                    ans=ans+LST;
-                }
-                continue;
-            }
-            
             ans=ans+LST*RST;
         }
         
         // return ans; //Recursive Solution
-        //TC: O(2^n) //as 2 (LST,RST) calls for every index
+        //TC: O(2^n) //as 2 (LST,RST) calls for every root index
         //SC: O(n)+O(n)auxiliary stack space
         
         return umap[n]=ans; //Top-Down DP approach -> Recursion + Memoization
-        //TC: O(n) //as for every index Recursion calls Memoized
+        //TC: O(n*n) //as for evry root index Recursion calls Memmoized and for all rotIndex for every n
         //SC: O(n)+O(n)auxiliary stack space
     }
 public:
