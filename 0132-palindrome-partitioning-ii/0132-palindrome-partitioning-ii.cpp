@@ -40,8 +40,9 @@ private:
         for(int i=index; i<s.length(); i++)
         {
             // str=str+s[i]; //giving TLE
-            // str.push_back(s[i]);
-            str+=s[i];
+            
+            // str.push_back(s[i]); //works
+            str+=s[i]; //works
             if(isPalindrome(str))
             {
                 int val=minCutUtil(s,i+1);
@@ -64,6 +65,38 @@ private:
 public:
     int minCut(string s) 
     {
-        return minCutUtil(s,0);
+        // return minCutUtil(s,0);
+        
+        int n=s.length();
+        vector<int> dp(n+1,0);
+        
+        for(int i=n-1; i>=0; i--)
+        {
+            int ans=s.length()-i-1;
+            string str="";
+            
+            for(int j=i; j<s.length(); j++)
+            {
+                str+=s[j];
+                // str.push_back(s[j]);
+                
+                if(isPalindrome(str))
+                {
+                    int val=dp[j+1];
+                    if(j+1<n)
+                    {
+                        val=val+1;
+                    }
+                    
+                    ans=min(ans,val);
+                }
+            }
+            
+            dp[i]=ans;
+        }
+        
+        return dp[0]; //Bottom-Up DP approach -> Tabulation
+        //TC: O(n*n)
+        //SC: O(n)
     }
 };
