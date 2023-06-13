@@ -39,7 +39,7 @@ private:
         
         for(int i=index; i<s.length(); i++)
         {
-            // str=str+s[i];
+            // str=str+s[i]; //giving TLE
             str.push_back(s[i]);
             if(isPalindrome(str))
             {
