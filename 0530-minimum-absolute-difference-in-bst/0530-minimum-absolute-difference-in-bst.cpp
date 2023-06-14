@@ -12,75 +12,28 @@
 class Solution 
 {
 private:
-    int getMax(TreeNode* root)
-    {
-        if(root==NULL)
-        {
-            return INT_MAX;
-        }
-        if(root->right!=NULL)
-        {
-            return getMax(root->right);
-        }
-        
-        return root->val;
-    }
+    vector<int> vec;
     
-    int getMin(TreeNode* root)
+    void inorderTraversal(TreeNode* root)
     {
-        if(root==NULL)
+        if(root!=NULL)
         {
-            return INT_MAX;
+            inorderTraversal(root->left);
+            vec.push_back(root->val);
+            inorderTraversal(root->right);
         }
-        if(root->left!=NULL)
-        {
-            return getMin(root->left);
-        }
-        
-        return root->val;
-    }
-    
-    int getMinDiffHelper(TreeNode* root,int &minim)
-    {
-        if(root==NULL || root->left==NULL && root->right==NULL)
-        {
-            return minim;
-        }
-        
-        if(root->left==NULL || root->right==NULL)
-        {
-            int diff;
-            if(root->left==NULL)
-            {
-                diff=getMin(root->right)-root->val;
-                minim=min(minim,diff);
-                return getMinDiffHelper(root->right,minim);
-            }
-            else
-            {
-                diff=root->val-getMax(root->left);
-                minim=min(minim,diff);
-                return getMinDiffHelper(root->left,minim);
-            }
-        }
-        
-        int diff=getMin(root->right)-root->val;
-        diff=min(diff,root->val-getMax(root->left));
-        
-        minim=min(minim,diff);
-        
-        getMinDiffHelper(root->left,minim);
-        getMinDiffHelper(root->right,minim);
-        
-        return minim;
     }
 public:
     int getMinimumDifference(TreeNode* root) 
     {
-        int minim=INT_MAX;
+        inorderTraversal(root);
         
-        getMinDiffHelper(root,minim);
+        int ans=INT_MAX;
+        for(int i=1; i<vec.size(); i++)
+        {
+            ans=min(ans,vec[i]-vec[i-1]);
+        }
         
-        return minim;
+        return ans;
     }
 };
