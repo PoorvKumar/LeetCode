@@ -1,83 +1,45 @@
 class Solution 
 {
 private:
-    unordered_map<int,unordered_map<int,int>> umap; //umap[index1][index2]
+    unordered_map<int,unordered_map<int,int>> umap; //umap[i][j]
     
-    int longestCommonUtil(string& text1,string& text2,int index1,int index2)
+    int lcsUtil(string& text1,string& text2,int i,int j)
     {
-        if(index1>=text1.length() || index2>=text2.length()) //base case
+        if(i>=text1.length() || j>=text2.length())
         {
             return 0;
         }
         
-        if(umap.count(index1) && umap[index1].count(index2))
+        if(umap.count(i) && umap[i].count(j))
         {
-            return umap[index1][index2];
+            return umap[i][j];
         }
         
-        if(text1[index1]==text2[index2])
+        int ans=0;
+        
+        if(text1[i]==text2[j])
         {
-            return umap[index1][index2]=1+longestCommonUtil(text1,text2,index1+1,index2+1);
+            ans=1+lcsUtil(text1,text2,i+1,j+1);
+        }
+        else
+        {
+            int t1=lcsUtil(text1,text2,i+1,j);
+            int t2=lcsUtil(text1,text2,i,j+1);
+            
+            ans=max(t1,t2);
         }
         
-        int t1=longestCommonUtil(text1,text2,index1+1,index2);
-        int t2=longestCommonUtil(text1,text2,index1,index2+1);
+        // return ans; //Recursive Solution
+        //TC: O(2^(m+n)) //as 2 Recursion calls for every index of text1 for every index of text2
+        //SC: O(m+n)+O(m+n)auxiliary stack space
         
-        // return max(t1,t2); //Recursive Solution
-        //TC: O(2^(n1+n2)) //as 2 (t1,t2) calls for all index in text1 , text2
-        //SC: O(n1+n2)+O(n1+n2)auxiliary stack space
-        
-        return umap[index1][index2]=max(t1,t2); //Top-Down DP approach -> Recursion + Memoization
-        //TC: O(n1*n2) //as for evry index in text1 for every index in text2 Recursion calls Memoized
-        //SC: O(n1*n2)+O(n1+n2)auxiliary stack space
+        return umap[i][j]=ans; //Top-Down DP approach -> Recursion + Memoization
+        //TC: O(m*n) //as for every index in text1 Recursion calls Memoized for every index in text2
+        //SC: O(m*n)+O(m+n)auxiliary stack space
     }
 public:
     int longestCommonSubsequence(string text1, string text2) 
     {
-        // return longestCommonUtil(text1,text2,0,0);
-        
-        int n1=text1.length();
-        int n2=text2.length();
-        
-//         vector<vector<int>> dp(n1+1,vector<int>(n2+1,0));
-//         //dp[index1][index2]
-        
-//         for(int i=n1-1; i>=0; i--)
-//         {
-//             for(int j=n2-1; j>=0; j--)
-//             {
-//                 if(text1[i]==text2[j])
-//                 {
-//                     dp[i][j]=1+dp[i+1][j+1];
-//                     continue;
-//                 }
-//                 dp[i][j]=max(dp[i+1][j],dp[i][j+1]);
-//             }
-//         }
-        
-//         return dp[0][0]; //Bottom-Up DP approach -> Tabulation
-//         //TC: O(n1*n2)
-//         //SC: O(n1*n2)
-        
-        vector<int> prev(n2+1,0);
-        vector<int> curr(n2+1,0);
-        
-        for(int i=n1-1; i>=0; i--)
-        {
-            for(int j=n2-1; j>=0; j--)
-            {
-                if(text1[i]==text2[j])
-                {
-                    curr[j]=1+prev[j+1];
-                    continue;
-                }
-                curr[j]=max(prev[j],curr[j+1]);
-            }
-            prev=curr;
-        }
-        
-        return prev[0]; //Space Optimisation
-        //TC: O(n1*n2)
-        //SC: O(n2)
+        return lcsUtil(text1,text2,0,0);
     }
 };
