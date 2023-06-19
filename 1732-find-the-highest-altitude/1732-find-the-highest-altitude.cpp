@@ -15,6 +15,9 @@ public:
             // maxim=max(maxim,altitude[i+1]);
         }
         
-        return maxim;
+        return maxim; 
+        //TC: O(n)
+        //SC: O(n) -> Approach 1
+        //SC: O(1) -> Approach 2
     }
 };
