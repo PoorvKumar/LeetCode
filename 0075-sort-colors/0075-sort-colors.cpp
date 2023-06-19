@@ -3,56 +3,24 @@ class Solution
 public:
     void sortColors(vector<int>& nums) 
     {
-        // sort(begin(nums),nums.end());
+        int low=0;
+        int mid=0;
+        int high=nums.size()-1;
         
-//         for(int i=0; i<nums.size(); i++) //Selection Sort
-//         {
-//             int minimIndex=i;
-//             for(int j=i+1; j<nums.size(); j++)
-//             {
-//                 if(nums[j]<nums[minimIndex])
-//                 {
-//                     minimIndex=j;
-//                 }
-//             }
-//             // int minimIndex=min_element(begin(nums)+i,end(nums))-nums.begin();
-            
-//             swap(nums[i],nums[minimIndex]);
-//         }
-        
-        int countZero=0;
-        int countOne=0;
-        int countTwo=0;
-        for(auto x:nums)
+        while(mid<=high)
         {
-            if(x==0)
+            switch(nums[mid])
             {
-                countZero++;
+                case 0: 
+                    swap(nums[low++],nums[mid++]);
+                    break;
+                case 1:
+                    mid++;
+                    break;
+                case 2:
+                    swap(nums[mid],nums[high--]);
+                    break;
             }
-            else if(x==1)
-            {
-                countOne++;
-            }
-            else
-            {
-                countTwo++;
-            }
-        }
-        
-        int i=0;
-        while(countZero--)
-        {
-            nums[i++]=0;
-        }
-        
-        while(countOne--)
-        {
-            nums[i++]=1;
-        }
-        
-        while(countTwo--)
-        {
-            nums[i++]=2;
         }
     }
 };
