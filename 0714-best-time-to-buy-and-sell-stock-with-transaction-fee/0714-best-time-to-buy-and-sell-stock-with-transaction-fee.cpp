@@ -2,7 +2,7 @@ class Solution
 {
 private:
     // unordered_map<int,unordered_map<bool,int>> umap; //umap[index][buy]
-    vector<vector<int>> dp;
+    vector<vector<int>> dp; //dp[index][buy]
     
     int maxProfitUtil(vector<int>& prices,int index,bool buy,int fee)
     {
@@ -52,6 +52,35 @@ public:
     int maxProfit(vector<int>& prices, int fee) 
     {
         dp.assign(prices.size()+1,vector<int>(2,-1));
-        return maxProfitUtil(prices,0,true,fee);
+        // return maxProfitUtil(prices,0,true,fee);
+        
+        int n=prices.size();
+        dp[n][1]=0;
+        dp[n][0]=-1e4;
+        
+        for(int i=n-1; i>=0; i--)
+        {
+            for(int j=1; j>=0; j--)
+            {
+                if(j==1)
+                {
+                    int notBuy=dp[i+1][1];
+                    int Buy=-prices[i]+dp[i+1][0];
+                    
+                    dp[i][j]=max(notBuy,Buy);
+                }
+                else
+                {
+                    int notSell=dp[i+1][j];
+                    int sell=prices[i]-fee+dp[i+1][1];
+                    
+                    dp[i][j]=max(notSell,sell);
+                }
+            }
+        }
+        
+        return dp[0][1]; //Bottom-Up DP approach -> Tabulation
+        //TC: O(n*2)
+        //SC: O(n*2)
     }
 };
