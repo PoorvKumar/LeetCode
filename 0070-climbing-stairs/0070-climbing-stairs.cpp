@@ -2,53 +2,29 @@ class Solution
 {
 private:
     unordered_map<int,int> umap;
-public:
-//     int climbStairs(int n) // Top-Down DP -> Recursion + Memoization
-//     {                      // could be done with better space complexity
-//         if(n<3)
-//         {
-//             return n; 
-//         }
-//                                 //Time Complexity -> O(n)        
-//         if(umap.count(n)==1)    // Space Complexity -> O(n) + O(n)
-//         {
-//             return umap[n];
-//         }
-        
-//         umap[n]=climbStairs(n-1)+climbStairs(n-2);    
-//         return umap[n];
-//     }
     
-    int climbStairs(int n) //Bottom-Up DP -> Tabulation
-    {
-        if(n<3)
+    int climbStairsUtil(int n)
+    {      
+        if(n<=2)
         {
             return n;
         }
         
-        // vector<int> dp(n+1);
-        // dp[0]=0;
-        // dp[1]=1;
-        // dp[2]=2;                   // Time Complexity -> O(n)
-        //                            // Space Complexity -> O(n)        
-        // for(int i=3; i<=n; i++)
-        // {
-        //     dp[i]=dp[i-1]+dp[i-2];
-        // }
-        
-        // return dp[n];
-               
-        int x=1;         //Space Optimisation
-        int y=2;
-        int res;
-        
-        for(int i=3; i<=n; i++)
+        if(umap.count(n))
         {
-            res=x+y;
-            x=y;
-            y=res;
+            return umap[n];
         }
         
-        return res;
+        int oneStep=climbStairsUtil(n-1);
+        int twoStep=climbStairsUtil(n-2);
+        
+        // return oneStep+twoStep;
+        
+        return umap[n]=oneStep+twoStep;
+    }
+public:
+    int climbStairs(int n) 
+    {
+        return climbStairsUtil(n);
     }
 };
