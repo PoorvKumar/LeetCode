@@ -9,28 +9,27 @@ using namespace std;
 
 class Solution
 {
+private:
+    void deleteMidUtil(stack<int>& stk,int  n,int count)
+    {
+        if(count==n/2)
+        {
+            stk.pop();
+            return ;
+        }
+        
+        int val=stk.top();
+        stk.pop();
+        
+        deleteMidUtil(stk,n,count+1);
+        
+        stk.push(val);
+    }
 public:
     //Function to delete middle element of a stack.
     void deleteMid(stack<int>& s, int sizeOfStack)
     {
-        vector<int> vec;
-        
-        int k=sizeOfStack/2;
-        
-        while(k--)
-        {
-            vec.push_back(s.top());
-            s.pop();
-        }
-        
-        s.pop();
-        
-        for(int i=vec.size()-1; i>=0; i--)
-        {
-            s.push(vec[i]);
-        }
-        
-        return ;
+        return deleteMidUtil(s,sizeOfStack,0);
     }
 };
 
