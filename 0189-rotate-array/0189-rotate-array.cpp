@@ -14,7 +14,7 @@ public:
         
         // for(int i=vec.size()-1; i>=0; i--)
         // {
-        //     nums.insert(nums.begin(),vec[i]);
+        //     nums.insert(nums.begin(),vec[i]); //getting TLE 37 / 38 testcases passed
         // }
         
         return ;
