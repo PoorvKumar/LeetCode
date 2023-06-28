@@ -3,27 +3,29 @@ class Solution
 public:
     vector<int> topKFrequent(vector<int>& nums, int k) 
     {
+        priority_queue<pair<int,int>> pq;
         unordered_map<int,int> umap;
         
-        for(int i=0; i<nums.size(); i++)
+        for(auto x:nums)
         {
-            umap[nums[i]]++;
+            umap[x]++;
         }
-        
-        vector<pair<int,int>> vec;
         
         for(auto x:umap)
         {
-            vec.push_back({x.second,x.first});
+            pq.push({x.second,x.first});
         }
-        
-        sort(vec.begin(),vec.end(),greater<pair<int,int>>());
         
         vector<int> res;
         
-        for(int i=0; i<k; i++)
+        while(k--)
         {
-            res.push_back(vec[i].second);
+            res.push_back(pq.top().second);
+            pq.pop();
+            if(pq.empty())
+            {
+                break;
+            }
         }
         
         return res;
