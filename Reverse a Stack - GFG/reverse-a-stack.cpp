@@ -11,28 +11,46 @@ using namespace std;
 class Solution
 {
 private:
-    void reverseUtil(stack<int>& stk,stack<int>& stk1)
+    void insertAtBottom(stack<int>& stk,int val)
     {
         if(stk.empty())
         {
-            stk=stk1;
+            stk.push(val);
             return ;
         }
         
-        stk1.push(stk.top());
+        int x=stk.top();
         stk.pop();
         
-        reverseUtil(stk,stk1);
+        insertAtBottom(stk,val);
+        
+        stk.push(x);
+        return ;
+    }
+    
+    void reverseUtil(stack<int>& stk)
+    {
+        if(stk.empty())
+        {
+            return ;
+        }
+        
+        int x=stk.top();
+        stk.pop();
+        
+        reverseUtil(stk);
+        
+        insertAtBottom(stk,x);
+        
         return ;
     }
 public:
-    void Reverse(stack<int>& St)
+    void Reverse(stack<int>& stk)
     {
-        stack<int> stk1;
-        
-        return reverseUtil(St,stk1);
+        return reverseUtil(stk);
     }
 };
+
 
 //{ Driver Code Starts.
 
