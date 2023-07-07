@@ -13,12 +13,30 @@ public:
             }
             else
             {
-                if(!stk.empty() && (c==')' && stk.top()=='(' || c==']' && stk.top()=='[' || c=='}' && stk.top()=='{'))
+                if(c==')')
                 {
+                    if(stk.empty() || stk.top()!='(')
+                    {
+                        return false;
+                    }
                     stk.pop();
-                    continue;
                 }
-                return false;
+                else if(c==']')
+                {
+                    if(stk.empty() || stk.top()!='[')
+                    {
+                        return false;
+                    }
+                    stk.pop();
+                }
+                else
+                {
+                    if(stk.empty() || stk.top()!='{')
+                    {
+                        return false;
+                    }
+                    stk.pop();
+                }
             }
         }
         
