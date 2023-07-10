@@ -19,6 +19,11 @@ public:
             return 0;
         }
         
+        if(root->left==NULL && root->right==NULL)
+        {
+            return 1;
+        }
+        
         if(root->left==NULL || root->right==NULL)
         {
             if(root->left==NULL)
