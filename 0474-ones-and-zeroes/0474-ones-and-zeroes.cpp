@@ -61,8 +61,33 @@ public:
         
         int N=vec.size();
         
-        vector<vector<vector<int>>> dp(N+1,vector<vector<int>>(m+1,vector<int>(n+1,0))); 
-        //dp[index][m][n]
+//         vector<vector<vector<int>>> dp(N+1,vector<vector<int>>(m+1,vector<int>(n+1,0))); 
+//         //dp[index][m][n]
+        
+//         for(int i=N-1; i>=0; i--)
+//         {
+//             for(int j=m; j>=0; j--)
+//             {
+//                 for(int k=n; k>=0; k--)
+//                 {
+//                     int exclude=dp[i+1][j][k];
+//                     int include=0;
+//                     if(vec[i].first<=j && vec[i].second<=k)
+//                     {
+//                         include=1+dp[i+1][j-vec[i].first][k-vec[i].second];
+//                     }
+                    
+//                     dp[i][j][k]=max(exclude,include);
+//                 }
+//             }
+//         }
+        
+//         return dp[0][m][n]; //Bottom-Up DP approach -> Tabulation
+//         //TC: O(N*m*n)
+//         //SC: O(N*m*n)
+        
+        vector<vector<int>> prev(m+1,vector<int>(n+1,0));
+        vector<vector<int>> curr(m+1,vector<int>(n+1,0));
         
         for(int i=N-1; i>=0; i--)
         {
@@ -70,18 +95,21 @@ public:
             {
                 for(int k=n; k>=0; k--)
                 {
-                    int exclude=dp[i+1][j][k];
+                    int exclude=prev[j][k];
                     int include=0;
                     if(vec[i].first<=j && vec[i].second<=k)
                     {
-                        include=1+dp[i+1][j-vec[i].first][k-vec[i].second];
+                        include=1+prev[j-vec[i].first][k-vec[i].second];
                     }
                     
-                    dp[i][j][k]=max(exclude,include);
+                    curr[j][k]=max(exclude,include);
                 }
             }
+            prev=curr;
         }
         
-        return dp[0][m][n];
+        return prev[m][n]; //Space Optimisation
+        //TC: O(N*m*n)
+        //SC: O(m*n)
     }
 };
