@@ -57,6 +57,31 @@ public:
         //     cout<<x.first<<" "<<x.second<<endl;
         // }
         
-        return findMaxUtil(0,m,n);
+        // return findMaxUtil(0,m,n);
+        
+        int N=vec.size();
+        
+        vector<vector<vector<int>>> dp(N+1,vector<vector<int>>(m+1,vector<int>(n+1,0))); 
+        //dp[index][m][n]
+        
+        for(int i=N-1; i>=0; i--)
+        {
+            for(int j=m; j>=0; j--)
+            {
+                for(int k=n; k>=0; k--)
+                {
+                    int exclude=dp[i+1][j][k];
+                    int include=0;
+                    if(vec[i].first<=j && vec[i].second<=k)
+                    {
+                        include=1+dp[i+1][j-vec[i].first][k-vec[i].second];
+                    }
+                    
+                    dp[i][j][k]=max(exclude,include);
+                }
+            }
+        }
+        
+        return dp[0][m][n];
     }
 };
