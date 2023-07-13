@@ -31,9 +31,13 @@ private:
             Break=wordBreakUtil(s,index+1,"");
         }
         
-        // return Break;
+        // return Break; //Recursive Solution
+        //TC: O(2^n) //as for every index (notBreak,Break) Recursion calls
+        //SC: O(n)+O(n*k)auxiliary stack space
         
-        return umap[index][str]=Break;
+        return umap[index][str]=Break; //Top-Down DP approach -> Recursion + Memoization
+        //TC: O(n*n) //as for every index for every substring Recursion calls Memoized
+        //SC: O(n*n)+O(n*k)auxiliary stack space
     }
 public:
     bool wordBreak(string s, vector<string>& wordDict) 
