@@ -1,125 +1,65 @@
 class LRUCache 
 {
 private:
-    // unordered_map<int ,pair<int,int>> lru;
-    // set<pair<int,int>> ageBit;
     int capacity;
-    // int age=0;
-    
-    unordered_map<int,pair<int,list<int>::iterator>> cache;
-    list<int> rank;
-    
+    unordered_map<int,int> umap;
+    list<int> recentlyUsed;
+    unordered_map<int,list<int>::iterator> position;
 public:
     LRUCache(int capacity) 
     {
-        ios::sync_with_stdio(false);
-        cin.tie(NULL);
         this->capacity=capacity;
-        // age=0;
     }
     
-    int get(int key)
+    int get(int key) 
     {
-        list<int>::iterator it;
-        
-        if(!cache.count(key))
+        if(!umap.count(key))
         {
             return -1;
         }
         
-        it=cache[key].second;
-        rank.erase(it);
+        recentlyUsed.erase(position[key]);
+        recentlyUsed.push_front(key);
         
-        rank.push_front(key);
+        position[key]=recentlyUsed.begin();
         
-        cache[key].second=rank.begin();
-        
-        return cache[key].first;
+        return umap[key];
     }
     
-    void put(int key,int value)
+    void put(int key, int value) 
     {
-        list<int>::iterator it;
-        
-        if(cache.count(key))
+        if(umap.count(key)) //update
         {
-            it=cache[key].second;
+            recentlyUsed.erase(position[key]);
+            recentlyUsed.push_front(key);
             
-            rank.erase(it);
-            rank.push_front(key);//updating rank to highest
+            position[key]=recentlyUsed.begin();
             
-            it=rank.begin();
-            
-            cache[key]={value,rank.begin()}; //value, rank updated
-            
-            return;
+            umap[key]=value;
+            return ;
         }
         
-        if(cache.size()==capacity)
+        if(umap.size()<capacity)
         {
-            cache.erase(rank.back());    //removed lru element
-            rank.pop_back();
+            recentlyUsed.push_front(key);
+            position[key]=recentlyUsed.begin();
             
-            rank.push_front(key);
-            
-            cache[key]={value,rank.begin()};  //assigned highest rank
-            
-            return;
+            umap[key]=value;
+            return ;
         }
         
-        rank.push_front(key);
-        cache[key]={value,rank.begin()};
+        int p=recentlyUsed.back();
+        recentlyUsed.pop_back();
         
-        return;
+        position.erase(p);
+        umap.erase(p);
+        
+        recentlyUsed.push_front(key);
+        position[key]=recentlyUsed.begin();
+        
+        umap[key]=value;
+        return ;
     }
-    
-//     int get(int key) 
-//     {
-//         int x=-1;
-//         if(!lru.count(key))
-//         {
-//             return -1;
-//         }
-//         int agebit=lru[key].first;
-//         x=lru[key].second;
-//         lru[key].first=++age;
-        
-//         ageBit.erase(ageBit.find({agebit,key}));
-//         ageBit.insert(pair<int,int>(age,key));
-        
-//         return x;
-//     }
-    
-//     void put(int key, int value) 
-//     {
-//         if(lru.count(key))
-//         {
-//             int x=lru[key].first;
-//             lru[key].first=++age;
-//             lru[key].second=value;
-            
-//             ageBit.erase(ageBit.find({x,key}));
-//             ageBit.insert({age,key});
-//             return;
-//         }
-        
-//         if(lru.size()==capacity)
-//         {
-//             int xkey=(*ageBit.begin()).second;
-//             ageBit.erase(ageBit.begin());
-//             lru.erase(xkey);
-            
-//             lru[key].first=++age;
-//             lru[key].second=value;
-//             ageBit.insert({age,key});
-//             return;
-//         }
-        
-//         lru[key].first=++age;
-//         lru[key].second=value;
-//         ageBit.insert({age,key});
-//         return;
-//     }
 };
 
 /**
