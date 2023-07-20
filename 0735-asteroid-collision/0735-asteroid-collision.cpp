@@ -7,41 +7,33 @@ public:
         
         for(auto x:asteroids)
         {
-            if(x<0 && !stk.empty() && stk.top()>0)
+            if(!stk.empty() && stk.top()>0 && x<0)
             {
-                int val=x+stk.top();
-                bool flag=true;
-                
-                while(val<0)
+                if(stk.top()+x>=0)
                 {
-                    stk.pop();
-                    
-                    if(!stk.empty() && stk.top()>0)
+                    if(stk.top()+x==0)
                     {
-                        val=x+stk.top();
-                        // if(val==0)
-                        // {
-                        //     stk.pop();
-                        //     break;
-                        // }
+                        stk.pop();
                     }
-                    else
-                    {
-                        stk.push(x);
-                        flag=false;
-                        break;
-                    }
+                    continue;
                 }
                 
-                if(flag && val==0)
+                while(!stk.empty() && stk.top()>0 && stk.top()+x<0)
                 {
                     stk.pop();
                 }
+                
+                if(!stk.empty() && stk.top()+x>=0)
+                {
+                    if(stk.top()+x==0)
+                    {
+                        stk.pop();
+                    }
+                    continue;
+                }
             }
-            else
-            {
-                stk.push(x);
-            }
+            
+            stk.push(x);
         }
         
         vector<int> res;
@@ -53,6 +45,7 @@ public:
         }
         
         reverse(res.begin(),end(res));
+        
         return res;
     }
 };
