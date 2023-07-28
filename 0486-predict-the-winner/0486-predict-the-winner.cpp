@@ -24,7 +24,7 @@ public:
     {
         long long scoreA=maximizeScore(nums,0,nums.size()-1,0);
         
-        long long sum=accumulate(nums.begin(),end(nums),0);
+        long long sum=accumulate(nums.begin(),end(nums),0LL);
         
         return scoreA>=sum-scoreA;
     }
