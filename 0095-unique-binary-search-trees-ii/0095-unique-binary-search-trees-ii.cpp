@@ -12,12 +12,19 @@
 class Solution 
 {
 private:
+    unordered_map<int,unordered_map<int,vector<TreeNode*>>> umap;
+    
     vector<TreeNode*> generateTreesUtil(int low,int high)
     {
         if(low==high)
         {
             TreeNode* root=new TreeNode(low);
             return vector<TreeNode*>({root});
+        }
+        
+        if(umap.count(low) && umap[low].count(high))
+        {
+            return umap[low][high];
         }
         
         vector<TreeNode*> res;
@@ -67,7 +74,13 @@ private:
             }
         }
         
-        return res;
+        // return res; //Recursion Solution
+        //TC: O(n*2^n) //as for every node 2(LST,RST) Recursion calls
+        //SC: O(n*2^n)
+        
+        return umap[low][high]=res; //Top-Down DP approach -> Recursion + Memoization
+        //TC: O(n*n^2)
+        //SC: O(n*n^2)
     }
 public:
     vector<TreeNode*> generateTrees(int n) 
