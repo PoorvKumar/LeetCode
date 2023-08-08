@@ -8,68 +8,48 @@ public:
             return nums[0]==target?0:-1;
         }
         
-        // if(nums.size()==2)
-        // {
-        //     if(nums[0]==target)
-        //     {
-        //         return 0;
-        //     }
-        //     return nums[1]==target?1:-1;
-        // }
-        
         int low=0;
         int high=nums.size()-1;
-        
         int mid=(low+high)/2;
         
         while(low<high)
         {
-            if(nums[mid]>=nums[0])
+            if(nums[mid]>=nums[low])
             {
+                if(mid+1<nums.size() && nums[mid]>nums[mid+1])
+                {
+                    break;
+                }
                 low=mid+1;
             }
             else
             {
-                high=mid;
+                high=mid-1;
             }
             mid=(low+high)/2;
         }
         
-        // cout<<nums[mid]<<" "<<mid<<endl;
-        
-        if(nums[mid]>=nums[0])
-        {
-            mid=0;
-        }
-        
-        int index=mid;
+        int k=mid;
+        // cout<<k<<endl;
         
         if(target>=nums[0])
         {
-            if(index==0)
-            {
-                index=nums.size();
-            }
-            vector<int>::iterator it=upper_bound(begin(nums),begin(nums)+index,target);
-            if(it==nums.begin() || *prev(it)!=target)
-            {
-                // cout<<*prev(it)<<endl;
-                return -1;
-            }
+            auto it=upper_bound(nums.begin(),nums.begin()+k+1,target);
+            it=prev(it);
             
-            return it-nums.begin()-1;
-        }
-        else
-        {
-            vector<int>::iterator it=upper_bound(begin(nums)+index,end(nums),target);
-            if(it==nums.begin() || *prev(it)!=target)
-            {
-                return -1;
-            }
-            
-            return it-nums.begin()-1;
+            return *it==target?it-nums.begin():-1;
         }
         
-        return 0;
+        // cout<<*(nums.begin()+k+1)<<endl;
+        
+        if(nums.begin()+k==nums.end())
+        {
+            return -1;
+        }
+        
+        auto it=upper_bound(nums.begin()+k+1,end(nums),target);
+        it=prev(it);
+        
+        return *it==target?it-begin(nums):-1;
     }
 };
