@@ -14,7 +14,7 @@ class Solution
 public:
     TreeNode* invertTree(TreeNode* root) 
     {
-        if(root==NULL || (root->left==NULL && root->right==NULL))
+        if(root==NULL || root->left==NULL && root->right==NULL)
         {
             return root;
         }
