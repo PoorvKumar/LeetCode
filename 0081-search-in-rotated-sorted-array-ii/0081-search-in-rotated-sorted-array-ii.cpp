@@ -21,15 +21,15 @@ private:
 public:
     bool search(vector<int>& nums, int target) 
     {
-//         for(auto x:nums)
-//         {
-//             if(x==target)
-//             {
-//                 return true;
-//             }
-//         }
+        for(auto x:nums)
+        {
+            if(x==target)
+            {
+                return true;
+            }
+        }
         
-//         return false;
+        return false;
         
         if(nums.size()==1)
         {
