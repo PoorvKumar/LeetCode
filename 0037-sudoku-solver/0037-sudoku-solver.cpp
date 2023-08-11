@@ -14,7 +14,7 @@ private:
     
     bool solveSudokuUtil(vector<vector<char>>& board,int i,int j)
     {
-        if(i>=9)
+        if(i==9)
         {
             return true;
         }
