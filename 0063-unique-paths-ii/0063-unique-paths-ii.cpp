@@ -46,8 +46,36 @@ public:
         m=obstacleGrid.size();
         n=obstacleGrid[0].size();
         
-        dp.assign(m+1,vector<int>(n+1,-1));
+        // dp.assign(m+1,vector<int>(n+1,-1));
         
-        return uniquePathsUtil(obstacleGrid,0,0);
+        // return uniquePathsUtil(obstacleGrid,0,0);
+        
+        if(obstacleGrid[m-1][n-1]!=0)
+        {
+            return 0;
+        }
+        
+        vector<vector<long long>> dp;
+        dp.assign(m+1,vector<long long>(n+1,0));
+        dp[m-1][n-1]=1;
+        
+        for(int i=m-1; i>=0; i--)
+        {
+            for(int j=n-1; j>=0; j--)
+            {
+                if(obstacleGrid[i][j]==1)
+                {
+                    continue;
+                }
+                
+                long long right=dp[i][j+1];
+                long long down=dp[i+1][j];
+                
+                long long ans=right+down;
+                dp[i][j]+=ans;
+            }
+        }
+        
+        return dp[0][0];
     }
 };
