@@ -4,54 +4,41 @@ private:
     int m;
     int n;
     
-    unordered_map<int,unordered_map<int,int>> umap;
+    vector<vector<int>> dp;
     
     int uniquePathsUtil(vector<vector<int>>& grid,int i,int j)
     {
-        if(grid[i][j]==1) //base case
+        if(i==m-1 && j==n-1)
         {
-            return 0; //obstacle
+            return grid[i][j]!=1;
         }
         
-        if(i==m-1 || j==n-1)
+        if(dp[i][j]!=-1)
         {
-            if(i==m-1)
-            {
-                for(int k=j; k<n; k++)
-                {
-                    if(grid[i][k]==1)
-                    {
-                        return 0;
-                    }
-                }
-            }
-            
-            for(int k=i; k<m; k++)
-            {
-                if(grid[k][j]==1)
-                {
-                    return 0;
-                }
-            }
-            
-            return 1;
+            return dp[i][j];
         }
         
-        if(umap.count(i) && umap[i].count(j))
+        if(i>=m || j>=n)
         {
-            return umap[i][j];
+            return 0;
         }
         
-        int down=uniquePathsUtil(grid,i+1,j);
+        if(grid[i][j]==1)
+        {
+            return 0;
+        }
+        
         int right=uniquePathsUtil(grid,i,j+1);
+        int down=uniquePathsUtil(grid,i+1,j);
         
-        // return down+right; //Recursive Solution
-        //TC: O(2^(m*n)) //as 2 calls (down , right) afor each cell , m*n cells
-        //SC: O(m*n) + O(m*n)auxiliary space
+        int ans=right+down;
+        // return ans; //Recursion Solution
+        //TC: O(2^(m*n)) //as 2(right,down) Recursion calls for evry i for every j
+        //SC: O(m*n)+O(m*n)auxiliary stack space
         
-        return umap[i][j]=down+right; //Top-Down DP approach -> Recursion + Memoization
-        //TC: O(m*n) //as 2 calls (down , right) for each cell and answer for each cell stored , m*n cells
-        //SC: O(m*n)
+        return dp[i][j]=ans; //Top-Down DP approach -> Recursion + Memoization
+        //TC: O(m*n) //as for every i for every j Recursion calls Memoized
+        //SC: O(m*n)+O(m*n)auxiliary stack space
     }
 public:
     int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) 
@@ -59,62 +46,8 @@ public:
         m=obstacleGrid.size();
         n=obstacleGrid[0].size();
         
-        // return uniquePathsUtil(obstacleGrid,0,0);
+        dp.assign(m+1,vector<int>(n+1,-1));
         
-        vector<vector<long long int>> dp(m,vector<long long int>(n,0));
-        
-        bool flag=true;
-        
-        for(int i=n-1; i>=0; i--) //base case
-        {
-            if(obstacleGrid[m-1][i]==1)
-            {
-                flag=false;
-            }
-            
-            dp[m-1][i]=flag; //1 0
-        }
-        
-        flag=true;
-        
-        for(int i=m-1; i>=0; i--) //base case
-        {
-            if(obstacleGrid[i][n-1]==1)
-            {
-                flag=false;
-            }
-            
-            dp[i][n-1]=flag; //1 0
-        }
-        
-        // for(auto x:dp)
-        // {
-        //     for(auto y:x)
-        //     {
-        //         cout<<y<<" ";
-        //     }
-        //     cout<<endl;
-        // }
-        
-        for(int i=m-2; i>=0; i--)
-        {
-            for(int j=n-2; j>=0; j--)
-            {
-                // if(obstacleGrid[i][j]==1)
-                // {
-                //     dp[i][j]=0;
-                // }
-                // else
-                // {
-                //     dp[i][j]=dp[i+1][j] + dp[i][j+1]; //dp[i][j]=down+right;
-                // }
-                
-                dp[i][j]=obstacleGrid[i][j]==1?0:dp[i+1][j]+dp[i][j+1]; //dp[i][j]=down+right;
-            }
-        }
-        
-        return dp[0][0]; //Bottom-Up DP approach -> Tabulation
-        //TC: O(m*n)
-        //SC: O(m*n) + O(m*n)auxiliary space
+        return uniquePathsUtil(obstacleGrid,0,0);
     }
 };
