@@ -23,22 +23,33 @@ public:
         
         while(h!=NULL)
         {
+            ListNode* temp=h->next;
+            h->next=NULL;
+            
             if(h->val<x)
             {
-                q->next=new ListNode(h->val);
+                // q->next=new ListNode(h->val);
+                q->next=h;
                 q=q->next;
             }
             else
             {
-                s->next=new ListNode(h->val);
+                // s->next=new ListNode(h->val);
+                s->next=h;
                 s=s->next;
             }
-            h=h->next;
+            h=temp;
+            // h=h->next;
         }
         
         r=r->next;
         q->next=r;
         
-        return p->next;
+        return p->next; 
+        //TC: O(n)
+        // SC: O(n)+O(n) //which can be reduced to O(n)
+        
+        //TC: O(n)
+        //SC: O(n)
     }
 };
