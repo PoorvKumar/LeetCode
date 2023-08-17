@@ -36,6 +36,30 @@ public:
         umap['D']=500;
         umap['M']=1000;
         
-        return romanToIntUtil(s,0);
+        // return romanToIntUtil(s,0);
+        
+        int ans=0;
+        
+        for(int i=0; i<s.length(); i++)
+        {
+            if(i==s.length()-1)
+            {
+                ans=ans+umap[s[i]];
+                break;
+            }
+            
+            if(umap[s[i]]<umap[s[i+1]])
+            {
+                int val=umap[s[i+1]]-umap[s[i]];
+                ans=ans+val;
+                i++;
+                continue;
+            }
+            
+            int val=umap[s[i]];
+            ans=ans+val;
+        }
+        
+        return ans;
     }
 };
