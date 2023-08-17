@@ -30,8 +30,20 @@ public:
     int rob(vector<int>& nums) 
     {
         int n=nums.size();
-        dp.assign(n+1,-1);
+        // dp.assign(n+1,-1);
         
-        return robUtil(nums,0);
+        // return robUtil(nums,0);
+        
+        dp.assign(n+2,0);
+        
+        for(int i=n-1; i>=0; i--)
+        {
+            int notRob=dp[i+1];
+            int Rob=nums[i]+dp[i+2];
+            
+            dp[i]=max(notRob,Rob);
+        }
+        
+        return dp[0];
     }
 };
