@@ -5,7 +5,6 @@ public:
     {
         sort(people.begin(),people.end());
         
-        //Two Pointers Approach
         int i=0;
         int j=people.size()-1;
         
@@ -13,17 +12,17 @@ public:
         
         while(i<j)
         {
-            if(people[i]+people[j]<=limit)
+            if(people[i]+people[j]>limit)
             {
-                ans++;
-                i++;
                 j--;
             }
             else
             {
-                ans++;
+                i++;
                 j--;
             }
+            
+            ans++;
         }
         
         if(i==j)
