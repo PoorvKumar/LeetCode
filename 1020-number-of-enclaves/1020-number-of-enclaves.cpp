@@ -1,55 +1,94 @@
-class Solution {
+class Solution 
+{
 public:
-    void dfs(int x, int y, int m, int n, vector<vector<int>>& grid, vector<vector<bool>>& visit) {
-        if (x < 0 || x >= m || y < 0 || y >= n || grid[x][y] == 0 || visit[x][y]) {
-            return;
-        }
-
-        visit[x][y] = true;
-        vector<int> dirx{0, 1, 0, -1};
-        vector<int> diry{-1, 0, 1, 0};
-
-        for (int i = 0; i < 4; i++) {
-            dfs(x + dirx[i], y + diry[i], m, n, grid, visit);
-        }
-        return;
-    }
-
-    int numEnclaves(vector<vector<int>>& grid) {
-        int m = grid.size();
-        int n = grid[0].size();
-        vector<vector<bool>> visit(m, vector<bool>(n));
-
-        for (int i = 0; i < m; ++i) {
-            // First column.
-            if (grid[i][0] == 1 && !visit[i][0]) {
-                dfs(i, 0, m, n, grid, visit);
-            }
-            // Last column.
-            if (grid[i][n - 1] == 1 && !visit[i][n - 1]) {
-                dfs(i, n - 1, m, n, grid, visit);
-            }
-        }
-
-        for (int i = 0; i < n; ++i) {
-            // First row.
-            if (grid[0][i] == 1 && !visit[0][i]) {
-                dfs(0, i, m, n, grid, visit);
-            }
-            // Last row.
-            if (grid[m - 1][i] == 1 && !visit[m - 1][i]) {
-                dfs(m - 1, i, m, n, grid, visit);
-            }
-        }
-
-        int count = 0;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (grid[i][j] == 1 && !visit[i][j]) {
-                    count++;
+    int numEnclaves(vector<vector<int>>& grid) 
+    {
+        int m=grid.size();
+        int n=grid[0].size();
+        
+        vector<vector<bool>> marked(m,vector<bool>(n,false));
+        
+        queue<pair<int,int>> q;
+        
+        for(int i=0; i<m; i++)
+        {
+            for(int j=0; j<n; j++)
+            {
+                if(grid[i][j]==0)
+                {
+                    marked[i][j]=true;
+                }
+                else if(i==0 || i==m-1 || j==0 || j==n-1)
+                {
+                    q.push({i,j});
+                    marked[i][j]=true;
                 }
             }
         }
-        return count;
+        
+        while(!q.empty())
+        {
+            pair<int,int> p=q.front();
+            q.pop();
+            
+            int i=p.first;
+            int j=p.second;
+            
+            //up
+            if(i>0 && !marked[i-1][j])
+            {
+                q.push({i-1,j});
+                marked[i-1][j]=true;
+            }
+            
+            //down
+            if(i<m-1 && !marked[i+1][j])
+            {
+                q.push({i+1,j});
+                marked[i+1][j]=true;
+            }
+            
+            //left
+            if(j>0 && !marked[i][j-1])
+            {
+                q.push({i,j-1});
+                marked[i][j-1]=true;
+            }
+            
+            //right
+            if(j<n-1 && !marked[i][j+1])
+            {
+                q.push({i,j+1});
+                marked[i][j+1]=true;
+            }
+        }
+        
+        int ans=0;
+        
+        // for(int i=0; i<m; i++)
+        // {
+        //     for(int j=0; j<n; j++)
+        //     {
+        //         if(!marked[i][j])
+        //         {
+        //             ans++;
+        //         }
+        //     }
+        // }
+        
+        for(auto x:marked)
+        {
+            for(auto y:x)
+            {
+                if(!y)
+                {
+                    ans++;
+                }
+            }
+        }
+        
+        return ans; //BFS Solution
+        //TC: O(m*n)+O(m+n)
+        //SC: O(m*n)+O(m+n)
     }
 };
