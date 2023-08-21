@@ -51,8 +51,29 @@ public:
         sort(vec.begin(),end(vec));
         
         int n=vec.size();
-        dp.assign(n+1,-1);
+        // dp.assign(n+1,-1);
         
-        return jobSchedulingUtil(0);
+        // return jobSchedulingUtil(0);
+        
+        dp.assign(n+1,0);
+        
+        for(int i=n-1; i>=0; i--)
+        {
+            int exclude=dp[i+1];
+            int include=0;
+            
+            auto it=vec.begin();
+            advance(it,i);
+            
+            vector<int> temp={vec[i][1],0,0};
+            
+            int k=lower_bound(it,end(vec),temp)-vec.begin();
+            
+            include=vec[i][2]+dp[k];
+            
+            dp[i]=max(exclude,include);
+        }
+        
+        return dp[0];
     }
 };
