@@ -3,6 +3,11 @@ class Solution
 public:
     bool repeatedSubstringPattern(string s) 
     {
+        if(s.length()==1)
+        {
+            return false;
+        }
+        
         string str="";
         
         for(int i=0; i<=s.length()/2; i++)
@@ -15,7 +20,7 @@ public:
                 
                 if(k==0)
                 {
-                    return false;
+                    return false; //only one copy of string
                 }
                 
                 string str1=str;
