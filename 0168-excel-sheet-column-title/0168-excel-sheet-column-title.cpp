@@ -21,7 +21,7 @@ private:
         string s=val>0?convertToTitleUtil(val):"";
         s=s+umap[z];
         
-        return s;
+        return umap[n]=s;
     }
 public:
     string convertToTitle(int columnNumber) 
