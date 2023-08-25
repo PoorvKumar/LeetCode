@@ -1,54 +1,62 @@
 class Solution 
 {
 private:
-    unordered_map<int,unordered_map<int,unordered_map<int,bool>>> umap; //umap[i][j][k]
+    vector<vector<vector<int>>> dp; //dp[i][j][k]
     
-    bool isInterleaveUtil(string& s1,string& s2,string& s3,int i,int j,int k)
+    bool isInterLeaveUtil(string& s1,string& s2,string& s3,int i,int j,int k)
     {
-        if(i==s1.length() && j==s2.length() && k==s3.length())
+        if(i>=s1.length() && j>=s2.length())
         {
-            return true;
+            return k>=s3.length();
         }
         
-        if(umap.count(i) && umap[i].count(j) && umap[i][j].count(k))
+        if(k>=s3.length())
         {
-            return umap[i][j][k];
+            return false;
         }
         
-        bool ans=false;
+        if(dp[i][j][k]!=-1)
+        {
+            return dp[i][j][k];
+        }
         
         if(i<s1.length() && s1[i]==s3[k])
         {
-            ans=isInterleaveUtil(s1,s2,s3,i+1,j,k+1);
-            
-            if(ans)
+            if(isInterLeaveUtil(s1,s2,s3,i+1,j,k+1))
             {
                 // return true;
-                return umap[i][j][k]=ans;
+                
+                return dp[i][j][k]=true;
             }
         }
         
         if(j<s2.length() && s2[j]==s3[k])
         {
-            ans=isInterleaveUtil(s1,s2,s3,i,j+1,k+1);
+            if(isInterLeaveUtil(s1,s2,s3,i,j+1,k+1))
+            {
+                // return true;
+                
+                return dp[i][j][k]=true;
+            }
         }
         
-        // return ans; //Recursive Solution
-        //TC: O(2^(m+n)) //as 2 Recursive calls for every index i, j in object of type class string s1,s2
-        //SC: O(n+m+k)+O(m+n)asuxiliary stack space
+        // return false; //Recursive Solution
+        //TC: O(2^(p+q)) //as for evry index in s1 for every index in s2 Recursion calls
+        //SC: O(p+q+r)+O(p+q)auxiliary stack space
         
-        return umap[i][j][k]=ans; //Top-Down DP approach -> Recursion + Memoization
-        //TC: O(m*n*k) //as for every i for every j for every k Recursion calls Memoized
-        //SC: O(m*n*k)+O(m*n)auxiliary stack space
+        return dp[i][j][k]=false; //Top-Down DP aproach -> Recursion + Memoization
+        //TC: O(p*q*r) //as for every index in s1 for every index in s2 for every index in s3 Recursion calls Memoized
+        //SC: O(p+q+r)+O(p*q*r)+O(p*q*r)auxiliary stack space
     }
 public:
-    bool isInterleave(string& s1, string& s2, string& s3) 
+    bool isInterleave(string s1, string s2, string s3) 
     {
-        if(s1.length()+s2.length()!=s3.length())
-        {
-            return false;
-        }
+        int p=s1.length();
+        int q=s2.length();
+        int r=s3.length();
         
-        return isInterleaveUtil(s1,s2,s3,0,0,0);
+        dp.assign(p+1,vector<vector<int>>(q+1,vector<int>(r+1,-1)));
+        
+        return isInterLeaveUtil(s1,s2,s3,0,0,0);
     }
 };
