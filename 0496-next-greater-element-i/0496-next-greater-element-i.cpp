@@ -3,20 +3,22 @@ class Solution
 public:
     vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) 
     {
-        stack<int> stk;
+        stack<pair<int,int>> stk;
+        stk.push({nums2[0],0});
+        
         unordered_map<int,int> umap;
         
-        stk.push(nums2[0]);
+        // vector<int> vec(nums2.size(),-1);
         
         for(int i=1; i<nums2.size(); i++)
         {
-            while(!stk.empty() && stk.top()<nums2[i])
+            while(!stk.empty() && stk.top().first<nums2[i])
             {
-                umap[stk.top()]=nums2[i];
+                // vec[stk.top().second]=i;
+                umap[stk.top().first]=nums2[i];
                 stk.pop();
             }
-            
-            stk.push(nums2[i]);
+            stk.push({nums2[i],i});
         }
         
         for(auto &x:nums1)
