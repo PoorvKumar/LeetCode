@@ -38,18 +38,35 @@ public:
 //         //TC: O(n)
 //         //SC: O(n)
         
-        dp.assign(n+1,-1);
+//         dp.assign(n+1,-1);
+        
+//         vector<int> res;
+        
+//         for(int i=0; i<=n; i++)
+//         {
+//             int count=countBitsUtil(i);
+//             res.push_back(count);
+//         }
+        
+//         return res; 
+//         //TC: O(nlogn)
+//         //SC: O(n)
         
         vector<int> res;
         
         for(int i=0; i<=n; i++)
         {
-            int count=countBitsUtil(i);
+            int count=0;
+            int val=i;
+            while(val>0)
+            {
+                count=count+val%2;
+                val=val/2;
+            }
+            
             res.push_back(count);
         }
         
-        return res; 
-        //TC: O(nlogn)
-        //SC: O(n)
+        return res;
     }
 };
