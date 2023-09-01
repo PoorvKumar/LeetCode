@@ -15,9 +15,13 @@ private:
             return dp[n];
         }
         
-        // return n%2+countBitsUtil(n/2);
+        // return n%2+countBitsUtil(n/2); //Recursive Solution
+        //TC: O(logn)
+        //SC: O(1)
         
-        return dp[n]=n%2+countBitsUtil(n/2);
+        return dp[n]=n%2+countBitsUtil(n/2); //Top-Down DP approach -> Recursion + Memoization
+        //TC: O(logn)
+        //SC: O(n)
     }
 public:
     vector<int> countBits(int n) 
@@ -30,7 +34,9 @@ public:
 //             res.push_back(bs.count());
 //         }
         
-//         return res;
+//         return res; // object of type class bitset<32> appraoach
+//         //TC: O(n)
+//         //SC: O(n)
         
         dp.assign(n+1,-1);
         
@@ -42,6 +48,8 @@ public:
             res.push_back(count);
         }
         
-        return res;
+        return res; 
+        //TC: O(nlogn)
+        //SC: O(n)
     }
 };
