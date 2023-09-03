@@ -38,8 +38,33 @@ public:
         
 //         return uniquePathsUtil(m,n,0,0);
         
-        dp.assign(m+1,vector<int>(n+1,0));
-        dp[m-1][n-1]=1;
+//         dp.assign(m+1,vector<int>(n+1,0));
+//         dp[m-1][n-1]=1;
+        
+//         for(int i=m-1; i>=0; i--)
+//         {
+//             for(int j=n-1; j>=0; j--)
+//             {
+//                 if(i==m-1 && j==n-1)
+//                 {
+//                     continue;
+//                 }
+                
+//                 int down=dp[i+1][j];
+//                 int right=dp[i][j+1];
+                
+//                 dp[i][j]=down+right;
+//             }
+//         }
+        
+//         return dp[0][0]; //Bottom-Up DP approach -> Tabulation
+//         //TC: O(m*n)
+//         //SC: O(m*n)
+        
+        vector<int> curr(n+1,0);
+        vector<int> next(n+1,0);
+        
+        curr[n-1]=1;
         
         for(int i=m-1; i>=0; i--)
         {
@@ -50,13 +75,16 @@ public:
                     continue;
                 }
                 
-                int down=dp[i+1][j];
-                int right=dp[i][j+1];
+                int down=next[j];
+                int right=curr[j+1];
                 
-                dp[i][j]=down+right;
+                curr[j]=down+right;
             }
+            next=curr;
         }
         
-        return dp[0][0];
+        return curr[0]; //Space Optimzation
+        //TC: O(m*n)
+        //SC: O(n)
     }
 };
