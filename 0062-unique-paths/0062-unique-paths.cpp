@@ -1,87 +1,41 @@
 class Solution 
 {
 private:
-    unordered_map<int,unordered_map<int,int>> umap;
+    vector<vector<int>> dp;
     
-    int uniquePathsUtil(int i,int j,int m,int n)
+    int uniquePathsUtil(int m,int n,int i,int j)
     {
-        if(i==m-1 || j==n-1) //base case
+        if(i==m-1 && j==n-1)
         {
             return 1;
         }
         
-        if(umap.count(i) && umap[i].count(j))
+        if(i<0 || i>=m || j<0 || j>=n)
         {
-            return umap[i][j];
+            return 0;
         }
         
-        // int down=uniquePathsUtil(i+1,j,m,n);
-        // int right=uniquePathsUtil(i,j+1,m,n);
+        if(dp[i][j]!=-1)
+        {
+            return dp[i][j];
+        }
         
-        //down
-        umap[i+1][j]=uniquePathsUtil(i+1,j,m,n);
-        //right
-        umap[i][j+1]=uniquePathsUtil(i,j+1,m,n);
+        int down=uniquePathsUtil(m,n,i+1,j);
+        int right=uniquePathsUtil(m,n,i,j+1);
         
         // return down+right; //Recursive Solution
-        //TC: O(2^(m*n)) //as 2 calls at every cell && m*n cells
-        //SC: O(m*n)
+        //TC: O(2^(m+n)) //as for every m for very n 2(down,right) Recursion calls
+        //SC: O(m*n)auxiliary stack space
         
-        return umap[i][j]=umap[i+1][j] + umap[i][j+1]; //Top-Down DP approach -> Recursion + Memoization
-        //TC: O(m*n) //as recursive calls for all cells but memoized the solution for all cells so call once for each cell
-        //SC: O(m*n)
+        return dp[i][j]=down+right; //Top-Down DP approach -> Recursion + Memoization
+        //TC: O(m*n) //as for evry m for every n Recursion calls Memoized
+        //SC: O(m*n)+O(m*n)auxiliary stack space
     }
 public:
-    int uniquePaths(int m, int n)
+    int uniquePaths(int m, int n) 
     {
-        // return uniquePathsUtil(0,0,m,n);
+        dp.assign(m,vector<int>(n,-1));
         
-//         vector<vector<int>> dp(m,vector<int>(n,0));
-        
-//         for(int i=0; i<n; i++) //base case
-//         {
-//             dp[m-1][i]=1;
-//         }
-        
-//         for(int i=0; i<m; i++) //base case
-//         {
-//             dp[i][n-1]=1;
-//         }
-        
-//         for(int i=m-2; i>=0; i--)
-//         {
-//             for(int j=n-2; j>=0; j--)
-//             {
-//                 dp[i][j]=dp[i+1][j] + dp[i][j+1]; //dp[i][j]=down + right;
-//             }
-//         }
-        
-//         return dp[0][0]; //Bottom-UP DP approach -> Tabulation
-//         //TC: O(m*n) 
-//         //SC: O(m*n) + O(m*n)auxiliary space
-        
-        vector<int> curr(n,0);
-        vector<int> prev(n,1);
-        
-        vector<int> vec(n,0);
-        vec[n-1]=1;
-        
-        curr[n-1]=1;
-        
-        for(int i=m-2; i>=0; i--)
-        {
-            // curr.assign(n,0);
-            // curr[n-1]=1;
-            // curr=vec;
-            for(int j=n-2; j>=0; j--)
-            {
-                curr[j]=prev[j]+curr[j+1];
-            }
-            prev=curr;
-        }
-        
-        return prev[0]; //Space Optimization
-        //TC: O(m*n)
-        //SC: O(n)
+        return uniquePathsUtil(m,n,0,0);
     }
 };
