@@ -61,6 +61,8 @@ public:
             vec.push_back(NULL);
         }
         
-        return vec;
+        return vec; 
+        //TC: O(n+k)
+        //SC: O(max(n,k))
     }
 };
