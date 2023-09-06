@@ -6,16 +6,27 @@ public:
         int n=nums.size();
         k=k%n;
         
-        vector<int> vec(nums.begin()+n-k,nums.end());
+        if(k==0)
+        {
+            return ;
+        }
         
-        nums.erase(nums.begin()+n-k,nums.end());
+        vector<int> vec;
+        for(int i=n-k; i<n; i++)
+        {
+            vec.push_back(nums[i]);
+        }
         
-        nums.insert(nums.begin(),vec.begin(),vec.end());
+        while(k--)
+        {
+            nums.pop_back();
+        }
         
-        // for(int i=vec.size()-1; i>=0; i--)
-        // {
-        //     nums.insert(nums.begin(),vec[i]); //getting TLE 37 / 38 testcases passed
-        // }
+        for(auto x:nums)
+        {
+            vec.push_back(x);
+        }
+        nums=vec;
         
         return ;
     }
