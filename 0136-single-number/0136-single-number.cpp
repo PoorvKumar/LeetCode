@@ -3,20 +3,20 @@ class Solution
 public:
     int singleNumber(vector<int>& nums) 
     {
-        unordered_set<int> uset;
+        sort(nums.begin(),end(nums));
         
-        for(auto x:nums)
+        for(int i=0; i<nums.size()-1; i++)
         {
-            if(uset.count(x))
+            if(nums[i]==nums[i+1])
             {
-                uset.erase(x);
+                i++;
             }
             else
             {
-                uset.insert(x);
+                return nums[i];
             }
         }
         
-        return *uset.begin();
+        return nums.back();
     }
 };
