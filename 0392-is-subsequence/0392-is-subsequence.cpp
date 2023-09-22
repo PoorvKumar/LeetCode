@@ -1,7 +1,7 @@
 class Solution 
 {
 public:
-    bool isSubsequence(string s, string t) 
+    bool isSubsequence(string& s, string& t) 
     {
         int p=0;
         int r=0;
