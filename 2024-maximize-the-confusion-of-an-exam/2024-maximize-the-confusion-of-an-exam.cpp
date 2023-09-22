@@ -1,52 +1,80 @@
 class Solution 
 {
 private:
-    bool isValid(string& answerKey,int windowSize,int k)
+    bool isValid(string& answerKey,int val,int k)
     {
-        unordered_map<char,int> umap;
+        int t=0;
+        int f=0;
         
-        for(int i=0; i<windowSize; i++)
+        for(int i=0; i<val; i++)
         {
-            umap[answerKey[i]]++;
-        }
-        
-        if(min(umap['T'],umap['F'])<=k)
-        {
-            return true;
-        }
-        
-        for(int i=windowSize; i<answerKey.length(); i++)
-        {
-            umap[answerKey[i]]++;
-            umap[answerKey[i-windowSize]]--;
-            
-            if(min(umap['T'],umap['F'])<=k)
+            if(answerKey[i]=='T')
             {
-                return true;
+                t++;
+            }
+            else
+            {
+                f++;
             }
         }
         
-        return false;
+        int minim=min(t,f);
+        
+        for(int i=val; i<answerKey.size(); i++)
+        {
+            if(minim<=k)
+            {
+                return true;
+            }
+            if(answerKey[i-val]=='T')
+            {
+                t--;
+            }
+            else
+            {
+                f--;
+            }
+            
+            if(answerKey[i]=='T')
+            {
+                t++;
+            }
+            else
+            {
+                f++;
+            }
+            
+            minim=min(t,f);
+        }
+        
+        return minim<=k;
     }
 public:
-    int maxConsecutiveAnswers(string answerKey, int k) 
+    int maxConsecutiveAnswers(string& answerKey, int k) 
     {
         int low=k;
         int high=answerKey.length();
         
-        while(low<high)
+        int mid=(low+high)/2;
+        
+        while(low<=high)
         {
-            int mid=(low+high+1)/2;
+            // cout<<low<<" "<<mid<<" "<<high<<endl;
+            
             if(isValid(answerKey,mid,k))
             {
-                low=mid;
+                // cout<<mid<<endl;
+                low=mid+1;
             }
             else
             {
                 high=mid-1;
             }
+            
+            mid=(low+high)/2;
+            
         }
         
-        return low;
+        return mid;
     }
 };
