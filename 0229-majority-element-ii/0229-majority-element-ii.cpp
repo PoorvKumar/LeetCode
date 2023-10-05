@@ -5,21 +5,22 @@ public:
     {
         unordered_map<int,int> umap;
         
-        vector<int> vec;
-        
         for(auto x:nums)
         {
             umap[x]++;
         }
         
+        int val=floor(nums.size()/(3*1.0));
+        
+        vector<int> res;
         for(auto x:umap)
         {
-            if(x.second>nums.size()/3)
+            if(x.second>val)
             {
-                vec.push_back(x.first);
+                res.push_back(x.first);
             }
         }
         
-        return vec;
+        return res;
     }
 };
