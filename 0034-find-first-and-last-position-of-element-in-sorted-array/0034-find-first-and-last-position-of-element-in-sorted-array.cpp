@@ -7,21 +7,26 @@ public:
         
         if(nums.empty())
         {
-            return res={-1,-1};
+            return vector<int>({-1,-1});
         }
         
         auto lit=lower_bound(nums.begin(),end(nums),target);
-        res.push_back((lit==nums.end() || *lit!=target?-1:lit-begin(nums)));
+        int l=lit-begin(nums);
         
-        auto uit=upper_bound(nums.begin(),nums.end(),target);
-        if(uit==begin(nums) || *prev(uit)!=target)
+        if(lit==nums.end() || nums[l]!=target)
         {
-            res.push_back(-1);
+            l=-1;
         }
-        else
+        res.push_back(l);
+        
+        vector<int>::iterator rit=upper_bound(begin(nums),nums.end(),target);
+        int r=rit-nums.begin()-1;
+        if(rit==nums.begin() || *prev(rit)!=target)
         {
-            res.push_back(uit-nums.begin()-1);
+            r=-1;
         }
+        
+        res.push_back(r);
         
         return res;
     }
