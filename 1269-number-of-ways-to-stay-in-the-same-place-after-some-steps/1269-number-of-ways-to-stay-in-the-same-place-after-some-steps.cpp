@@ -40,8 +40,8 @@ private:
         //SC: O(n)auxiliary stack space
         
         return dp[index][steps]=ans%M; //Top-Down DP approach -> Recursion + Memoization
-        //TC: O(arrLen*steps) //as for every index for every step Recursion calls made
-        //SC: O(arrLen*step)+O(arrLen*steps)auxilary stack space
+        //TC: O(arrLen*steps) //as for every index for every step Recursion calls Memoized
+        //SC: O(arrLen*steps)+O(arrLen*steps)auxilary stack space
     }
 public:
     int numWays(int steps, int arrLen) 
@@ -57,6 +57,11 @@ public:
 //         {
 //             for(int k=arrLen-1; k>=0; k--)
 //             {
+//                 if(k-i>0)
+//                 {
+//                     continue;
+//                 }
+                
 //                 int stay=dp[i-1][k];
                 
 //                 int left=0;
@@ -77,8 +82,8 @@ public:
 //         }
         
 //         return dp[steps][0]; //Bottom-Up DP approach -> Tabulation
-        //TC: O(steps*arrLen)
-        //SC: O(steps*arrLen)
+//         // TC: O(steps*arrLen)
+//         // SC: O(steps*arrLen)
         
         vector<int> prev(arrLen,0);
         vector<int> curr(arrLen,0);
