@@ -46,7 +46,7 @@ private:
 public:
     int numWays(int steps, int arrLen) 
     {
-        dp.assign(steps+1,vector<int>(505,-1)); //arrLen fixed to 505
+        dp.assign(steps+1,vector<int>(501,-1)); //arrLen fixed to 505 //saw in discuss section
         
         return numWaysUtil(0,steps,arrLen);
         
