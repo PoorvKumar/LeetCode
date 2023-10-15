@@ -46,12 +46,48 @@ private:
 public:
     int numWays(int steps, int arrLen) 
     {
-        dp.assign(501,vector<int>(501,-1)); //arrLen fixed to 505 //saw in discuss section
+//         dp.assign(501,vector<int>(501,-1));
         
-        return numWaysUtil(0,steps,arrLen);
+//         return numWaysUtil(0,steps,arrLen);
         
-//         dp.assign(steps+1,vector<int>(arrLen,0));
-//         dp[0][0]=1;
+        dp.assign(501,vector<int>(501,0));
+        dp[0][0]=1;
+        
+        for(int i=1; i<=steps; i++)
+        {
+            for(int k=min(arrLen,500); k>=0; k--)
+            {
+                if(k-i>0)
+                {
+                    continue;
+                }
+                
+                int stay=dp[i-1][k];
+                
+                int left=0;
+                if(k-1>=0)
+                {
+                    left=dp[i-1][k-1];
+                }
+                
+                int right=0;
+                if(k+1<min(arrLen,500))
+                {
+                    right=dp[i-1][k+1];
+                }
+                
+                int ans=(stay%M+left%M+right%M)%M;
+                dp[i][k]=ans;
+            }
+        }
+        
+        return dp[steps][0]; //Bottom-Up DP approach -> Tabulation
+        // TC: O(steps*arrLen)
+        // SC: O(steps*arrLen)
+        
+//         vector<int> prev(501,0);
+//         vector<int> curr(501,0);
+//         prev[0]=1;
         
 //         for(int i=1; i<=steps; i++)
 //         {
@@ -62,64 +98,28 @@ public:
 //                     continue;
 //                 }
                 
-//                 int stay=dp[i-1][k];
+//                 int stay=prev[k];
                 
 //                 int left=0;
 //                 if(k-1>=0)
 //                 {
-//                     left=dp[i-1][k-1];
+//                     left=prev[k-1];
 //                 }
                 
 //                 int right=0;
 //                 if(k+1<arrLen)
 //                 {
-//                     right=dp[i-1][k+1];
+//                     right=prev[k+1];
 //                 }
                 
 //                 int ans=(stay%M+left%M+right%M)%M;
-//                 dp[i][k]=ans;
+//                 curr[k]=ans;
 //             }
+//             prev=curr;
 //         }
         
-//         return dp[steps][0]; //Bottom-Up DP approach -> Tabulation
-//         // TC: O(steps*arrLen)
-//         // SC: O(steps*arrLen)
-        
-        vector<int> prev(arrLen,0);
-        vector<int> curr(arrLen,0);
-        prev[0]=1;
-        
-        for(int i=1; i<=steps; i++)
-        {
-            for(int k=arrLen-1; k>=0; k--)
-            {
-                if(k-i>0)
-                {
-                    continue;
-                }
-                
-                int stay=prev[k];
-                
-                int left=0;
-                if(k-1>=0)
-                {
-                    left=prev[k-1];
-                }
-                
-                int right=0;
-                if(k+1<arrLen)
-                {
-                    right=prev[k+1];
-                }
-                
-                int ans=(stay%M+left%M+right%M)%M;
-                curr[k]=ans;
-            }
-            prev=curr;
-        }
-        
-        return prev[0]; //Space Optimisation
-        //TC: O(steps*arrLen)
-        //SC: O(arrLen)
+//         return prev[0]; //Space Optimisation
+//         //TC: O(steps*arrLen)
+//         //SC: O(arrLen)
     }
 };
