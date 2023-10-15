@@ -16,9 +16,9 @@ private:
             return 0;
         }
         
-        if(dp[index][steps]!=-1)
+        if(dp[steps][index]!=-1)
         {
-            return dp[index][steps];
+            return dp[steps][index];
         }
         
         int stay=numWaysUtil(index,steps-1,n);
@@ -39,16 +39,16 @@ private:
         //TC: O(3^n) //as for every step 3 (stay,left,right) Recursion calls made
         //SC: O(n)auxiliary stack space
         
-        return dp[index][steps]=ans%M; //Top-Down DP approach -> Recursion + Memoization
+        return dp[steps][index]=ans%M; //Top-Down DP approach -> Recursion + Memoization
         //TC: O(arrLen*steps) //as for every index for every step Recursion calls Memoized
         //SC: O(arrLen*steps)+O(arrLen*steps)auxilary stack space
     }
 public:
     int numWays(int steps, int arrLen) 
     {
-//         dp.assign(arrLen,vector<int>(steps+1,-1));
+        dp.assign(steps+1,vector<int>(505,-1)); //arrLen fixed to 505
         
-//         return numWaysUtil(0,steps,arrLen);
+        return numWaysUtil(0,steps,arrLen);
         
 //         dp.assign(steps+1,vector<int>(arrLen,0));
 //         dp[0][0]=1;
