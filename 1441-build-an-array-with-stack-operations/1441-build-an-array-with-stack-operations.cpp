@@ -34,7 +34,30 @@ private:
 public:
     vector<string> buildArray(vector<int>& target, int n) 
     {
-        buildArrayUtil(target,0,1,n);
+        // buildArrayUtil(target,0,1,n);
+        
+        int val=1;
+        
+        for(int i=0; i<target.size(); i++)
+        {
+            if(target[i]==val)
+            {
+                res.push_back("Push");
+                val++;
+            }
+            else
+            {
+                while(target[i]!=val)
+                {
+                    res.push_back("Push");
+                    res.push_back("Pop");
+                    val++;
+                }
+                
+                res.push_back("Push");
+                val++;
+            }
+        }
         
         return res;
     }
