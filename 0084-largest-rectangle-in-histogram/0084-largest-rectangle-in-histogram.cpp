@@ -13,13 +13,13 @@ public:
         {
             while(!stk.empty() && stk.top().first>heights[i])
             {
-                int right=i;
+                int right=i-1;
                 int h=stk.top().first;
                 
                 stk.pop();
                 
-                int left=stk.empty()?-1:stk.top().second;
-                int area=h*(right-left-1);
+                int left=stk.empty()?0:stk.top().second+1;
+                int area=h*(right-left+1);
                 
                 ans=max(ans,area);
             }
