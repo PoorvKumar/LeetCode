@@ -1,7 +1,7 @@
 class Solution 
 {
 private:
-    vector<vector<bool>> visited;
+    // vector<vector<bool>> visited;
     
     void bfs(vector<vector<char>>& grid,int i,int j)
     {
@@ -24,12 +24,13 @@ private:
                 continue;
             }
             
-            if(grid[x][y]!='1' || visited[x][y])
+            if(grid[x][y]!='1')
             {
                 continue;
             }
             
-            visited[x][y]=true;
+            grid[x][y]='0';
+            // visited[x][y]=true;
             
             q.push({x-1,y});
             q.push({x+1,y});
@@ -45,7 +46,7 @@ public:
         int m=grid.size();
         int n=grid[0].size();
         
-        visited.assign(m,vector<bool>(n,false));
+        // visited.assign(m,vector<bool>(n,false));
         
         int ans=0;
         
@@ -53,7 +54,7 @@ public:
         {
             for(int j=0; j<n; j++)
             {
-                if(grid[i][j]=='1' && !visited[i][j])
+                if(grid[i][j]=='1')
                 {
                     ans++;
                     bfs(grid,i,j); //O(mn)
