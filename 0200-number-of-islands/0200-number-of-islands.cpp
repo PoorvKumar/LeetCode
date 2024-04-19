@@ -8,8 +8,6 @@ private:
         int m=grid.size();
         int n=grid[0].size();
         
-        visited[i][j]=true;
-        
         queue<pair<int,int>> q;
         q.push({i,j});
         
@@ -21,33 +19,22 @@ private:
             int x=p.first;
             int y=p.second;
             
-            //up
-            if(x>0 && grid[x-1][y]=='1' && !visited[x-1][y])
+            if(x<0 || x>m-1 || y<0 || y>n-1)
             {
-                q.push({x-1,y});
-                visited[x-1][y]=true;
+                continue;
             }
             
-            //down
-            if(x<m-1 && grid[x+1][y]=='1' && !visited[x+1][y])
+            if(grid[x][y]!='1' || visited[x][y])
             {
-                q.push({x+1,y});
-                visited[x+1][y]=true;
+                continue;
             }
             
-            //left
-            if(y>0 && grid[x][y-1]=='1' && !visited[x][y-1])
-            {
-                q.push({x,y-1});
-                visited[x][y-1]=true;
-            }
+            visited[x][y]=true;
             
-            //right
-            if(y<n-1 && grid[x][y+1]=='1' && !visited[x][y+1])
-            {
-                q.push({x,y+1});
-                visited[x][y+1]=true;
-            }
+            q.push({x-1,y});
+            q.push({x+1,y});
+            q.push({x,y-1});
+            q.push({x,y+1});
         }
         
         return ;
@@ -69,11 +56,11 @@ public:
                 if(grid[i][j]=='1' && !visited[i][j])
                 {
                     ans++;
-                    bfs(grid,i,j);
+                    bfs(grid,i,j); //O(mn)
                 }
             }
         }
         
-        return ans;
+        return ans; //O(m*m*n*n)
     }
 };
