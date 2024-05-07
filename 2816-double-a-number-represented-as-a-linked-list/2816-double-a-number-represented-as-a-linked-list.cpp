@@ -11,7 +11,7 @@
 class Solution 
 {
 private:
-    pair<ListNode*,int> doubleItUtil(ListNode* head)
+    int doubleItUtil(ListNode* head)
     {
         if(head->next==NULL)
         {
@@ -19,33 +19,33 @@ private:
             head->val=val%10;
             int carry=val/10;
             
-            return {head,carry};
+            // return {head,carry};
+            return carry;
         }
         
-        pair<ListNode*,int> p=doubleItUtil(head->next);
+        // pair<ListNode*,int> p=doubleItUtil(head->next);
+        int c=doubleItUtil(head->next);
         
-        int val=head->val*2+p.second;
+        int val=head->val*2+c;
         head->val=val%10;
         
-        head->next=p.first;
-        
         int carry=val/10;
-        
-        return {head,carry};
+        return carry;
     }
 public:
     ListNode* doubleIt(ListNode* head) 
     {
-        pair<ListNode*,int> p=doubleItUtil(head);
+        // pair<ListNode*,int> p=doubleItUtil(head);
+        int carry=doubleItUtil(head);
         
-        if(p.second!=0)
+        if(carry!=0)
         {
-            ListNode* newHead=new ListNode(p.second);
-            newHead->next=p.first;
+            ListNode* newHead=new ListNode(carry);
+            newHead->next=head;
             
             return newHead;
         }
         
-        return p.first;
+        return head;
     }
 };
